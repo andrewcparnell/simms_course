@@ -58,9 +58,9 @@ Time  | Class
 Time  | Class
 ------------- | -------------
 9:00 | Students arrive
-9:15-10:00 | Building your own SIMM with JAGS (AP) [Module 10]
+9:15-10:00 | Building your own SIMM with JAGS (AP) [Module 10](https://rawgit.com/andrewcparnell/simms_course/master/ap_notes/mod_10_building_simms/module_10_building_SIMMs.html)
 10:00-10:45 | Discussion and coffee
-10:45-11:30 | Practical: using MixSIAR and JAGS on real world data sets; benefits over SIAR (AP) Practical 4 
+10:45-11:30 | Practical: using MixSIAR and JAGS on real world data sets; benefits over SIAR (AP) [Practical 4](https://rawgit.com/andrewcparnell/simms_course/master/ap_notes/prac_4_mixsiar_and_jags/prac_4_mixsiar_and_jags.html)
 11:30-12:00 | Break 
 12:00-12:45 | Practical (continued)
 12:45-14:00 | Lunch
