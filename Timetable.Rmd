@@ -49,7 +49,6 @@ Time  | Class
 12:00-12:45 | Source grouping, when and how? (AJ) Module 9
 12:45-14:00 | Lunch 
 14:00-15:30 | Practical: Using SIBER (AJ) [Practical 3a](https://rawgit.com/andrewljackson/SIAR-examples-and-queries/master/learning-resources/siber-comparing-communities.html) and [3b](https://rawgit.com/andrewljackson/SIAR-examples-and-queries/master/learning-resources/siber-comparing-populations.html)
-11:50-12:45 | Practical continued 
 15:30-16:00 | Break 
 16:00-17:30 | Discussion: when to use which type of SIMM 
 
