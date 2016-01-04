@@ -1,5 +1,0 @@
-Source Mean15N Sd15N Mean13C Sd13C
-Zostera    3.54  0.74    1.63  0.63
-Grass    3.54  0.74    1.63  0.63
-U.lactuca    3.54  0.74    1.63  0.63
-Enteromorpha    3.54  0.74    1.63  0.63
