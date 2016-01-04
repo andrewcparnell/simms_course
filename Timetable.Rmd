@@ -5,16 +5,16 @@ date: "January 2016"
 output: html_document
 ---
 
-Module pre-requisites: 
+Module pre-requisites can be found [here](https://rawgit.com/andrewcparnell/simms_course/master/Prerequisites.html).  
 
 ## Tuesday
 
 Time  | Class
 ------------- | -------------
 9:00  | Students arrive
-9:15-10:00 | Introduction; why use a SIMM? (AJ) Module 1 
+9:15-10:00 | Introduction; why use a SIMM? (AJ) [Module 1](https://rawgit.com/andrewcparnell/simms_course/master/ap_notes/mod_2_intro_bayes/module_2_introbayes.html)
 10:00-10:45 | Discussion and coffee 
-10:45-11:30 | An introduction to Bayesian statistics (AP) Module 2 
+10:45-11:30 | An introduction to Bayesian statistics (AP) [Module 2](https://rawgit.com/andrewcparnell/simms_course/master/ap_notes/mod_2_intro_bayes/module_2_introbayes.html)
 11:30-12:00 | Discussion and break 
 12:00-12:45 | Differences between regression models and SIMMs. (AP) Module 3 
 12:45-14:00 | Lunch

@@ -43,7 +43,7 @@ These will install the most up to date versions of the package. Note: if you are
 
 MixSIAR should be installed by following the instructions here: [https://github.com/brianstock/MixSIAR](https://github.com/brianstock/MixSIAR)
  
-Finally if you would like to do some pre-course reading (recommended) ther are some papers which can accessed via this link: https://goo.gl/AwTv1Y.
+Finally if you would like to do some pre-course reading (recommended) ther are some papers which can accessed [here](https://github.com/andrewcparnell/simms_course/tree/master/papers).
 
 ### Troubleshooting
 
