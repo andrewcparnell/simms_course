@@ -1,0 +1,68 @@
+---
+title: "Stable Isotope Mixing Models: course timetable"
+author: "Andrew Parnell and Andrew Jackson"
+date: "January 2016"
+output: html_document
+---
+
+Module pre-requisites: 
+
+## Tuesday
+
+Time  | Class
+------------- | -------------
+9:00  | Students arrive
+9:15-10:00 | Introduction; why use a SIMM? (AJ) Module 1 
+10:00-10:45 | Discussion and coffee 
+10:45-11:30 | An introduction to Bayesian statistics (AP) Module 2 
+11:30-12:00 | Discussion and break 
+12:00-12:45 | Differences between regression models and SIMMs. (AP) Module 3 
+12:45-14:00 | Lunch
+14:00-15:30 | Practical: Revision on using R to load data, create plots and fit statistical models (AJ) Practical 1
+15:30-16:00 | Break 
+16:00-17:30 | Discussion: understanding Bayesian models.
+
+## Wednesday
+
+Time  | Class
+------------- | -------------
+9:00 | Students arrive 
+9:15-10:00 | Dos and donts of using SIAR (AJ) Module 4 
+10:00-10:45 | Discussion and coffee 
+10:45-11:30 | The statistical model behind SIAR (AP) Module 5 
+11:30-12:00 | Discussion and break 
+12:00-12:45 | Creating and understanding Stable Isotope Bayesian Ellipses (SIBER) (AJ) Module 6 
+12:45-14:00 | Lunch 
+14:00-15:30 | Practical: using SIAR for real-world data sets (AP) Practical 2 
+15:30-16:00 | Break
+16:00-17:30 | Discussion: issues when using simple SIMMs 
+
+## Thursday
+
+Time  | Class
+------------- | -------------
+9:00 | Students arrive 
+9:15-10:00 | What are the differences between SIAR and MixSIAR? (AP) Module 7 
+10:00-10:45 | Discussion and coffee 
+10:45-11:30 | SIMMs for complex data sets: time series and mixed effects models (AP) Module 8 
+11:30-12:00 | Break 
+12:00-12:45 | Source grouping, when and how? (AJ) Module 9 
+12:45-14:00 | Lunch 
+14:00-15:30 | Practical: Using SIBER (AJ) Practical 3 
+11:50-12:45 | Practical continued 
+15:30-16:00 | Break 
+16:00-17:30 | Discussion: when to use which type of SIMM 
+
+## Friday
+
+Time  | Class
+------------- | -------------
+9:00 | Students arrive
+9:15-10:00 | Building your own SIMM with JAGS (AP) Module 10 
+10:00-10:45 | Discussion and coffee
+10:45-11:30 | Practical: using MixSIAR and JAGS on real world data sets; benefits over SIAR (AP) Practical 4 
+11:30-12:00 | Break 
+12:00-12:45 | Practical (continued)
+12:45-14:00 | Lunch
+14:00-17:30 | Discussion: bring your own data set
+

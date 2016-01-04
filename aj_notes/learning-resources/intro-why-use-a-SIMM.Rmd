@@ -1,0 +1,186 @@
+---
+title: 'Monday 09:15--10:00: Isotope Models for Ecology'
+author: "Andrew Jackson"
+date: "21st July 2015"
+output:
+  ioslides_presentation:
+    logo: images/tcd-stacked-square.png
+    transition: slower
+    css: mystyle.css
+---
+
+## General pattern for this course
+- 09:15 - 10:00 Lecture
+- 10:00 - 10:45 Discussion
+- 10:45 - 11:30 Lecture
+- 11:30 - 12:00 Discussion
+- 12:00 - 12:45 Lecture
+- 12:45 - 14:00 Lunch
+- 14:00 - 15:30 Practical
+- 15:30 - 16:00 Break
+- 16:00 - 17:30 Discussion
+
+## Questions ecologists often ask
+
+> - What is this animal eating?
+> - Are these animals specialists or generalists?
+> - Why are these populations of animals eating different things?
+> - How is this community functioning?
+
+## Isotopes can provide insights
+<img src="images/ideal_iso_community.png" alt="Idealised Community" width="600">
+
+## Moving heavy isotopes is hard work
+<img src="images/heavy_frac.png" alt="heavy isotopes fractionate" width="600">
+
+## Heavy isotopes are chemically sticky
+<img src="images/chem_frac.png" alt="chemical reactions fractionate" width="600">
+
+## Observe the states and infer the process
+<img src="images/infer_process.png" alt="infer the process by observing the state" width="600">
+
+## Ecological process inferred by isotopes
+- Newsome, Martinez del Rio, Bearhop & Phillips. 2007. A Niche for Isotopic Ecology. Frontiers in Ecology and the Environment. 
+- d-space and p-space
+
+<img src="images/dspace-pspace.png" alt="moving from d-space to p-space" width="600">
+
+## Mixing Models move from d- to p-space
+- Direct measure of trophic interactions via consumption
+
+<img src="images/simm-1.png" alt="siar output example" width="600">
+
+## Determined system - 2 sources 1 tracer
+
+> - How much of black and blue is the red dot made of?
+> - ``` consumer = (1/3)*(-10) + (2/3)*(5) = 0```
+
+```{r, echo=FALSE, message=FALSE, fig.width = 8, fig.height = 4}
+plot(c(-10, 0, 5), c(0,0,0), pch = c(15,16,15), col = c(1,2,4),
+     xlab = "", ylab = "", bty="L", cex = 4)
+```
+
+## Determined system - 3 sources 2 tracers
+> - How much of black, blue and magenta is the red dot made of?
+> - ``` p = c(0.2, 0.4, 0.4) ```
+
+```{r, echo=FALSE, message=FALSE, fig.width = 8, fig.height = 4}
+
+s1 <- c(-10, 2)
+s2 <- c(0, 8)
+s3 <- c(5, 3)
+
+sources <- rbind(s1, s2, s3)
+
+p <- c(0.2, 0.4, 0.4)
+
+consumer <- p %*% sources
+
+plot(sources[,1], sources[,2], pch = c(15,15,15), col = c(1,6,4),
+     xlab = "", ylab = "", bty="L", cex = 4, asp = 1, xlim = c(-12,6),
+     ylim = c(0, 10))
+points(consumer[1], consumer[2], pch = 16, col = 2, cex = 4)
+```
+
+## Under-determined - 3 sources 1 tracers
+> - problems arise
+> - ``` 1/3 black + 2/3 blue ```
+> - ``` 1/6 back + 5/6 magenta ```
+> - ``` 1/3 back + 1/6 magenta + 3/5 blue```
+
+```{r, echo=FALSE, message=FALSE, fig.width = 8, fig.height = 2.5}
+plot(c(-10, 0, 2, 5), c(0,0,0,0), pch = c(15,16,15,15), col = c(1,2,6,4),
+     xlab = "", ylab = "", bty="L", cex = 4, ylim = c(-0.5, 0.5), yaxt = "n")
+```
+
+
+## Under-determined - 4 sources 2 tracers
+> - similar issue but more nuanced
+
+
+```{r, echo=FALSE, message=FALSE, fig.width = 8, fig.height = 4}
+
+s1 <- c(-10, 2)
+s2 <- c(0, 8)
+s3 <- c(5, 3)
+s4 <- c(-5, 8)
+
+sources <- rbind(s1, s2, s3, s4)
+
+p <- c(0.2, 0.4, 0.4, 0)
+
+consumer <- p %*% sources
+
+plot(sources[,1], sources[,2], pch = c(15,15,15, 15), col = c(1,6,4,5),
+     xlab = "", ylab = "", bty="L", cex = 4, asp = 1, xlim = c(-12,6),
+     ylim = c(0, 10))
+points(consumer[1], consumer[2], pch = 16, col = 2, cex = 4)
+```
+
+## IsoSource
+
+<img src="images/isosource-screenshot.png" alt="histogram output from isosource" width="430" style="float:right;">
+
+> - took a brute force approach
+> - try every possible combination of sources in 1% increments
+> - accept if within some treshold of the mixture (consumer)
+> - reject if outside treshold
+
+## SIAR / MixSIR / MixSIAR
+
+<img src="images/siar-histograms.png" alt="histogram output from siar" width="430" style="float:right;">
+
+> - uses Bayesian Inference to assign probabilities to the estimates
+> - frequency of occurrence, and proximity of estimate to the observed value increases the probability of a solution
+> - can also include prior information that weights the probability of a solution
+
+
+
+## Comparing dietary proportions
+
+- Proportion of terrestrial grass in the diet of Brent geese
+
+<img src="images/grass-in-geese.png" alt="geese eat grass in different proportions" width="700">
+
+
+## Diet over time
+
+- Diet can be linked to covariates such as time
+
+<img src="images/swallows-over-time.png" alt="swallow diets change over time" width="800">
+
+
+## Inference from d-space
+
+> - Isotopes are like naturally occurring PCA analyses
+> - They are two axes, behind which lie multiple biotic and physical factors
+> - d15N tells us a lot about trophic level for example
+> - d13C can tell us about marine Vs terrestrial among other scenopoetic factors
+> - Idea is that isotopic niche correlates in some way with ecological niche
+
+## Specialists Vs generalists
+
+<img src="images/specialist-generalist.png" alt="specialists vs generalists in isotope d-space" width="600">
+
+<div class="ref">Bearhop, Adam, Waldron, Fuller & MacLeod. 2004. Determining trophic niche width: a novel approach using stable isotope analysis. J Anim Ecol.</div>
+
+## Drivers of niche width
+
+<img src="images/layman-frag.png" alt="niche width shrinks with fragmentation" height="400">
+
+<div class="ref">Layman et al. 2007. Niche width collapse in a resilient top predator following ecosystem fragmentation.</div>
+
+## Invasive species
+
+<img src="images/crayfish-carp.png" alt="niche width of native species affected by invasive species" height="400">
+
+<div class="ref">Jackson, M.C. et al. 2012. Population-Level Metrics of Trophic Structure Based on Stable Isotopes and Their Application to Invasion Ecology. PLoSONE. </div>
+
+## The question is key
+> - as with all science, your question will determine which analysis you require
+> - formulating a clear question at the start will inform your study design
+> - If you need to know what an animal is eating, then you require a SIMM
+> - if you want to compare the niche widths of populations then you probably want the ellipse functions in SIBER
+> - if you want to compare entire communities for niche structure, then you probably want the hull-based metrics in SIBER
+
+

@@ -1,0 +1,261 @@
+---
+title: "Comparing populations in isotope-space"
+author: "Andrew L Jackson"
+date: "14 July 2015"
+output: html_document
+---
+
+```{r, echo=FALSE, message = FALSE, fig.width = 7, fig.height = 7}
+
+library(siar, quietly = TRUE,
+        verbose = FALSE,
+        logical.return = FALSE)
+
+source("plot.siber.data.r")
+
+M <- plot.siber.data("../siber-scripts/example_layman_data.csv",
+                tt = "Community 1", add.hull = F)
+```
+
+In this figure, we have 4 populations (or more generically: groups) of indivuals. We might want to make some comparisons of the isotopic (and hence ecological) niches occupied by these individuals. The two most obvious ways to compare two of these populations, is to ask whether their niches are located in the same place, and if they are the same size. Thereafter, we may be interested in asking to what extent do their niches overlap.
+
+We can visualise this by adding both ellipses, and convex hulls to the data. In this case, we add standard ellipses, which are to bivariate data as standard deviations are to univariate data. A standard ellipse contains approximately 40% of the data, although they can be rescaled to contain any proporition of the data we wish if we accept the assumption that they multivariate normal distributed. Owing to this proportional representation of the data, the ellipse _should_ be insensitive to sample size, and _should_ always contain 40% of the data. However, as was demonstrated in the SIBER paper [Jackson et al 2010](https://scholar.google.com/citations?view_op=view_citation&hl=en&user=E0sB7fUAAAAJ&citation_for_view=E0sB7fUAAAAJ:_FxGoFyzp5QC), the basic Standard Ellipse Area (SEA) shows bias at small sample sizes, which can be corrected to calculate SEAc.
+
+In contrast, the convex hull is a polygon that is drawn around the outermost points in the cloud of data such that all other points lie within the outline. If we were to go out and collect more samples, then this hull can only grow in size and not get smaller. The result of this is that smaller sample sizes will result in smaller convex hulls. Despite this statistical problem, the convex hull remains a useful way to help us visualise bivariate data such as carbon-nitrogen stable isotope values.
+
+We can then go back to our community comprising 4 populations, and add standard ellipses and convex hulls to each group by first splitting the data into 4 groups, and then looping over these 4 groups and applying the ellipse and hull plotting instructions to each group, one at a time. This code is taken from the script (demo.SEA.r)[../siber-scripts/demo.SEA.r] which you can open seprately, or you can copy and paste from below (although you will need to alter the location of the data file in the opening code:
+
+``` r
+mydata<-read.csv("path/example_ellipse_data.csv"))
+```
+
+And now the full code...
+
+```{r, fig.width = 6, fig.height = 6}
+
+rm(list = ls()) # clear the memory of objects
+
+# load the siar package of functions
+library(siar)
+
+# ------------------------------------------------------------------------------
+# ANDREW - REMOVE THESE LINES WHICH SHOULD BE REDUNDANT
+# change this line
+#setwd("c:/rtemp")
+#setwd("/Users/andrewjackson/Dropbox/siar/demo scripts and files/siber scripts")
+#setwd( "D:/Alternative My Documents/Andrews Documents/Dropbox/siar/demo scripts and files/siber scripts")
+# ------------------------------------------------------------------------------
+
+
+
+# now close all currently open windows
+# graphics.off()
+
+
+# read in some data
+# NB the column names have to be exactly, "group", "x", "y"
+mydata <- read.csv("../siber-scripts/example_layman_data.csv",header=T)
+
+# make the column names availble for direct calling
+# attach(mydata)
+# NB I am phasing out use of the attach() function, and instead
+# prefer to directly reference columns within data.frame objects
+# by using, mydata$x, mydata$y and mydata$group etc...
+
+
+# now loop through the data and calculate the ellipses
+ngroups <- length(unique(mydata$group))
+
+
+
+# split the isotope data based on group
+spx <- split(mydata$x, mydata$group)
+spy <- split(mydata$y, mydata$group)
+
+# create some empty vectors for recording our metrics
+SEA <- numeric(ngroups)
+SEAc <- numeric(ngroups)
+TA <- numeric(ngroups)
+
+#dev.new()
+plot(mydata$x, mydata$y, col=mydata$group, type="p",
+     xlab=expression({delta}^13*C~'\u2030'),
+     ylab=expression({delta}^15*N~'\u2030'))
+
+legend("topright",
+       legend = as.character(paste("Group ",unique(mydata$group))),
+       pch = 19,
+       col = 1:length(unique(mydata$group)))
+
+# a dataframe for collecting the 6 layman metrics, although see
+# my note below for caveats.
+group.layman.metrics <- data.frame(group = unique(mydata$group),
+                                  dN_range = double(ngroups),
+                                  dC_range = double(ngroups),
+                                  TA = double(ngroups),
+                                  CD = double(ngroups),
+                                  MNND = double(ngroups),
+                                  SDNND = double(ngroups)
+                                  )
+
+for (j in unique(mydata$group)){
+
+
+  # Fit a standard ellipse to the data
+  SE <- standard.ellipse(spx[[j]],spy[[j]],steps=1)
+  
+  # Extract the estimated SEA and SEAc from this object
+  SEA[j] <- SE$SEA
+  SEAc[j] <- SE$SEAc
+  
+  # plot the standard ellipse with d.f. = 2 (i.e. SEAc)
+  # These are plotted here as thick solid lines
+  lines(SE$xSEAc,SE$ySEAc,col=j,lty=1,lwd=3)
+  
+  
+  # Also, for comparison we can fit and plot the convex hull
+  # the convex hull is plotted as dotted thin lines
+  #
+  # Calculate the convex hull for the jth group's isotope values
+  # held in the objects created using split() called spx and spy
+  CH <- convexhull(spx[[j]],spy[[j]])
+  
+  # Extract the area of the convex hull from this object
+  TA[j] <- CH$TA
+  
+  # Plot the convex hull
+  lines(CH$xcoords,CH$ycoords,lwd=1,lty=3)
+
+  # you can if you want also calculate the 6 layman metrics
+  # for this group, although I do not recommned making quantiative
+  # comparisons owing to the sample size bias and uncertainties
+  # illustrated in my SIBER paper. This is after all why we are 
+  # fitting ellipses to our data in this script!
+  
+  tmp <- laymanmetrics(spx[[j]],spy[[j]])
+  
+  group.layman.metrics[j,2:7] <- c(tmp$dN_range,
+                                   tmp$dC_range,
+                                   tmp$hull$TA,
+                                   tmp$CD,
+                                   tmp$MNND,
+                                   tmp$SDNND)
+  
+}
+
+# print the area metrics to screen for comparison
+# NB if you are working with real data rather than simulated then you wont be
+# able to calculate the population SEA (pop.SEA)
+# If you do this enough times or for enough groups you will easily see the
+# bias in SEA as an estimate of pop.SEA as compared to SEAc which is unbiased.
+# Both measures are equally variable.
+print(cbind(SEA,SEAc,TA))
+```
+
+***
+
+## Using Bayesian Inference to calculate uncertainty around ellipses
+So far these still just point-metrics that describe the width of the isotopic niche. That is, they are single numbers for each group, which means that we can't compare one group to another in a statisical sense as we lack a measure of the uncertainty around each estimate. This is where we can use Bayesian Inference to quantify the error associated with fitting these ellipses to each group, that arises from both the number of samples we have, and also their distribution.
+
+Essentially, what the MCMC algorithm does is generate a distribution of covariance matrices that to a greater or lesser extent (in terms of likelihood) describe the observed data. It does so, as is the general case in Bayesian INference, by combing the prior probability with the likelihood of the data for a given covariance matrix.
+
+What we end up with is a range of ellipses that could explain the data, with more of them clustered around the most likely solution. However, one cannot simply take an average across these covariance matrices, as there are strict mathematical properties that must be maintained. The result of this is that it is not possible to plot a mean, median or modal Bayesian Standard Ellipse; instead we must calculate each one of the ellipse's area, and then present summary statistics of this derived measurement.
+
+The plots below represent the posterior distribution of the SEA_B fitted to each of the 4 groups in our dataset.
+
+```{r, fig.width = 8, fig.height = 6}
+# So far we have fitted the standard ellipses based on frequentist methods
+# and calculated the relevant metrics (SEA and SEAc). Now we turn our attention
+# to producing a Bayesian estimate of the standard ellipse and its area SEA_B
+
+
+reps <- 10^4 # the number of posterior draws to make
+
+# Generate the Bayesian estimates for the SEA for each group using the 
+# utility function siber.ellipses
+SEA.B <- siber.ellipses(mydata$x, mydata$y, mydata$group, R = reps)
+
+# ------------------------------------------------------------------------------
+# Plot out some of the data and results
+# ------------------------------------------------------------------------------
+
+
+# Plot the credible intervals for the estimated ellipse areas now
+# stored in the matrix SEA.B
+#dev.new()
+siardensityplot(SEA.B,
+  xlab="Group",ylab="Area (permil^2)",
+  main="Bayesian Standard Ellipse Area (SEA_B)")
+
+# and now overlay the other metrics on teh same plot for comparison
+points(1:ngroups, SEAc, pch = 15, col = "red")
+legend("topright", c("SEAc"),
+       pch = c(15, 17), col = c("red", "blue"))
+```
+
+***
+
+## Comparing the posterior distributions
+
+In order to test whether one group's ellipse is smaller or larger than another, we can simply calculate the probability that its posterior distribution is smaller (or larger). This is acheived by comparing each pair of posterior draws for both groups, and dtermining which is smaller in magnitude. We then find the proportion of draws that are smaller, and this is a direct proxy for the probability that one group's posterior distribution (of ellipse size in this case) is smaller than the other.
+
+
+Here, we first calculate the proportion, and hence probability, of the SEA.B for group 1 being smaller than the SEA.B for group 2.
+
+```{r}
+Pg1.lt.g2 <- sum( SEA.B[,1] < SEA.B[,2] ) / nrow(SEA.B)
+print(Pg1.lt.g2)
+```
+
+So, in this case, all of the estimates for groups 1's ellipse are smaller than for group 2; although we could probably guess at this given that there appears to be no overlap between then 95% credible intervals of the two groups (see the figure above).
+
+Then we can do exactly the same for groups 1 and 3.
+
+```{r}
+Pg1.lt.g3 <- sum( SEA.B[,1] < SEA.B[,3] ) / nrow(SEA.B)
+print(Pg1.lt.g3 )
+```
+
+And then for the other pairings:
+
+```{r}
+Pg1.lt.g4 <- sum( SEA.B[,1] < SEA.B[,4] ) / nrow(SEA.B)
+print(Pg1.lt.g4)
+
+Pg2.lt.g3 <- sum( SEA.B[,2] < SEA.B[,3] ) / nrow(SEA.B)
+print(Pg2.lt.g3)
+
+Pg3.lt.g4 <- sum( SEA.B[,3] < SEA.B[,4] ) / nrow(SEA.B)
+print(Pg3.lt.g4)
+```
+
+***
+
+## Overlap Between Ellipses
+One can calculate the overlap between two (or more) ellipses. In the first instance, this overlap is simply the area, in units of per mil squared, contained by the shape that lies within the overlapping region. This overlap is most easily calculated by using the SEAc of each ellipse.
+
+The overlap between the SEAc for groups 2 and 3 is given by:
+
+```{r}
+overlap.G2.G3 <- overlap(spx[[2]], spy[[2]], 
+                         spx[[3]], spy[[3]],
+                         steps = 1)
+print(overlap.G2.G3)
+```
+
+One might then wish to calculate the proportion overlap; athough one then runs into a choice as to what the demoninator will be in the equation. You could for instance calculate the proportion of A that overlaps with B, the proporiton of B that overlaps with A, or the proportion of A and B that overlap with each other.
+
+```{r}
+overlap.G2.G3$overlap / overlap.G2.G3$area1
+
+overlap.G2.G3$overlap / overlap.G2.G3$area2
+
+overlap.G2.G3$overlap / (overlap.G2.G3$area1 + overlap.G2.G3$area2)
+
+```
+
+A problem with this simple overlap calculation is that it yields a point-estimate of overlap based on the maximum likelihood estimated SEA_c. One could in theory calculate the overlap for each ellipse created by the MCMC chain and therefore get a distribution of uncertainty around this measure. However, this requires some code to be written to loop over all the posterior means and covariance matrices and calculate overlap for each one. The overlap code is in a separate package, is relatively slow to run, and will need to be applied to every row in the posterior output. SIBER does not currently have a function to perform this calculation.
+
+
+
+

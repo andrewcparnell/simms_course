@@ -1,0 +1,51 @@
+---
+title: "Pre-requisites"
+author: "Andrew Parnell and Andrew Jackson"
+output: html_document
+---
+
+In preparation for the course can all participants please do the following, preferably in the correct order as some of the steps are dependent on the preceding one.
+
+You will need to bring your own personal computer for the duration of the course.
+
+### Step 1
+
+Install the following using the corresponding links
+
+-	R: [http://www.r-project.org](http://www.r-project.org)
+
+-	Rstudio (optional): [https://www.rstudio.com](https://www.rstudio.com)
+
+-	JAGS: [http://mcmc-jags.sourceforge.net](http://sourceforge.net/projects/mcmc-jags/files/)
+
+### Step 2
+
+Now install the following packages by going into Rstudio (or R) and typing:
+```{r,eval=FALSE}
+install.packages(c('devtools','rjags'))
+```
+
+### Step 3
+
+SIAR and (optionally) simmr should be installed by entering the following code in to R
+
+```{r,eval=FALSE}
+library(devtools) 
+install_github("andrewljackson/siar") 
+library(siar)
+install_github("andrewcparnell/simmr",build_vignettes=TRUE) 
+library(simmr)
+```
+
+These will install the most up to date versions of the package. Note: if you are on a Mac you might need to install X11 from [http://www.xquartz.org](http://www.xquartz.org). You may get a pop up window be asking if you want 'additional build tool' -select 'yes')
+
+### Step 4
+
+MixSIAR should be installed by following the instructions here: [https://github.com/brianstock/MixSIAR](https://github.com/brianstock/MixSIAR)
+ 
+Finally if you would like to do some pre-course reading (recommended) ther are some papers which can accessed via this link: https://goo.gl/AwTv1Y.
+
+### Troubleshooting
+
+If you run into any problems please drop us a line at <andrew.parnell@ucd.ie> or <andrew.jackson@tcd.ie>.
+
