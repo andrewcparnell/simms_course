@@ -12,13 +12,13 @@ Module pre-requisites can be found [here](https://rawgit.com/andrewcparnell/simm
 Time  | Class
 ------------- | -------------
 9:00  | Students arrive
-9:15-10:00 | Introduction; why use a SIMM? (AJ) [Module 1](https://rawgit.com/andrewcparnell/simms_course/master/ap_notes/mod_2_intro_bayes/module_2_introbayes.html)
+9:15-10:00 | Introduction; why use a SIMM? (AJ) [Module 1](https://rawgit.com/andrewljackson/SIAR-examples-and-queries/master/learning-resources/intro-why-use-a-SIMM.html)
 10:00-10:45 | Discussion and coffee 
 10:45-11:30 | An introduction to Bayesian statistics (AP) [Module 2](https://rawgit.com/andrewcparnell/simms_course/master/ap_notes/mod_2_intro_bayes/module_2_introbayes.html)
 11:30-12:00 | Discussion and break 
-12:00-12:45 | Differences between regression models and SIMMs. (AP) Module 3 
+12:00-12:45 | Differences between regression models and SIMMs. (AP) [Module 3](https://rawgit.com/andrewcparnell/simms_course/master/ap_notes/mod_3_reg_and_simms/module_3_reg_and_simms.html)
 12:45-14:00 | Lunch
-14:00-15:30 | Practical: Revision on using R to load data, create plots and fit statistical models (AJ) Practical 1
+14:00-15:30 | Practical: Revision on using R to load data, create plots and fit statistical models (AJ) [Practical 1](https://rawgit.com/andrewljackson/SIAR-examples-and-queries/master/learning-resources/monday-practical.Rmd)
 15:30-16:00 | Break 
 16:00-17:30 | Discussion: understanding Bayesian models.
 
@@ -27,13 +27,13 @@ Time  | Class
 Time  | Class
 ------------- | -------------
 9:00 | Students arrive 
-9:15-10:00 | Dos and donts of using SIAR (AJ) Module 4 
+9:15-10:00 | Dos and donts of using SIAR (AJ) [Module 4](https://rawgit.com/andrewljackson/SIAR-examples-and-queries/master/SIAR-examples-and-queries/learning-resources/siar-dos-and-donts.Rmd)
 10:00-10:45 | Discussion and coffee 
-10:45-11:30 | The statistical model behind SIAR (AP) Module 5 
+10:45-11:30 | The statistical model behind SIAR (AP) [Module 5](https://rawgit.com/andrewcparnell/simms_course/master/ap_notes/mod_5_siar_stats/module_5_siar_stats.html)
 11:30-12:00 | Discussion and break 
-12:00-12:45 | Creating and understanding Stable Isotope Bayesian Ellipses (SIBER) (AJ) Module 6 
+12:00-12:45 | Creating and understanding Stable Isotope Bayesian Ellipses (SIBER) (AJ) [Module 6](https://rawgit.com/andrewljackson/SIAR-examples-and-queries/master/learning-resources/Introduction-to-SIBER.html)
 12:45-14:00 | Lunch 
-14:00-15:30 | Practical: using SIAR for real-world data sets (AP) Practical 2 
+14:00-15:30 | Practical: using SIAR for real-world data sets (AP) [Practical 2](https://rawgit.com/andrewcparnell/simms_course/master/ap_notes/prac_2_using_siar/prac_2_using_siar.html)
 15:30-16:00 | Break
 16:00-17:30 | Discussion: issues when using simple SIMMs 
 
@@ -42,13 +42,13 @@ Time  | Class
 Time  | Class
 ------------- | -------------
 9:00 | Students arrive 
-9:15-10:00 | What are the differences between SIAR and MixSIAR? (AP) Module 7 
+9:15-10:00 | What are the differences between SIAR and MixSIAR? (AP) [Module 7](https://rawgit.com/andrewcparnell/simms_course/master/ap_notes/mod_7_siar_mixsiar/module_7_siar_mixsiar.html)
 10:00-10:45 | Discussion and coffee 
-10:45-11:30 | SIMMs for complex data sets: time series and mixed effects models (AP) Module 8 
+10:45-11:30 | SIMMs for complex data sets: time series and mixed effects models (AP) [Module 8](https://rawgit.com/andrewcparnell/simms_course/master/ap_notes/mod_8_complex_simms/module_8_complex_SIMMs.html)
 11:30-12:00 | Break 
-12:00-12:45 | Source grouping, when and how? (AJ) Module 9 
+12:00-12:45 | Source grouping, when and how? (AJ) Module 9
 12:45-14:00 | Lunch 
-14:00-15:30 | Practical: Using SIBER (AJ) Practical 3 
+14:00-15:30 | Practical: Using SIBER (AJ) [Practical 3a](https://rawgit.com/andrewljackson/SIAR-examples-and-queries/master/learning-resources/siber-comparing-communities.html) and [3b](https://rawgit.com/andrewljackson/SIAR-examples-and-queries/master/learning-resources/siber-comparing-populations.html)
 11:50-12:45 | Practical continued 
 15:30-16:00 | Break 
 16:00-17:30 | Discussion: when to use which type of SIMM 
@@ -58,7 +58,7 @@ Time  | Class
 Time  | Class
 ------------- | -------------
 9:00 | Students arrive
-9:15-10:00 | Building your own SIMM with JAGS (AP) Module 10 
+9:15-10:00 | Building your own SIMM with JAGS (AP) [Module 10]
 10:00-10:45 | Discussion and coffee
 10:45-11:30 | Practical: using MixSIAR and JAGS on real world data sets; benefits over SIAR (AP) Practical 4 
 11:30-12:00 | Break 
