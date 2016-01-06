@@ -4,9 +4,9 @@ author: "Andrew Parnell and Andrew Jackson"
 output: html_document
 ---
 
-In preparation for the course can all participants please do the following, preferably in the correct order as some of the steps are dependent on the preceding one.
+In preparation for the course please install the following, preferably in the below suggested order.
 
-You will need to bring your own personal computer for the duration of the course.
+Remember you will need to bring your own personal computer for the duration of the course.
 
 ### Step 1
 
@@ -14,7 +14,7 @@ Install the following using the corresponding links
 
 -	R: [http://www.r-project.org](http://www.r-project.org)
 
--	Rstudio (optional): [https://www.rstudio.com](https://www.rstudio.com)
+-	Rstudio (optional but recommended): [https://www.rstudio.com](https://www.rstudio.com)
 
 -	JAGS: [http://mcmc-jags.sourceforge.net](http://sourceforge.net/projects/mcmc-jags/files/)
 
@@ -33,17 +33,19 @@ SIAR and (optionally) simmr should be installed by entering the following code i
 library(devtools) 
 install_github("andrewljackson/siar") 
 library(siar)
+install_github("andrewljackson/SIBER") 
+library(SIBER)
 install_github("andrewcparnell/simmr",build_vignettes=TRUE) 
 library(simmr)
 ```
 
-These will install the most up to date versions of the package. Note: if you are on a Mac you might need to install X11 from [http://www.xquartz.org](http://www.xquartz.org). You may get a pop up window be asking if you want 'additional build tool' -select 'yes')
+These will install the most up to date versions of the package. Note: if you are on a Mac you might need to install X11 from [http://www.xquartz.org](http://www.xquartz.org). You may get a pop up window be asking if you want 'additional build tool'. Please select 'yes'.
 
 ### Step 4
 
 MixSIAR should be installed by following the instructions here: [https://github.com/brianstock/MixSIAR](https://github.com/brianstock/MixSIAR)
  
-Finally if you would like to do some pre-course reading (recommended) ther are some papers which can accessed [here](https://github.com/andrewcparnell/simms_course/tree/master/papers).
+Finally if you would like to do some pre-course reading (recommended) there are some papers which can accessed [here](https://github.com/andrewcparnell/simms_course/tree/master/papers).
 
 ### Troubleshooting
 
