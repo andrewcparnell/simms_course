@@ -92,7 +92,12 @@ install_github(&quot;andrewljackson/SIBER&quot;)
 library(SIBER)
 install_github(&quot;andrewcparnell/simmr&quot;,build_vignettes=TRUE) 
 library(simmr)</code></pre>
-<p>These will install the most up to date versions of the package. Note: if you are on a Mac you might need to install X11 from <a href="http://www.xquartz.org"><a href="http://www.xquartz.org" class="uri">http://www.xquartz.org</a></a>. You may get a pop up window be asking if you want ‘additional build tool’. Please select ‘yes’.</p>
+<p>These will install the most up to date versions of the package. You might run into the following problems:</p>
+<ul>
+<li>If you are on a Mac you might need to install X11 from <a href="http://www.xquartz.org"><a href="http://www.xquartz.org" class="uri">http://www.xquartz.org</a></a>.</li>
+<li>You may get a pop up window be asking if you want ‘additional build tools’. Please select ‘yes’.</li>
+<li>If you get an error about package <code>stringi</code> try typing <code>install.packages('stringi',type='win.binary')</code> if on Windows or <code>install.packages('stringi',type='mac.binary')</code> if on Mac. Then re-run the commands above</li>
+</ul>
 </div>
 <div id="step-4" class="section level3">
 <h3>Step 4</h3>

@@ -39,7 +39,11 @@ install_github("andrewcparnell/simmr",build_vignettes=TRUE)
 library(simmr)
 ```
 
-These will install the most up to date versions of the package. Note: if you are on a Mac you might need to install X11 from [http://www.xquartz.org](http://www.xquartz.org). You may get a pop up window be asking if you want 'additional build tool'. Please select 'yes'.
+These will install the most up to date versions of the package. You might run into the following problems:
+
+  - If you are on a Mac you might need to install X11 from [http://www.xquartz.org](http://www.xquartz.org). 
+  - You may get a pop up window be asking if you want 'additional build tools'. Please select 'yes'.
+  - If you get an error about package `stringi` try typing `install.packages('stringi',type='win.binary')` if on Windows or `install.packages('stringi',type='mac.binary')` if on Mac. Then re-run the commands above
 
 ### Step 4
 
