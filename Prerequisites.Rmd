@@ -16,7 +16,7 @@ Install the following using the corresponding links
 
 -	Rstudio (optional but recommended): [https://www.rstudio.com](https://www.rstudio.com)
 
--	JAGS: [http://mcmc-jags.sourceforge.net](http://sourceforge.net/projects/mcmc-jags/files/)
+-	JAGS: http://sourceforge.net/projects/mcmc-jags/files/
 
 ### Step 2
 
