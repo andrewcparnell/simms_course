@@ -3,7 +3,6 @@
 # It is taken from Andrew Parnell's code in 
 # module_3_reg_and_simms.Rmd
 
-
 # ---------------------------------------------------------------------
 # A little housekeeping to start
 rm(list=ls())
