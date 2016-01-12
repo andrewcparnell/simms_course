@@ -42,15 +42,31 @@ legend('topright',legend=c('Grass','Zostera','Consumers'),
 # specify the jags model
 modelstring ='
 model {
+
+  # Specify the likelihood for the data, i.e. the 
+  # response variable whcih in this case is a set of  
+  # d13C values for 9 geese.
   for(i in 1:N) { 
     y[i] ~ dnorm( p_1 * s_1 + p_2 * s_2, 1 / pow(sigma, 2) ) 
   }
 
+  # ----------------------------------------------
+  # Specify the priors for every parameter that is 
+  # to be estimated.
+
+  # p_1 is uniform distributed
   p_1 ~ dunif(0,1)
-  p_2 <- 1-p_1
-  s_1 ~ dnorm(s_1_mean,s_1_prec)
-  s_2 ~ dnorm(s_2_mean,s_2_prec)
-  sigma ~ dunif(0,10)
+  
+  # p_2 is simply 1 minus p_1
+  p_2 <- 1 - p_1
+
+  # s_1 and s_2 are normally distributed
+  s_1 ~ dnorm(s_1_mean, s_1_prec)
+  s_2 ~ dnorm(s_2_mean, s_2_prec)
+
+  # sigma is the residual variance unexplained by our
+  # mixing model
+  sigma ~ dunif(0, 10)
 }
 ' # end of string
 
@@ -67,8 +83,9 @@ data = list(y = consumers,
 model = jags.model(textConnection(modelstring), data=data)
 
 # generate the samples for the posterior
-output = coda.samples(model=model,variable.names=c("p_1","p_2"),
-                    n.iter=10000)
+output = coda.samples(model = model,
+                      variable.names = c("p_1","p_2"),
+                      n.iter = 10000)
 
 plot(output)
 
@@ -102,4 +119,7 @@ plot(output.2[[1]][1000:1500,1], type = "b")
 
 # check the acf again
 acf(output.2[[1]][,1])
+
+# test the BGR for convergence
+gelman.diag(output.2)
 
