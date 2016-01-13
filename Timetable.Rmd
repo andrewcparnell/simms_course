@@ -27,7 +27,7 @@ Time  | Class
 Time  | Class
 ------------- | -------------
 9:00 | Students arrive 
-9:15-10:00 | Dos and donts of using SIAR (AJ) [Module 4](https://rawgit.com/andrewljackson/SIAR-examples-and-queries/master/learning-resources/siar-dos-and-donts.html)
+9:15-10:00 | Dos and donts of using mixing models (AJ) [Module 4](https://rawgit.com/andrewljackson/SIAR-examples-and-queries/master/learning-resources/siar-dos-and-donts.html)
 10:00-10:45 | Discussion and coffee 
 10:45-11:30 | The statistical model behind SIAR (AP) [Module 5](https://rawgit.com/andrewcparnell/simms_course/master/ap_notes/mod_5_siar_stats/module_5_siar_stats.html)
 11:30-12:00 | Discussion and break 
