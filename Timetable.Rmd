@@ -5,7 +5,7 @@ date: "January 2016"
 output: html_document
 ---
 
-Module pre-requisites can be found [here](https://rawgit.com/andrewcparnell/simms_course/master/Prerequisites.html). All the raw files and code can be found [here](https://github.com/andrewcparnell/simms_course) (for AP files) and [here](https://github.com/AndrewLJackson/SIAR-examples-and-queries) (for AJ files). Click 'Download ZIP' near the top right if you want offline versions of everything.
+Course pre-requisites can be found [here](https://rawgit.com/andrewcparnell/simms_course/master/Prerequisites.html). All the raw files and code can be found [here](https://github.com/andrewcparnell/simms_course) (for AP files) and [here](https://github.com/AndrewLJackson/SIAR-examples-and-queries) (for AJ files). Click 'Download ZIP' near the top right if you want offline versions of everything. The course wiki page can be found [here](https://github.com/AndrewLJackson/SIA-for-Ecologists/wiki). Please feel free to contribute and add questions, comments, papers, etc. 
 
 ## Tuesday
 
