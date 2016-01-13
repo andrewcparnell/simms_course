@@ -2,11 +2,11 @@
 title: 'Module 5: The statistical model behind SIAR'
 author: "Andrew Parnell, School of Mathematics and Statistics, University College Dublin"
 output:
-  beamer_presentation: default
   ioslides_presentation:
     logo: http://www.ucd.ie/handball/images/ucd_brandmark_colour.gif
     transition: slower
     widescreen: yes
+  beamer_presentation: default
 ---
 
 ## Learning outcomes:
@@ -182,7 +182,7 @@ $$ y_{ij} \sim N \left( \frac{\sum_{k=1}^K p_k q_{jk} (s_{jk}+c_{jk})}{\sum_{k=1
 ## Richer source sampling {.smaller}
 
 - The model we've been fitting up to now assumes that all individuals sample the same source value $s_k$ for each source and isotope. This is unrealistic
-- A better model has each individual sampling a different source value from the source prior distribution, i.e. we now have $s_{ik}$ (or $s_{ikj} with multiple isotopes)
+- A better model has each individual sampling a different source value from the source prior distribution, i.e. we now have $s_{ik}$ (or $s_{ikj}$ with multiple isotopes)
 - The JAGS code becomes:
 ```{r,eval=FALSE}
 for(k in 1:K) { 

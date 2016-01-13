@@ -27,7 +27,7 @@ Time  | Class
 Time  | Class
 ------------- | -------------
 9:00 | Students arrive 
-9:15-10:00 | Dos and donts of using SIAR (AJ) [Module 4](https://rawgit.com/andrewljackson/SIAR-examples-and-queries/master/SIAR-examples-and-queries/learning-resources/siar-dos-and-donts.html)
+9:15-10:00 | Dos and donts of using SIAR (AJ) [Module 4](https://rawgit.com/andrewljackson/SIAR-examples-and-queries/master/learning-resources/siar-dos-and-donts.html)
 10:00-10:45 | Discussion and coffee 
 10:45-11:30 | The statistical model behind SIAR (AP) [Module 5](https://rawgit.com/andrewcparnell/simms_course/master/ap_notes/mod_5_siar_stats/module_5_siar_stats.html)
 11:30-12:00 | Discussion and break 
@@ -41,16 +41,16 @@ Time  | Class
 
 Time  | Class
 ------------- | -------------
-9:00 | Students arrive 
-9:15-10:00 | What are the differences between SIAR and MixSIAR? (AP) [Module 7](https://rawgit.com/andrewcparnell/simms_course/master/ap_notes/mod_7_siar_mixsiar/module_7_siar_mixsiar.html)
-10:00-10:45 | Discussion and coffee 
-10:45-11:30 | SIMMs for complex data sets: time series and mixed effects models (AP) [Module 8](https://rawgit.com/andrewcparnell/simms_course/master/ap_notes/mod_8_complex_simms/module_8_complex_SIMMs.html)
-11:30-12:00 | Break 
-12:00-12:45 | Source grouping, when and how? (AJ) [Module 9](https://github.com/AndrewLJackson/SIAR-examples-and-queries/blob/master/siar-mixing-models/source_aggregation.r)
-12:45-14:00 | Lunch 
-14:00-15:30 | Practical: Using SIBER (AJ) [Practical 3a](https://rawgit.com/andrewljackson/SIAR-examples-and-queries/master/learning-resources/siber-comparing-communities.html) and [3b](https://rawgit.com/andrewljackson/SIAR-examples-and-queries/master/learning-resources/siber-comparing-populations.html)
-15:30-16:00 | Break 
-16:00-17:30 | Discussion: when to use which type of SIMM 
+9:00-9:45 | What are the differences between SIAR and MixSIAR? (AP) [Module 7](https://rawgit.com/andrewcparnell/simms_course/master/ap_notes/mod_7_siar_mixsiar/module_7_siar_mixsiar.html)
+9:45-10:15 | Discussion and coffee 
+10:15-11:00 | SIMMs for complex data sets: time series and mixed effects models (AP) [Module 8](https://rawgit.com/andrewcparnell/simms_course/master/ap_notes/mod_8_complex_simms/module_8_complex_SIMMs.html)
+11:00-11:15 | Break 
+11:15-12:00 | Source grouping, when and how? (AJ) [Module 9](https://github.com/AndrewLJackson/SIAR-examples-and-queries/blob/master/siar-mixing-models/source_aggregation.r)
+12:00-13:00 | Practical part 3a: Using SIBER (AJ) [Practical 3a](https://rawgit.com/andrewljackson/SIAR-examples-and-queries/master/learning-resources/siber-comparing-communities.html)
+13:00-14:00 | Lunch 
+14:00-15:00 | Practical part 3b: Using SIBER (AJ) [Practical 3b](https://rawgit.com/andrewljackson/SIAR-examples-and-queries/master/learning-resources/siber-comparing-populations.html)
+15:00-18:00 | Walk up a mountain!
+
 
 ## Friday
 
