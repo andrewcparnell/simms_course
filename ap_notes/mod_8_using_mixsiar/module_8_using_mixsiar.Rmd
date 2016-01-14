@@ -1,0 +1,87 @@
+---
+title: 'Module 8: Using MixSIAR'
+author: "Andrew Parnell, School of Mathematics and Statistics, University College Dublin"
+output:
+  ioslides_presentation:
+    logo: http://www.ucd.ie/handball/images/ucd_brandmark_colour.gif
+    transition: slower
+    widescreen: yes
+  beamer_presentation: default
+---
+
+## Learning outcomes
+- Run MixSIAR on one of the standard examples
+- Check convergence and produce plots in MixSIAR
+- Be able to understand output from MixSIAR
+
+## Intro to MixSIAR
+
+- MixSIAR implements a version of the CLR jags code already shown, and through this allows the introduction of random effects and covariates
+- It's a bit limited in that:
+
+    1. It's recommended to work with a GUI
+    2. You can only put a certain number of random effects/covariates into the model
+    3. It doesn't currently take account of uncertainty in TEFs (it calls this _discrimination_)
+    4. It doesn't allow for much choice in prior distributions
+
+- However, it's a great start at finding simple ways to run more complicated models
+
+## The main MixSIAR input screen
+
+<center><img src="mixsiar_screen.tiff" height="500px" /></center>
+
+## Running the Wolves example
+
+- In the MixSIAR folder there are three files: `wolves_consumer.csv`, `wolves_dicrimination.csv`, and `wolves_sources.csv`
+- These contain the consumer isotope data with two covariates, the discrimination data (no standard deviations), and the source data (for each different region)
+- Note that MixSIAR allows you to input either the sources means/sds (as we have been using), or the raw source data, to which it fits a model to estimate the source parameters
+- These data are similar to those used in the Semmens _et al_ PLoS ONE paper already mentioned. The methods are more fully described in that paper
+- The variables pack and region here are included as _nested_ random effects, meaning that there are two layers of random effects which measure variability between regions and variability between packs. The overall residual measures variability within pack
+
+## Wolves example - consumers
+
+<center><img src="mixsiar_screen_mix.tiff" height="500px" /></center>
+
+## Wolves example - sources
+
+<center><img src="mixsiar_screen_source.tiff" height="500px" /></center>
+
+## Wolves example - isospace plot
+
+<center><img src="mixsiar_screen_isospace.tiff" height="500px" /></center>
+
+## Wolves example - running
+
+- First run the model as a test go, then choose a normal run
+- These models are starting to get complicated, they take a while to run 
+- MixSIAR write JAGS code on the fly. Check out the JAGS model structure in `MixSIAR_model.txt`
+- When it's finished click on `process output` to get at the (many) results
+- You can also access an R script version of this (much better) in `mixsiar_script.r`
+
+## Analysing output
+
+- First, check convergence using Brooks-Gelman-Rubin or Geweke (both previously covered)
+- You then have access to histograms of the posterior distributions of the overall means, and also for each level of the hierarchy; here pack and region
+- They also produce a pairs plot (like the matrix plot of yesterday) which can tell you about model inadequacy
+- Use the `mixsiar_script.r` if you want full access to the JAGS output for any further analysis
+
+## MixSIAR output - trace plot
+
+<center><img src="trace.tiff" height="500px" /></center>
+
+## MixSIAR output - random effect densities
+
+<center><img src="re_sds.tiff" height="500px" /></center>
+
+## MixSIAR output - overall proportion densities
+
+<center><img src="overall_p.tiff" height="500px" /></center>
+
+## MixSIAR output - matrix plot
+
+<center><img src="matrix_plot.tiff" height="500px" /></center>
+
+## Summary
+
+- We now know how to load in special types of consumers, sources, and discrimination factors in MixSIAR
+- We have run one of the more complicated MixSIAR examples
