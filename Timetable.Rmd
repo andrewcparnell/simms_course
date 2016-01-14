@@ -33,7 +33,7 @@ Time  | Class
 11:30-12:00 | Discussion and break 
 12:00-12:45 | Creating and understanding Stable Isotope Bayesian Ellipses (SIBER) (AJ) [Module 6](https://rawgit.com/andrewljackson/SIAR-examples-and-queries/master/learning-resources/siber-intro.html)
 12:45-14:00 | Lunch 
-14:00-15:30 | Practical: using SIAR for real-world data sets (AP) [Practical 2](https://rawgit.com/andrewcparnell/simms_course/master/ap_notes/prac_2_using_siar/prac_2_using_siar.html), _or_ why not try using [simmr](https://rawgit.com/andrewcparnell/simmr/master/vignettes/simmr.html)? Also make sure you have installed [MixSIAR](https://github.com/brianstock/MixSIAR)
+14:00-15:30 | Practical: using SIAR for real-world data sets (AP) [Practical 2](https://rawgit.com/andrewcparnell/simms_course/master/ap_notes/prac_2_using_siar/prac_2_using_siar.html), _or_ why not try using [simmr](https://rawgit.com/andrewcparnell/simmr/master/vignettes/simmr.html)? 
 15:30-16:00 | Break
 16:00-17:30 | Discussion: issues when using simple SIMMs 
 
