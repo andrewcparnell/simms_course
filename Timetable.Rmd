@@ -43,7 +43,7 @@ Time  | Class
 ------------- | -------------
 9:00-9:45 | From SIAR to MixSIAR? (AP) [Module 7](https://rawgit.com/andrewcparnell/simms_course/master/ap_notes/mod_7_siar_mixsiar/module_7_siar_mixsiar.html)
 9:45-10:15 | Discussion and coffee 
-10:15-11:00 | Using MixSIAR [Module 8](https://rawgit.com/andrewcparnell/simms_course/master/ap_notes/mod_8_complex_simms/module_8_using_mixsiar.html)
+10:15-11:00 | Using MixSIAR (AP) [Module 8](https://rawgit.com/andrewcparnell/simms_course/master/ap_notes/mod_8_complex_simms/module_8_using_mixsiar.html)
 11:00-11:15 | Break 
 11:15-12:00 | Source grouping, when and how? (AJ) [Module 9](https://github.com/AndrewLJackson/SIAR-examples-and-queries/blob/master/siar-mixing-models/source_aggregation.r)
 12:00-13:00 | Practical part 3a: Using SIBER (AJ) [Practical 3a](https://rawgit.com/andrewljackson/SIAR-examples-and-queries/master/learning-resources/siber-comparing-communities.html)
