@@ -56,7 +56,7 @@ Time  | Class
 Time  | Class
 ------------- | -------------
 9:00 | Students arrive
-9:15-10:00 | SIMMs for complex data sets: time series and mixed effects models (AP) [Module 10](https://rawgit.com/andrewcparnell/simms_course/master/ap_notes/mod_10_building_simms/module_10_complx_SIMMs.html)
+9:15-10:00 | SIMMs for complex data sets: time series and mixed effects models (AP) [Module 10](https://rawgit.com/andrewcparnell/simms_course/master/ap_notes/mod_10_complex_simms/module_10_complex_SIMMs.html)
 10:00-10:45 | Discussion and coffee
 10:45-11:30 | Practical: using MixSIAR and JAGS on real world data sets; benefits over SIAR (AP) [Practical 4](https://rawgit.com/andrewcparnell/simms_course/master/ap_notes/prac_4_mixsiar_and_jags/prac_4_mixsiar_and_jags.html)
 11:30-12:00 | Break 
