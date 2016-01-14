@@ -1,19 +1,18 @@
 ---
-title: 'Module 7: An introduction to MixSIAR'
+title: 'Module 7: From SIAR to MixSIAR'
 author: "Andrew Parnell, School of Mathematics and Statistics, University College Dublin"
 output:
-  beamer_presentation: default
   ioslides_presentation:
     logo: http://www.ucd.ie/handball/images/ucd_brandmark_colour.gif
     transition: slower
     widescreen: yes
+  beamer_presentation: default
 ---
 
 ## Learning outcomes
 - Random effects models
 - Understand how MixSIAR extends MixSIR and SIAR
 - Understand the differences in likelihoods and priors
-- Be able to understand output from MixSIAR
 
 ## Revision: SIAR model in JAGS
 
@@ -153,7 +152,7 @@ model {
   for (j in 1:J) {
     for (i in 1:N) { 
       y[i,j] ~ dnorm(inprod(p[i,]*q[,j], s_mean[,j]+c_mean[,j]) / inprod(p[i,],q[,j]), 1/var_y[i,j])
-      var_y[j] <- inprod(pow(p[i,]*q[,j],2),1/s_prec[,j]+1/c_prec[,j])/pow(inprod(p[i,],q[,j]),2) + pow(sigma[j],2)
+      var_y[i,j] <- inprod(pow(p[i,]*q[,j],2),1/s_prec[,j]+1/c_prec[,j])/pow(inprod(p[i,],q[,j]),2) + pow(sigma[j],2)
     }
   }
   for(i in 1:N) {
@@ -231,6 +230,7 @@ head(out_summ$statistics,12)
 - We now have individual dietary proportion estimates ($p_{ik}$) and overall dietary proportion estimates (via CLR transform of $\mu_k)$, and also estimates of the variability (from $\sigma_f$)
 - Things start to get complicated with prior distributions at this stage. Be very careful and always examine prior sensitivity by re-running the model with slightly different prior distributions. Look at the effect on $p$ (the effect on $\mu_f$ and $\sigma_f$ is less important)
 
+<!--
 ## Back to MixSIAR
 
 - MixSIAR implements a version of the CLR jags code already shown, and through this allows the introduction of random effects and covariates
@@ -303,3 +303,12 @@ head(out_summ$statistics,12)
 - We have looked at the differences between SIAR and MixSIAR
 - This has included: random effects, the centralised log ratio
 - We have run one of the more complicated MixSIAR examples
+
+-->
+
+## Summary
+
+- We have looked at the differences between SIAR and MixSIAR
+- We studied the CLR as an alternative to the Dirichlet
+- We showed how to include random effects in a SIMM
+
