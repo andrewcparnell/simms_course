@@ -9,14 +9,6 @@ output:
     transition: slower
 ---
 
-## Comparisons of populations
-
-<img src="images/siber-ellipse-example.png" alt="four ellipses fit to data" height="450">
-
-## SIBER output
-
-<img src="images/sea-community1.png" alt="estimates of ellipse size for community 1" height="450">
-
 ## Comparisons of communities
 
 ```{r, echo=FALSE, message = FALSE, fig.width = 7, fig.height = 3.5}
@@ -25,17 +17,23 @@ library(siar, quietly = TRUE,
         verbose = FALSE,
         logical.return = FALSE)
 
-source("plot.siber.data.r")
+source("utility-scripts/plot.siber.data.r")
 
 par(mfrow=c(1,2))
 
-M <- plot.siber.data("../siber-scripts/example_layman_data.csv",
+M <- plot.siber.data("data/example_layman_data.csv",
                 tt = "Community 1", add.hull = T)
 
-M <- plot.siber.data("../siber-scripts/example_layman_data_2.csv",
+M <- plot.siber.data("data/example_layman_data_2.csv",
                 tt = "Community 2", add.hull = T)
 
 ```
+
+## Based on the ellipse method
+... but with an extra step
+
+<img src="images/siber-ellipse-example.png" alt="four ellipses fit to data" height="450">
+
 
 ## Layman metrics
 
@@ -55,9 +53,9 @@ M <- plot.siber.data("../siber-scripts/example_layman_data_2.csv",
 ```{r, echo=FALSE, message = FALSE, fig.width = 7, fig.height = 4.5}
 
 # read in some data
-comm1 <- read.csv("../siber-scripts/example_layman_data.csv", header=T)
+comm1 <- read.csv("data/example_layman_data.csv", header=T)
 
-comm2 <- read.csv("../siber-scripts/example_layman_data_2.csv", header=T)
+comm2 <- read.csv("data/example_layman_data_2.csv", header=T)
 
 # calculate the Bayesian Layman metrics given data for Isotopes 1 and 2, 
 # a grouping variable Group and a number of iterations to use to generate

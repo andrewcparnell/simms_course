@@ -1,7 +1,7 @@
 ---
 title: "Comparing populations in isotope-space"
 author: "Andrew L Jackson"
-date: "14 Jan 2016"
+date: "14 Jan 2017"
 output: html_document
 ---
 
@@ -15,7 +15,7 @@ library(viridis)
 palette(viridis(4))
 
 # read in the data
-mydata <- read.csv("../siber-scripts/example_layman_data_all.csv",
+mydata <- read.csv("data/example_layman_data_all.csv",
                    header=T)
 
 # create the siber object
@@ -64,7 +64,7 @@ rm(list = ls()) # clear the memory of objects
 library(SIBER)
 
 # read in the data
-mydata <- read.csv("../siber-scripts/example_layman_data_all.csv",
+mydata <- read.csv("data/example_layman_data_all.csv",
                    header=T)
 
 # create the siber object
