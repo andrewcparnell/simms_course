@@ -1,0 +1,123 @@
+---
+title: "SIBER introduction - Hulls"
+author: "Andrew L Jackson"
+date: "12 December 2015"
+output:
+  ioslides_presentation:
+    css: mystyle.css
+    logo: images/tcd-stacked-square-2.png
+    transition: slower
+---
+
+## Comparisons of communities
+
+```{r, echo=FALSE, message = FALSE, fig.width = 7, fig.height = 3.5}
+
+library(siar, quietly = TRUE,
+        verbose = FALSE,
+        logical.return = FALSE)
+
+source("utility-scripts/plot.siber.data.r")
+
+par(mfrow=c(1,2))
+
+M <- plot.siber.data("data/example_layman_data.csv",
+                tt = "Community 1", add.hull = T)
+
+M <- plot.siber.data("data/example_layman_data_2.csv",
+                tt = "Community 2", add.hull = T)
+
+```
+
+## Based on the ellipse method
+... but with an extra step
+
+<img src="images/siber-ellipse-example.png" alt="four ellipses fit to data" height="450">
+
+
+## Layman metrics
+
+> - __TA__ - the area of convex hull containing, in the case of SIBER, the means of the populations that comprise the community.
+> - __dN_range__ - the distance in units between the min and max y-axis populations means which is most often d15Nitrogen in ecological studies.
+> - __dC_range__ - the distance in units between the min and max x-axis population means which is most often d13Carbon in ecological studies.
+> - __CD__ - the mean distance to centroid from the means
+> - __MNND__ - the mean nearest neighbour distance of the means
+> - __SDNND__ - the standard deviation of the nearest neighbour distance
+
+## Calculate metrics based on ellipses fitted to populations
+
+<img src="images/community-hulls.png" alt="illustration of bayesian hull fitting" width="800">
+
+## Bayesian Convex Hulls (TA)
+
+```{r, echo=FALSE, message = FALSE, fig.width = 7, fig.height = 4.5}
+
+# read in some data
+comm1 <- read.csv("data/example_layman_data.csv", header=T)
+
+comm2 <- read.csv("data/example_layman_data_2.csv", header=T)
+
+# calculate the Bayesian Layman metrics given data for Isotopes 1 and 2, 
+# a grouping variable Group and a number of iterations to use to generate
+# the results
+metrics.comm1 <- siber.hull.metrics(comm1$x, comm1$y, comm1$group, R=10^4)
+
+metrics.comm2 <- siber.hull.metrics(comm2$x, comm2$y, comm2$group, R=10^4)
+
+# ------------------------------------------------------------------------------
+# Plot out the results
+# ------------------------------------------------------------------------------
+
+# these are the names of each of the metrics taken from the fitted model
+xlabels <- attributes(metrics.comm1)$dimnames[[2]]
+
+# in this example, I plot TA as a histogram seperately to the other
+# metrics as it is usually on a scale so vastly different from the other 
+# metrics. TA is third column entry in the output from above.
+#dev.new()
+par(mfrow = c(1,1))
+
+# use cbind() to put the TA from community 1 and 2 together for plotting side
+# by side.
+siardensityplot(cbind(metrics.comm1[,3], metrics.comm2[,3]),
+                xlab = "Community", 
+                ylab = expression('TA  \u2030'^2), 
+                bty = "L")
+
+```
+
+## And the other 5 metrics
+
+```{r, echo=FALSE, message = FALSE, fig.width = 7, fig.height = 4.5}
+
+par(mfrow = c(1,2))
+
+siardensityplot(metrics.comm1[,c(1,2,4,5,6)],
+                xticklabels = xlabels[c(1,2,4,5,6)],
+                ylims = c(0,25),
+                ylab = expression('\u2030'),
+                xlab = "Metric",
+                main = "Community 1",
+                bty = "L")
+
+siardensityplot(metrics.comm2[,c(1,2,4,5,6)],
+                xticklabels = xlabels[c(1,2,4,5,6)],
+                ylims = c(0,25),
+                ylab = expression('\u2030'),
+                xlab = "Metric", 
+                main = "Community 2",
+                bty = "L")
+
+```
+
+
+
+
+
+
+
+
+
+
+
+

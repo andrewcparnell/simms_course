@@ -1,0 +1,28 @@
+
+
+.outer {
+position: absolute;
+bottom: 0;
+top: 0;
+border: solid;
+}
+.one {
+    float: right;
+    height: 75%;  
+}
+.two {
+    position: relative;
+    bottom: 0;
+    right: 0;
+    font-size: 0.75em;
+    width: 60%;
+    height: 25%;
+    float: right;
+    clear: right;
+ }
+
+
+.ref {
+  font-size: 0.6em;
+  
+}
