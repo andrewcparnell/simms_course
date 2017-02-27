@@ -2,11 +2,11 @@
 title: "Introduction to Bayesian Statistics"
 author: "Andrew Parnell, School of Mathematics and Statistics, University College Dublin"
 output:
-  beamer_presentation: default
   ioslides_presentation:
     logo: https://static1.squarespace.com/static/54f81b8ce4b0dc6e6b10371b/54f87babe4b0ffd48a81bf58/54f87bbee4b087c5398e4a2a/1425570919146/ucd_brandmark_colour.gif?format=500w
     transition: slower
     widescreen: yes
+  beamer_presentation: default
 ---
 
 ## Learning outcomes
