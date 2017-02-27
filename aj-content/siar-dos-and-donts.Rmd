@@ -1,7 +1,7 @@
 ---
-title: "Tuesday 09:15-10:00 SIAR dos and donts"
+title: "SIAR dos and don'ts: a discussion"
 author: "Andrew L Jackson"
-date: "24 July 2015"
+date: "24 February 2017"
 output:
   ioslides_presentation:
     logo: images/tcd-stacked-square-2.png
@@ -24,14 +24,14 @@ output:
 > - Consumer tissue sampled at appropriate time relative to sources
 > - Consumer is at equilibrium with their food
 > - TEF is a fair reflection of consumer physiology
-    - fasting
-    - high carbon / nitrogen diets
-    - reproduction
-    - growth
-    - hibernation
-    - migration
+>     - fasting
+>     - high carbon / nitrogen diets
+>     - reproduction
+>     - growth
+>     - hibernation
+>     - migration
     
-## Some (11) Dos and donts of mixing models
+## Some (11) Dos and don'ts of mixing models
 
 <img src="images/dos-and-donts.png" alt="title of can j zoology paper" width="800">
 
@@ -53,13 +53,13 @@ output:
 
 ## Sample collection - 3a
 > - tissue in the consumer takes time to made from the assimilated material
-    - some tissue has a fast turn-over, and some can be very slow
-    - may never actually be in equilrium with their food
+>     - some tissue has a fast turn-over, and some can be very slow
+>     - may never actually be in equilrium with their food
 > - important therefore to sample sources at the time the tissue was laid down
-    - blood plasma is practically instantaneous (a few days)
-    - blood cells a week or two
-    - feathers and scales could be months old
-    - important to think about the biology of your organisms
+>     - blood plasma is practically instantaneous (a few days)
+>     - blood cells a week or two
+>     - feathers and scales could be months old
+>     - important to think about the biology of your organisms
     
 ## Sample collection - 3b
 
@@ -69,7 +69,7 @@ output:
 > - Sources likely vary through space
 > - Getting a good picture of this variation, and including it in the modelling process is very important
 > - How many source samples will you take?
-    - particularly when you have hierarchically nested populations of consumers, the number of samples at each level can have a large effect on precision of estimated diets [Semmens et al 2009](http://www.ncbi.nlm.nih.gov/pubmed/19587790).
+> - particularly when you have hierarchically nested populations of consumers, the number of samples at each level can have a large effect on precision of estimated diets [Semmens et al 2009](http://www.ncbi.nlm.nih.gov/pubmed/19587790).
 
 ## Enrichment factors - 4a
 
@@ -104,7 +104,7 @@ points(sources[,1] - 1, sources[,2] - 3,
 > - Some people worry about internal routing
     - different nutrients are sent along different pathways depending on physiological state of the organism and anabolic processes (building of tissues)
 > - My own view that the uncertainty one includes encompasses all these concerns
-> - We are working on a neat method to estimate these factors on species for which we dont have observed factors
+> - We are working on a neat method to estimate these factors on species for which we dont have observed factors: SIDER
 
 ## Plot your data - 5a
 <img src="images/siar-biplot.png" alt="biplot of goose data and sources" width="450">
@@ -113,12 +113,14 @@ points(sources[,1] - 1, sources[,2] - 3,
 <img src="images/fry-feasible.png" alt="Brian Fry's concerns in graphic form" width="430" style="float:right;">
 
 > - Fry, B. 2013. Alternative approaches for solving underdetermined isotope mixing problems. MEPS.
-> - this is an over-simplification as we will see later in the course when we remember to look at the full posterior estimates and not just focus on the means
+> - Brett, M. 2016. Resource polygon geometry predicts Bayesian stable isotope mixing model bias. MEPS.
+> - these are over-simplifications as we will see later in the course when we remember to look at the full posterior estimates and not just focus on the means
+> - Brett used simulations of only a single consumer to show that the prior dominates the solutions...
 
 ## Include sources in an informed way - 6
 
-<img src="images/omit-source.png" alt="effect of omitting a source" width="330" style="float:left;">
-<img src="images/omit-source-table.png" alt="effect of omitting a source" width="450" style="float:right;">
+<center><img src="images/omit-source.png" alt="effect of omitting a source" width="330"></center>
+<img src="images/omit-source-table.png" alt="effect of omitting a source" width="700">
 
 ## Consider grouping sources - 7a
 <img src="images/siar-biplot.png" alt="aggregation of estimates" width="430" style="float:right;">
@@ -169,10 +171,10 @@ points(sources[,1] - 1, sources[,2] - 3,
 
 <img src="images/siar-by-group.png" alt="effect of omitting a source" width="400" style="float:right;">
 
-- mode
-- mean
-- median
-- credible intervals
+> - mode
+> - median
+> - mean
+> - credible intervals
 
 ## Report distributions of results - 10a
 
@@ -198,7 +200,7 @@ points(sources[,1] - 1, sources[,2] - 3,
 ## New horizons - 12
 > - including other contraints
     - p(1) > p(2) & p(1) > p(3)
-> - reconstruct entire food-webs
+> - reconstruct entire food-webs: Kadoya, Osada & Takimoto. 2012. IsoWeb.
 > - amino acids
 > - better informed priors
     - from e.g. DNA or abundance data

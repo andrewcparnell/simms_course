@@ -15,7 +15,7 @@ library(viridis)
 palette(viridis(4))
 
 # read in the data
-mydata <- read.csv("data/example_layman_data_all.csv",
+mydata <- read.csv("../data/example_layman_data_all.csv",
                    header=T)
 
 # create the siber object
@@ -50,13 +50,10 @@ In contrast, the convex hull is a polygon that is drawn around the outermost poi
 
 We can then go back to our community comprising 4 populations, and add standard ellipses and convex hulls to each group. The new code in SIBER creates a special object that contains the original data, the rescaled and z-scored data, along with various summary statistics to aid with plotting and model fitting. Most of this happens in the background, so you dont need to worry about the details of this object unless you want to delve deeper.
 
-``` r
-mydata<-read.csv("path/example_layman_data.csv"))
-```
 
 And now the full code...
 
-```{r, fig.width = 6, fig.height = 6}
+```{r import-data, fig.width = 6, fig.height = 6}
 
 rm(list = ls()) # clear the memory of objects
 
@@ -64,7 +61,7 @@ rm(list = ls()) # clear the memory of objects
 library(SIBER)
 
 # read in the data
-mydata <- read.csv("data/example_layman_data_all.csv",
+mydata <- read.csv("../data/example_layman_data_all.csv",
                    header=T)
 
 # create the siber object
@@ -106,6 +103,10 @@ plotGroupEllipses(siber.example, n = 100, p.interval = 0.95,
 group.ML <- groupMetricsML(siber.example)
 print(group.ML)
 
+# add a legend
+legend("topright", colnames(group.ML), 
+       pch = c(1,1,1,1,2,2,2,2), col = c(1:4, 1:4), lty = 1)
+
 ```
 
 ***
@@ -117,7 +118,7 @@ Essentially, what the MCMC algorithm does is generate a distribution of covarian
 
 SIBER uses the jags package to fit the Bayesian model and so we need to specify the parameters of the simulation run, including: run length, burn-in period, number of chains etc...
 
-```{r}
+```{r fit-bayes}
 
 # options for running jags
 parms <- list()
@@ -143,7 +144,7 @@ What we end up with is a range of ellipses that could explain the data, with mor
 
 The plots below represent the posterior distribution of the SEA_B fitted to each of the 4 groups in our dataset.
 
-```{r, fig.width = 8, fig.height = 6}
+```{r plot-data, fig.width = 10, fig.height = 6}
 # 
 # ----------------------------------------------------------------
 # Plot out some of the data and results
@@ -194,7 +195,7 @@ In order to test whether one group's ellipse is smaller or larger than another, 
 
 Here, we first calculate the proportion, and hence probability, of the SEA.B for group 1 being smaller than the SEA.B for group 2.
 
-```{r}
+```{r prob-diff-g12}
 Pg1.lt.g2 <- sum( SEA.B[,1] < SEA.B[,2] ) / nrow(SEA.B)
 print(Pg1.lt.g2)
 ```
@@ -203,14 +204,14 @@ So, in this case, all of the estimates for groups 1's ellipse are smaller than f
 
 Then we can do exactly the same for groups 1 and 3.
 
-```{r}
+```{r prob-diff-g13}
 Pg1.lt.g3 <- sum( SEA.B[,1] < SEA.B[,3] ) / nrow(SEA.B)
 print(Pg1.lt.g3 )
 ```
 
 And then for the other pairings:
 
-```{r}
+```{r prob-diff-all}
 Pg1.lt.g4 <- sum( SEA.B[,1] < SEA.B[,4] ) / nrow(SEA.B)
 print(Pg1.lt.g4)
 
@@ -226,40 +227,36 @@ print(Pg3.lt.g4)
 ## Overlap Between Ellipses
 One can calculate the overlap between two (or more) ellipses. In the first instance, this overlap is simply the area, in units of per mil squared, contained by the shape that lies within the overlapping region. This overlap is most easily calculated by using the SEAc of each ellipse.
 
-The overlap between the SEAc for groups 2 and 3 is given by:
+The overlap between the SEAc for groups 3 and 4 is given by:
 
-```{r}
-# We have to go back to the original data and split the isotope
-# data based on the group identifier. NB, this bit of code wont
-# work if you also have multiple communities. For now...
-spx <- split(siber.example$original.data$iso1, 
-             siber.example$original.data$group)
-spy <- split(siber.example$original.data$iso2,
-             siber.example$original.data$group)
+```{r ML-overlap}
 
-# The overlap function still lives in the siar package so we 
-# have to load that here to acheive this.
-library(siar)
+overlap.G3.G4 <- maxLikOverlap("1.3", "1.4", siber.example, p = 0.95, n =)
 
-overlap.G2.G3 <- overlap(as.numeric(spx[[2]]), spy[[2]], 
-                         spx[[3]], spy[[3]],
-                         steps = 1)
-print(overlap.G2.G3)
 ```
 
 One might then wish to calculate the proportion overlap; athough one then runs into a choice as to what the demoninator will be in the equation. You could for instance calculate the proportion of A that overlaps with B, the proporiton of B that overlaps with A, or the proportion of A and B that overlap with each other.
 
-```{r}
-overlap.G2.G3$overlap / overlap.G2.G3$area1
+```{r ML-overlap-proportions}
+prop.of.first <- as.numeric(overlap.G3.G4["overlap"] / overlap.G3.G4["area.1"])
+print(prop.of.first)
 
-overlap.G2.G3$overlap / overlap.G2.G3$area2
+prop.of.second <- as.numeric(overlap.G3.G4["overlap"] / overlap.G3.G4["area.2"])
+print(prop.of.second)
 
-overlap.G2.G3$overlap / (overlap.G2.G3$area1 + overlap.G2.G3$area2)
-
+prop.of.both <- as.numeric(overlap.G3.G4["overlap"] / (overlap.G3.G4["area.1"] + overlap.G3.G4["area.2"]))
+print(prop.of.both)
 ```
 
-A problem with this simple overlap calculation is that it yields a point-estimate of overlap based on the maximum likelihood estimated SEA_c. One could in theory calculate the overlap for each ellipse created by the MCMC chain and therefore get a distribution of uncertainty around this measure. However, this requires some code to be written to loop over all the posterior means and covariance matrices and calculate overlap for each one. The overlap code is in a separate package, is relatively slow to run, and will need to be applied to every row in the posterior output. SIBER does not currently have a function to perform this calculation.
+A problem with this simple overlap calculation is that it yields a point-estimate of overlap based on the maximum likelihood estimated SEA_c. One can instead calculate a distribution of overlap based on the posterior distirbutions of the fitted ellipses. It can be a bit slow to calculate this overlap, so you may want to drop the number of `draws` if your computer is slow.
 
+```{r bayesian-overlap}
+bayes.overlap.G2.G3 <- bayesianOverlap("1.3", "1.4", ellipses.posterior, 
+                                       draws = 10, p.interval = 0.95,
+                                       n = 360)
+print(bayes.overlap.G2.G3)
+
+```
 
 
 
