@@ -5,15 +5,15 @@ date: "February 2017"
 output: html_document
 ---
 
-Course pre-requisites can be found [here](https://rawgit.com/andrewcparnell/simms_course/master/Prerequisites.html). All the raw files and code can be found [here](https://github.com/andrewcparnell/simms_course) (for AP files) and [here](https://github.com/AndrewLJackson/SIAR-examples-and-queries) (for AJ files). Click 'Download ZIP' near the top right if you want offline versions of everything. 
+Course pre-requisites can be found [here](https://rawgit.com/andrewcparnell/simms_course/master/Prerequisites.html). All the raw files and code can be found [here](https://github.com/andrewcparnell/simms_course) . Click 'Download ZIP' near the top right if you want an offline copy of everything. 
 
 ## Tuesday
 
 Time  | Class
-------------- | --------------------------
-9:00-10:00 | Introduction; why use a SIMM? (AJ) [Module 1](https://rawgit.com/andrewljackson/SIAR-examples-and-queries/master/learning-resources/intro-why-use-a-SIMM.html) CHECK
+------------- | ----------------------------------------------------
+9:00-10:00 | [Introduction: why use a SIMM? (AJ)](https://rawgit.com/andrewcparnell/simms_course/master/aj-content/intro-why-use-a-SIMM.html)
 10:00-10:30 | Discussion and coffee 
-10:30-11:30 | An introduction to Bayesian statistics (AP) [Module 2](https://rawgit.com/andrewcparnell/simms_course/master/ap_notes/mod_2_intro_bayes/module_2_introbayes.html) CHECK
+10:30-11:30 | [An introduction to Bayesian statistics (AP)](https://rawgit.com/andrewcparnell/simms_course/master/ap_notes/intro_bayes/intro_bayes.html) CHECK
 11:30-12:00 | Discussion and break 
 12:00-13:00 | Differences between regression models and SIMMs. (AP) [Module 3](https://rawgit.com/andrewcparnell/simms_course/master/ap_notes/mod_3_reg_and_simms/module_3_reg_and_simms.html) CHECK
 13:00-14:00 | Lunch
@@ -24,7 +24,7 @@ Time  | Class
 ## Wednesday
 
 Time  | Class
-------------- | --------------------------
+------------- | ----------------------------------------------------
 9:00-10:30 | Dos and donts of using mixing models with discussion (AJ) [Module 4](https://rawgit.com/andrewljackson/SIAR-examples-and-queries/master/learning-resources/siar-dos-and-donts.html) CHECK
 10:30-10:45 | Discussion and coffee 
 10:45-11:30 | The statistical model behind SIAR (AP) [Module 5](https://rawgit.com/andrewcparnell/simms_course/master/ap_notes/mod_5_siar_stats/module_5_siar_stats.html) CHECK AND MENTION SIMMR
@@ -39,7 +39,7 @@ Time  | Class
 ## Thursday
 
 Time  | Class
-------------- | --------------------------
+------------- | ----------------------------------------------------
 9:00-9:45 | From SIAR to MixSIAR (AP) [Module 7](https://rawgit.com/andrewcparnell/simms_course/master/ap_notes/mod_7_siar_mixsiar/module_7_siar_mixsiar.html) CHECK
 9:45-10:15 | Discussion and coffee 
 10:15-11:00 | Using MixSIAR (AP) [Module 8](https://rawgit.com/andrewcparnell/simms_course/master/ap_notes/mod_8_complex_simms/module_8_using_mixsiar.html) CHECK/RE_WRITE
@@ -53,7 +53,7 @@ Time  | Class
 ## Friday
 
 Time  | Class
-------------- | --------------------------
+------------- | ----------------------------------------------------
 9:00-10:00 | SIMMs for complex data sets: time series and mixed effects models (AP) [Module 10](https://rawgit.com/andrewcparnell/simms_course/master/ap_notes/mod_10_complex_simms/module_10_complex_SIMMs.html) CHECK
 10:00-10:30 | Discussion and coffee
 10:30-11:30 | Practical: using MixSIAR and JAGS on real world data sets; benefits over SIAR (AP) [Practical 4](https://rawgit.com/andrewcparnell/simms_course/master/ap_notes/prac_4_mixsiar_and_jags/prac_4_mixsiar_and_jags.html) CHECK ESP MIXSIAR
