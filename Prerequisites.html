@@ -135,18 +135,17 @@ $(document).ready(function () {
 </div>
 <div id="step-2" class="section level3">
 <h3>Step 2</h3>
-<p>Now install the following packages by going into Rstudio (or R) and typing:</p>
-<pre class="r"><code>install.packages(c('rjags'))</code></pre>
-</div>
-<div id="step-3" class="section level3">
-<h3>Step 3</h3>
-<p>SIAR and (optionally) simmr should be installed by entering the following code in to R</p>
-<pre class="r"><code>library(devtools) 
+<p>Now install all the pacakges required for the course by entering the following code in to R</p>
+<pre class="r"><code>install.packages('rjags')
+library(rjags)
+install.packages('devtools')
+library(devtools) 
 install_github(&quot;andrewljackson/siar&quot;) 
 library(siar)
-install_github(&quot;andrewljackson/SIBER&quot;) 
+install_github(&quot;andrewljackson/SIBER&quot;, build_vignettes = TRUE) 
 library(SIBER)
-install_github(&quot;healyke/SIDER&quot;) 
+install_github(&quot;TGuillerme/mulTree@release&quot;)
+install_github(&quot;healyke/SIDER&quot;, build_vignettes = TRUE) 
 library(SIDER)
 install_github(&quot;andrewcparnell/simmr&quot;,build_vignettes=TRUE) 
 library(simmr)</code></pre>
@@ -158,20 +157,18 @@ library(simmr)</code></pre>
 <li>If you get some errors about <code>pandoc</code> when installing simmr leave out the <code>build_vignettes=TRUE</code> argument</li>
 </ul>
 </div>
+<div id="step-3" class="section level3">
+<h3>Step 3</h3>
+<p>MixSIAR should be installed by following the instructions here: <a href="https://github.com/brianstock/MixSIAR" class="uri">https://github.com/brianstock/MixSIAR</a>. Make sure to follow the instruction for the full installation with the GUI, as we will be using this to teach MixSIAR. If you run into problems just install the standard version.</p>
+</div>
 <div id="step-4" class="section level3">
 <h3>Step 4</h3>
-<p>MixSIAR should be installed by following the instructions here: <a href="https://github.com/brianstock/MixSIAR" class="uri">https://github.com/brianstock/MixSIAR</a>. Make sure to follow the instruction for the full installation with the GUI.</p>
-</div>
-<div id="step-5" class="section level3">
-<h3>Step 5</h3>
-</div>
-<div id="finally-if-you-would-like-to-do-some-pre-course-reading-recommended-there-are-some-papers-which-can-be-accessed-here." class="section level1">
-<h1>Finally if you would like to do some pre-course reading (recommended) there are some papers which can be accessed <a href="https://github.com/andrewcparnell/simms_course/tree/master/papers">here</a>.</h1>
+<p>Finally if you would like to do some pre-course reading (recommended) there are some papers which can be accessed <a href="https://github.com/andrewcparnell/simms_course/tree/master/papers">here</a>.</p>
 <p>Note: this might take a while as these are pretty big and complicated packages.</p>
+</div>
 <div id="troubleshooting" class="section level3">
 <h3>Troubleshooting</h3>
 <p>If you run into any problems please drop us a line at <a href="mailto:andrew.parnell@ucd.ie">andrew.parnell@ucd.ie</a> (for SIAR/simmr/MixSIAR queries) or <a href="mailto:andrew.jackson@tcd.ie">andrew.jackson@tcd.ie</a> (for SIBER/SIDER queries).</p>
-</div>
 </div>
 
 
