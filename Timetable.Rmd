@@ -10,17 +10,6 @@ Course pre-requisites can be found [here](https://rawgit.com/andrewcparnell/simm
 ## Tuesday
 
 Time  | Class
-<<<<<<< HEAD
-------------- | -------------
-9:00  | Students arrive
-9:15-10:00 | Introduction; why use a SIMM? (AJ) [Module 1](https://rawgit.com/andrewcparnell/simms_course/master/aj-content/intro-why-use-a-SIMM.html)
-10:00-10:45 | Discussion and coffee 
-10:45-11:30 | An introduction to Bayesian statistics (AP) [Module 2](https://rawgit.com/andrewcparnell/simms_course/master/ap_notes/mod_2_intro_bayes/module_2_introbayes.html)
-11:30-12:00 | Discussion and break 
-12:00-12:45 | Differences between regression models and SIMMs. (AP) [Module 3](https://rawgit.com/andrewcparnell/simms_course/master/ap_notes/mod_3_reg_and_simms/module_3_reg_and_simms.html)
-12:45-14:00 | Lunch
-14:00-15:30 | Practical: Revision on using R to load data, create plots and fit statistical models (AJ) [Practical 1](https://rawgit.com/andrewcparnell/simms_course/master/aj-content/monday-practical.html)
-=======
 ------------- | ----------------------------------------------------
 9:00-10:00 | [Introduction: why use a SIMM? (AJ)](https://rawgit.com/andrewcparnell/simms_course/master/aj-content/intro-why-use-a-SIMM.html)
 10:00-10:30 | Discussion and coffee 
@@ -29,36 +18,23 @@ Time  | Class
 12:00-13:00 | [Differences between regression models and SIMMs (AP)](https://rawgit.com/andrewcparnell/simms_course/master/ap_notes/reg_and_simms/reg_and_simms.html)
 13:00-14:00 | Lunch
 14:00-15:30 | [Practical: Revision on using R to load data, create plots and fit statistical models (AJ)](https://rawgit.com/andrewcparnell/simms_course/master/aj-content/monday-practical.html)
->>>>>>> master
 15:30-16:00 | Break 
 16:00-17:30 | Discussion: understanding Bayesian models.
 
 ## Wednesday
 
 Time  | Class
-<<<<<<< HEAD
-------------- | -------------
-9:00 | Students arrive 
-9:15-10:00 | Dos and donts of using mixing models (AJ) [Module 4](https://rawgit.com/andrewcparnell/simms_course/master/aj-content/siar-dos-and-donts.html)
-10:00-10:45 | Discussion and coffee 
-10:45-11:30 | The statistical model behind SIAR (AP) [Module 5](https://rawgit.com/andrewcparnell/simms_course/master/ap_notes/mod_5_siar_stats/module_5_siar_stats.html)
-11:30-12:00 | Discussion and break 
-12:00-12:45 | Creating and understanding Stable Isotope Bayesian Ellipses (SIBER) (AJ) [Module 6](https://rawgit.com/andrewcparnell/simms_course/master/aj-content/siber-intro-ellipses.html)
-12:45-14:00 | Lunch 
-14:00-15:30 | Practical: using SIAR for real-world data sets (AP) [Practical 2](https://rawgit.com/andrewcparnell/simms_course/master/ap_notes/prac_2_using_siar/prac_2_using_siar.html), _or_ why not try using [simmr](https://rawgit.com/andrewcparnell/simmr/master/vignettes/simmr.html)? 
-=======
 ------------- | ----------------------------------------------------
 9:00-10:30 | [Dos and don'ts of using mixing models with discussion (AJ)](https://rawgit.com/andrewcparnell/simms_course/master/aj-content/siar-dos-and-donts.html) CHECK
 10:30-10:45 | Discussion and coffee 
 10:45-11:30 | [The statistical model behind SIAR (AP)](https://rawgit.com/andrewcparnell/simms_course/master/ap_notes/siar_stats/siar_stats.html)
 11:30-13:00 | [Practical: using SIAR for real-world data sets (AP)](https://rawgit.com/andrewcparnell/simms_course/master/ap_notes/prac_using_siar/prac_using_siar.html), _or_ why not try using [simmr](https://rawgit.com/andrewcparnell/simms_course/master/ap_notes/prac_using_siar/prac_using_simmr.html)?
 13:00-14:00 | Lunch 
-14:00-14:30 | [Creating and understanding Stable Isotope Bayesian Ellipses (SIBER) (AJ)](https://rawgit.com/andrewcparnell/simms_course/master/aj-content/siber-intro.html)
-14:30-15:30 | [Practical: Using SIBER to compare populations using ellipses (AJ)](https://rawgit.com/andrewcparnell/simms_course/master/aj-content/siber-comparing-populations.html)
->>>>>>> master
+14:00-14:30 | [Creating and understanding Stable Isotope Bayesian Ellipses (SIBER) (AJ)](https://rawgit.com/andrewcparnell/simms_course/master/aj-content/siber-intro-ellipses.html)
+14:30-15:30 | [Practical: Using SIBER to compare populations using ellipses (AJ)](https://rawgit.com/andrewcparnell/simms_course/master/aj-content/practicals/siber-comparing-populations.html)
 15:30-16:00 | Break
-16:00-16:30 | [Community level metrics using SIBER (AJ)](https://rawgit.com/simms_course/master/aj-content/siber-intro.html)
-16:30-17:30 | [Practical: Using SIBER to compare communities using convex hulls (AJ)](https://rawgit.com/simms_course/master/aj-content/siber-comparing-communities.html)
+16:00-16:30 | [Community level metrics using SIBER (AJ)](https://rawgit.com/simms_course/master/aj-content/siber-intro-hulls.html)
+16:30-17:30 | [Practical: Using SIBER to compare communities using convex hulls (AJ)](https://rawgit.com/simms_course/master/aj-content/practicals/siber-comparing-communities.html)
 
 ## Thursday
 
@@ -85,4 +61,3 @@ Time  | Class
 12:00-12:45 | Practical (continued)
 12:45-14:00 | Lunch
 14:00-17:30 | Discussion: bring your own data set
-
