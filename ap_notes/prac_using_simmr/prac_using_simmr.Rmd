@@ -1,0 +1,452 @@
+---
+title: 'Practical: Using simmr'
+author: "Andrew Parnell"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+## Introduction
+
+Welcome to the practical! We will learn about:
+
+- Loading data into simmr
+- Running simmr
+- Getting output from simmr
+- Using simmr for single observations
+- Setting prior distributions on the dietary proportions
+- Customising your own simmr output
+
+It's assumed that you already have `simmr` installed via:
+
+```{r,eval=FALSE}
+library(devtools)
+install_github('andrewcparnell/simmr')
+```
+
+You should then be able to run 
+
+```{r,eval=FALSE}
+library(simmr)
+```
+
+without error.
+
+This document is a slightly friendlier version of the [simmr vignette](https://cran.r-project.org/web/packages/simmr/vignettes/simmr.html).
+
+You should follow and run the commands shown in the grey boxes below. At various points you will see a horizontal line in the text which indicates a question you should try to answer, like this:
+
+***
+
+What words does the following command print to the console?
+```{r,results='hide'}
+print("Hello World")
+```
+
+***
+
+If you get stuck, please get our attention and we will try to help! There are no prepared answers to these questions so keep you own record as you go. At the end of the practical are harder questions which you can attempt if you get through all of the material. If you find any mistakes in the document please let us know.
+
+You can run the code from these practicals by loading up the `.Rmd` file in the same directory in Rstudio. This is an R markdown document containing all the text. Feel free to add in your own answers, or edit the text to give yourself extra notes. You can also run the code directly by highlighting the relevant code and clicking `Run`.
+
+## Loading data into simmr
+
+Unlike SIAR and MixSIAR which have both menu systems and script-based ways of interacting with the software, simmr only allows a script-based version. This makes it slightly harder to use for those unfamiliar with R but allows for much more flexibility in the long run. We will focus on using the script-based way of running simmr.
+
+The key differences between simmr and other SIMMs are:
+
+  - simmr has a slightly richer mixing model than SIAR, based on code from the Parnell et al 2013 Environmetrics paper
+  - simmr uses ggplot2 to create graphs and JAGS to run the mixing model
+  - simmr has simple functions to load data, create iso-space plots, and summarise/plot output
+  - simmr has some simple functions for comparing and combining sources, and for comparing groups
+
+We will use the data included with SIAR (make sure you have installed SIAR using the instructions in the 'using SIAR' practical) to run simmr. When running your own models you should try to keep your data in the same format as these examples. At minimum you need two files to get simmr working; a consumers file and a sources file. The simplest geese data set is obtained via:
+
+```{r, include = FALSE}
+library(siar)
+data(geese1demo)
+print(geese1demo)
+```
+```{r, eval = FALSE}
+library(siar)
+data(geese1demo)
+print(geese1demo)
+```
+
+This data set has two columns, one for each isotope, and 9 individuals. A useful command for learning about the structure of an R data set is `str`, especially for large data objects:
+
+```{r}
+str(geese1demo)
+```
+
+We can see that it has 9 rows, 2 columns, and is of numeric (`num`) mode. The two column labels refer to the $\delta^{15}$N and $\delta^{13}$C isotope values. 
+
+The sources data can be obtained from:
+
+```{r}
+data(sourcesdemo)
+print(sourcesdemo)
+```
+
+We can see that there are 4 sources, with their names in the first column. The remaining columns refer to the means and standard deviations for each source on each isotope. The isotopes need to be in the same order as the consumer data in `geese1demo`. Note the structure of this object
+
+```{r}
+str(sourcesdemo)
+```
+
+It's a data frame. This is an R data type which can store both text and numbers, useful for storing the source names as well as their isotope values.
+
+We could run simmr with just these two data files. However, this would produce a pretty poor model as we don't have any corrections for trophic enrichment factors (TEFs). The TEFs file looks just like the source file:
+
+```{r}
+data(correctionsdemo)
+print(correctionsdemo)
+```
+
+Lastly, if we have concentration dependence we can include these too. The data for the Geese comes from:
+
+```{r}
+data(concdepdemo)
+print(concdepdemo)
+```
+
+Note that although this data set includes standard deviations on the concentration dependencies, they are currently not used by simmr in the model run.
+
+If you were loading these data sets in yourself, it's best to store them in the same directory and then load them in from there, e.g.:
+
+```{r,eval=FALSE}
+# Set the working directory (where R looks first for files)
+setwd('path/to/files')
+# Read in consumers
+consumers = read.table('my_consumer_file.txt',header=TRUE)
+# Read in sources
+sources = read.table('my_sources_file.txt',header=TRUE)
+# Read in TEFs
+TEFs = read.table('my_TEF_file.txt',header=TRUE)
+```
+
+The extra `header=TRUE` argument tells R that there are column names at the top of the file.
+
+***
+
+1. What is the structure of the TEFs object? How many rows and columns does it have?
+2. There's another data object that comes with siar called `geese2demo`. How many rows and columns does this have?
+3. Create some simple scatter plots of the `geese1demo` data using `plot`. See if you can add in the source means corrected for the TEF means (hint: add the means together and then plot using `points`)
+
+***
+
+## Loading data into simmr
+
+We are now in a position to run simmr. The first function to use is `simmr_load`. You can find help on this function by typing the name with a `?` in front. If you are using Rstudio you can use the `<TAB>` key to complete your command once you have typed in the first few characters. To load the Geese data into simmr, type:
+
+```{r, include = FALSE}
+library(simmr)
+```
+```{r}
+simmr_in = simmr_load(mixtures = geese1demo[,c(2,1)],
+                      source_names = as.character(sourcesdemo[,1]),
+                      source_means = sourcesdemo[,c(4,2)],
+                      source_sds = sourcesdemo[,c(5,3)],
+                      correction_means = correctionsdemo[,c(4,2)],
+                      correction_sds = correctionsdemo[,c(5,3)],
+                      concentration_means = concdepdemo[,c(4,2)])
+```
+
+Once loaded we can create an isospace plot very simply with:
+```{r}
+plot(simmr_in)
+```
+
+You should see that the consumers are inside the mixing polygon (or _convex hull_) of the sources. The consumers are close to the Zostera source, so we would expect this to come out as the main dietary proportion.
+
+We can also print out the details of the current model:
+
+```{r}
+print(simmr_in)
+```
+
+
+## Running simmr
+
+To run simmr we use the `simmr_mcmc` function:
+```{r,results='hide', message=FALSE}
+simmr_out = simmr_mcmc(simmr_in)
+```
+
+
+simmr now runs the MCMC algorithm (using JAGS) and, whilst running, reports the percentage complete. When finished, the first thing to do is to check convergence
+
+```{r}
+summary(simmr_out, type = 'diagnostics')
+```
+
+These are the Brooks-Gelman-Rubin diagnostics discussed in the lecture notes. All values are close to 1 so the model has achieved satisfactory convergence. The rule of thumb is usually that the model has converged ok if the values are less than 1.1.
+
+We can plot the posterior distributions of the dietary proportions with:
+
+```{r}
+plot(simmr_out, type = 'histogram')
+```
+
+If you want more textual output you can get it with:
+
+```{r}
+summary(simmr_out, type = c('statistics', 'quantiles'))
+```
+
+This will produce a quantiles for the posterior proportions (useful for 50% and 95% uncertainty intervals), and the estimated mean and standard deviation It will also give the same estimates for the residual standard deviations for each isotope. These will tend to be large when the consumers lie outside the source mixing polygon. 
+
+If you want held on these functions use `?summary.simmr_output` and `?plot.simmr_output`
+
+***
+
+1. What's the structure of the `simmr_out` object? Can you see anything you recognise in it? Try accessing different parts of it using the `$` notation, e.g. `simmr_out$input$n_obs`
+2. Try the command `plot(simmr_out, type = 'matrix')`. What does this produce? What other types of plots are available? 
+3. Try running the model again without including the `correctionsdemo` data. What happens to the isospace plot?
+
+***
+
+## Longer simmr runs
+
+If you want to be really certain of convergence you can run simmr for more iterations with some extra arguments. The extra arguments are:
+
+  1. `iter` which sets the total number of iterations. The default is 10,000
+  2. `burn` which sets the number of initial iterations to remove. The default is 1,000
+  3. `thin` which sets the amount of thinning (removal) of iterations to avoid autocorrelation in the output values. The default is 10, which means simmr will keep only every 10th iteration
+  4. `n.chain` which sets the number of chains (i.e. the number of runs with different starting values). The default is 4 chains.
+  
+Usually the default values will be fine, but you could double them if you wanted a longer run. The resulting number of iterations kept by simmr for the posterior distribution is `n.chain*(iterations-burnin)/thinby`. It's usually not a good idea to store more than 10,000 iterations unless you have lots of RAM.
+
+To include such extra values a run might be:
+
+```{r,results='hide', message=FALSE}
+simmr_out_long = simmr_mcmc(simmr_in,
+                            mcmc.control = list(iter = 20000,
+                                                burn = 2000,
+                                                thin = 20,
+                                                n.chain = 4))
+```
+
+***
+
+1. Without checking, how many iterations will the command above save?
+2. Did the results change much between the shorter and longer run?
+3. Were the convergence results better for the longer run (i.e. were the BGR diagnostic values closer to 1)?
+
+***
+
+## Working with multiple groups
+
+Sometimes you might be interested in running simmr for multiple different groups of consumers. These different groups might be different sexes, different sampling periods, different locations, etc. simmr will run these simultaneously and store the output for easier plots and comparison. 
+
+The data which are included in simmr for multiple groups analysis can be found with:
+
+```{r}
+data(geese2demo)
+head(geese2demo,15)
+str(geese2demo)
+```
+
+This is a much bigger data set. The first column contains the group number. To run simmr you now need to specify the groups so that it can separate out the model. We can see how many and how large the groups are with:
+
+```{r}
+table(geese2demo[,'Group'])
+```
+
+so 8 groups ranging from 9 to 74 observations. simmr will work with up to 30 groups. There needs to be at least 3 observations per group for simmr to run, but really 5 or more is desirable if you want to properly estimate the residual error.
+
+To run simmr with this data set it's the same as before:
+
+```{r,results='hide'}
+simmr_in2 = simmr_load(mixtures = geese2demo[,c(3,2)],
+                       source_names = as.character(sourcesdemo[,1]),
+                       source_means = sourcesdemo[,c(4,2)],
+                       source_sds = sourcesdemo[,c(5,3)],
+                       correction_means = correctionsdemo[,c(4,2)],
+                       correction_sds = correctionsdemo[,c(5,3)],
+                       concentration_means = concdepdemo[,c(4,2)],
+                       group = as.integer(geese2demo[,1]))
+```
+
+Again we can do an isospace plot with:
+
+```{r}
+plot(simmr_in2, group = 1:8)
+```
+
+We run simmr the same as before too:
+
+```{r, results='hide', message=FALSE}
+simmr_out2 = simmr_mcmc(simmr_in2)
+```
+
+The summaries and convergence diagnostics are created with, e.g.:
+
+```{r}
+summary(simmr_out2, type = c('diagnostics', 'quantiles'), group = 3)
+```
+
+Running the above without the `group` argument gives the results for all groups (though is pretty long).
+
+We can get some within-group boxplots with:
+
+```{r}
+plot(simmr_out2, type = 'boxplot', group = 2)
+```
+
+To compare groups we can run, e.g.:
+```{r}
+compare_groups(simmr_out2,source='Zostera',groups=1:2)
+```
+
+This will also estimate the probability that this source is being eaten by one group more than the other.
+
+Finally, the matrix plot (discussed in the lectures) can be created with:
+
+```{r}
+plot(simmr_out2, type = 'matrix', group = 7)
+```
+
+This is a really useful plot as it provides the histograms and the relationships between the sources, potentially identifying which sources are impossible to discern between in the model. It takes a little bit of practice to interpret a matrix plot.
+
+### Running the model for individual observations
+
+When you have just a single observation it is impossible to estimate the residual standard deviation. However you can still estimate the dietary proportions and simmr will run this as standard when provided with only one observation by forcing the prior distribution on the residual standard deviation to be tiny. We can create a simple example by just taking a single row from the geese data:
+
+```{r,results='hide', message=FALSE}
+simmr_in3 = simmr_load(mixtures = geese1demo[1,c(2,1), drop = FALSE],
+                       source_names = as.character(sourcesdemo[,1]),
+                       source_means = sourcesdemo[,c(4,2)],
+                       source_sds = sourcesdemo[,c(5,3)],
+                       correction_means = correctionsdemo[,c(4,2)],
+                       correction_sds = correctionsdemo[,c(5,3)],
+                       concentration_means = concdepdemo[,c(4,2)])
+simmr_out3 = simmr_mcmc(simmr_in3)
+```
+
+The extra argument `drop = FALSE` is used above because the mixtures have to be in matrix format (without this R will turn the resulting object into a vector rather than a matrix).
+
+```{r}
+summary(simmr_out3, type = 'quantiles')
+```
+
+Note that the estimates of the residual standard deviation are all tiny values.
+
+### Adding in your own prior information
+
+Occasionally it is the case that previous studies have given insight into the likely values of the dietary proportions for your study. You can use this external information to guide the model by changing the prior distributions used for the transformed CLR-distribution (see module on: 'From SIAR to MixSIAR'). If prior information is available, it is usually a good idea to use it, as it means the model will often converge quicker, and yield more realistic results.
+
+simmr has a special function for the inclusion of prior distributions. For example suppose we had prior information that the four sources in the Geese example had means (0.5, 0.1, 0.2, 0.2) and standard deviations (0.1, 0.05, 0.01, 0.02), we would run:
+
+```{r}
+prior = simmr_elicit(simmr_in,
+                     proportion_means = c(0.5,0.1,0.2,0.2),
+                     proportion_sds = c(0.1,0.05,0.01,0.02))
+```
+
+This requires some optimisation routines in the background and can often be slow. 
+The function will print out some values to use in the prior distribution for the CLR-transformed values. We can use these as follows:
+
+```{r, results='hide', message=FALSE}
+simmr_out_prior = simmr_mcmc(simmr_in,
+                             prior.control = list(means = prior$mean,
+                                                  sd = prior$sd))
+```
+
+
+***
+
+1. Try several different prior estimates and see how they change the posterior dietary proportions with `plot`.
+2. An alternative default prior for simmr would be when all of the mean prior proportions are set to 1 divided by the number of sources, and the prior standard deviations are set to be very large. What effect does using this prior have on the different Geese data sets?
+
+***
+
+### Creating your own plots and tables
+
+Often what you want to create isn't exactly part of the simmr toolkit. Maybe the plots don't look right, or maybe you want to compare two different groups in a particular way. To do this, you can get at the simmr output yourself, and then play with it as you want.
+
+Whenever simmr creates the dietary proportions using e.g. `simmr_mcmc`, it stores the output as an R _list_. You can see everything in the list with:
+
+```{r}
+str(simmr_out)
+```
+
+This will provide quite a lot of output, but the most important part is the element named `output` which contains all of the posterior samples. You can see the first few samples with:
+
+```{r}
+head(simmr_out$output[[1]][[1]])
+```
+
+You will see that, for each row, each of the four sources sum to 1:
+
+```{r}
+sum(simmr_out$output[[1]][[1]][1,1:4])
+```
+
+You can now create any further that you wish, for example a simple histogram of the posterior proportion for the first chain of Zostera:
+
+```{r}
+hist(simmr_out$output[[1]][[1]][,'Zostera'])
+```
+
+This is a bit crude, but with some extra options, you can make this look quite neat:
+
+```{r}
+# Set some better options for graphs
+par(mar=c(3,3,2,1), mgp=c(2,.7,0), tck=-.01,las=1)
+hist(simmr_out$output[[1]][[1]][,'Zostera'],freq=FALSE,main='Posterior for Zostera',
+     xlab='Proportion',col='lightblue',breaks=30)
+```
+
+You can also create your own output analysis. For example, what is the 90% credible interval for Grass?
+
+```{r}
+quantile(simmr_out$output[[1]][[1]][,'Grass'],probs=c(0.05,0.95))
+```
+
+What is the probability that the consumers ate more Ulva Lactuca than Enteromorpha?
+
+```{r}
+sum(simmr_out$output[[1]][[1]][,'U.lactuca']>simmr_out$output[[1]][[1]][,'Enteromorpha'])/nrow(simmr_out$output[[1]][[1]])
+```
+
+The above counts the number of rows (i.e. iterations) in the output where Ulva Lactuca is higher than Enteromorpha and divides this by the total number of rows. This is essentially what the `compare_groups` function is doing. There is also a `compare_sources` function which also creates something similar to the above.
+
+Finally, if you want to see what simmr is doing behind the scenes, simply type the name of the function without brackets, for example
+
+```{r,eval=FALSE}
+simmr_mcmc
+```
+
+If the simmr plot or table doesn't exactly match what you want you can create your own function based on the original one which includes everything you need.
+
+There is even more detail on the extra functions in simmr in the [simmr vignette](https://cran.r-project.org/web/packages/simmr/vignettes/simmr.html) so make sure to read that before trying to create something complicated yourself. 
+
+***
+
+1. Try accessing the output from the second Geese data set (stored above in `simmr_out2`). Try to re-create the above histograms for some of the groups. 
+2. Continuing the above, try and calculate the probability that one group ate more of a certain source than another.
+
+***
+
+### Some extra tasks
+
+If you finish all the above and want some further tasks to complete try these.
+
+***
+
+1. See if you can re-create the iso-space plot from the raw data from scratch. Refer back to the code in `plot.simmr_input` if you need to.
+2. Try and write your own function to process the output from a simmr model run. What would you like to include? Below is a function which just lists the first 15 iterations. You could create something far richer, including means (via `mean`), credible intervals (via `quantile`), correlations (via `cor`) or plots. The `apply` function is often useful here as it will run a function over the rows or columns of a matrix.
+
+```{r}
+my_summary = function(x) {
+  head(x$output[[1]][[1]],15)
+}
+my_summary(simmr_out)
+```
+
+***
+
+
+
+

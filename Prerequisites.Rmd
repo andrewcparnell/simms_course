@@ -1,10 +1,10 @@
 ---
-title: "Pre-requisites"
-author: "Andrew Parnell and Andrew Jackson"
+title: "Pre-requisites for Bayesian Hierarchical Modelling course"
+author: "Andrew Parnell"
 output: html_document
 ---
 
-In preparation for the course please install the following, preferably in the below suggested order.
+In preparation for the course please install the following, preferably in the below suggested order. Make sure you run these before you arrive in case of poor (or crowded!) internet.
 
 Remember you will need to bring your own personal computer for the duration of the course.
 
@@ -22,9 +22,10 @@ Install the following using the corresponding links
 
 Now install the following packages by going into Rstudio (or R) and typing:
 ```{r,eval=FALSE}
-install.packages(c('devtools','rjags'))
+install.packages(c('rjags','rstan'))
 ```
 
+<<<<<<< HEAD
 ### Step 3
 
 SIAR and (optionally) simmr should be installed by entering the following code in to R
@@ -55,8 +56,11 @@ MixSIAR should be installed by following the instructions here: [https://github.
 ### Step 5
  
 Finally if you would like to do some pre-course reading (recommended) there are some papers which can be accessed [here](https://github.com/andrewcparnell/simms_course/tree/master/papers).
+=======
+Note: this might take a while as these are pretty big and complicated packages.
+>>>>>>> cb3913429229380a3923a51254159af78dc7a479
 
 ### Troubleshooting
 
-If you run into any problems please drop us a line at <andrew.parnell@ucd.ie> or <a.jackson@tcd.ie>.
+If you run into any problems please drop me a line at <andrew.parnell@ucd.ie>.
 
