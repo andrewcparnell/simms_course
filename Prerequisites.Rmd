@@ -1,6 +1,6 @@
 ---
-title: "Pre-requisites for Bayesian Hierarchical Modelling course"
-author: "Andrew Parnell"
+title: "Pre-requisites for Stable Isotope Mixing Models course"
+author: "Andrew Parnell and Andrew Jackson"
 output: html_document
 ---
 
@@ -22,12 +22,43 @@ Install the following using the corresponding links
 
 Now install the following packages by going into Rstudio (or R) and typing:
 ```{r,eval=FALSE}
-install.packages(c('rjags','rstan'))
+install.packages(c('rjags'))
 ```
 
+### Step 3
+
+SIAR and (optionally) simmr should be installed by entering the following code in to R
+
+```{r,eval=FALSE}
+library(devtools) 
+install_github("andrewljackson/siar") 
+library(siar)
+install_github("andrewljackson/SIBER") 
+library(SIBER)
+install_github("healyke/SIDER") 
+library(SIDER)
+install_github("andrewcparnell/simmr",build_vignettes=TRUE) 
+library(simmr)
+```
+
+These will install the most up to date versions of the package. You might run into the following problems:
+
+  - If you are on a Mac you might need to install X11 from [http://www.xquartz.org](http://www.xquartz.org). 
+  - You may get a pop up window be asking if you want 'additional build tools'. Please select 'yes'.
+  - If you get an error about package `stringi` try typing `install.packages('stringi',type='win.binary')` if on Windows or `install.packages('stringi',type='mac.binary')` if on Mac. Then re-run the commands above
+  - If you get some errors about `pandoc` when installing simmr leave out the `build_vignettes=TRUE` argument
+
+### Step 4
+
+MixSIAR should be installed by following the instructions here: [https://github.com/brianstock/MixSIAR](https://github.com/brianstock/MixSIAR). Make sure to follow the instruction for the full installation with the GUI.
+ 
+### Step 5
+ 
+Finally if you would like to do some pre-course reading (recommended) there are some papers which can be accessed [here](https://github.com/andrewcparnell/simms_course/tree/master/papers).
+=======
 Note: this might take a while as these are pretty big and complicated packages.
 
 ### Troubleshooting
 
-If you run into any problems please drop me a line at <andrew.parnell@ucd.ie>.
+If you run into any problems please drop us a line at <andrew.parnell@ucd.ie> (for SIAR/simmr/MixSIAR queries) or <andrew.jackson@tcd.ie> (for SIBER/SIDER queries).
 
