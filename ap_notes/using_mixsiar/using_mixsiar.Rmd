@@ -2,11 +2,11 @@
 title: "Using MixSIAR"
 author: "Andrew Parnell, School of Mathematics and Statistics, University College Dublin"
 output:
+  beamer_presentation: default
   ioslides_presentation:
     logo: https://static1.squarespace.com/static/54f81b8ce4b0dc6e6b10371b/54f87babe4b0ffd48a81bf58/54f87bbee4b087c5398e4a2a/1425570919146/ucd_brandmark_colour.gif?format=500w
     transition: slower
     widescreen: yes
-  beamer_presentation: default
 ---
 
 ## Learning outcomes
@@ -19,12 +19,12 @@ output:
 - MixSIAR implements a version of the CLR jags code already shown, and through this allows the introduction of random effects and covariates
 - It's a bit limited in that:
 
-    1. It's recommended to work with a GUI
+    1. <s>It's recommended to work with a GUI</s>
     2. You can only put a certain number of random effects/covariates into the model
     3. It doesn't currently take account of uncertainty in TEFs (it calls this _discrimination_)
     4. It doesn't allow for much choice in prior distributions
 
-- However, it's a great start at finding simple ways to run more complicated models
+- It's a great way of finding simple ways to run more complicated models, though beware it's very slow to run in most cases.
 
 ## The main MixSIAR input screen
 
@@ -65,6 +65,102 @@ output:
 - They also produce a pairs plot (like the matrix plot of yesterday) which can tell you about model inadequacy
 - Use the `mixsiar_script.r` if you want full access to the JAGS output for any further analysis
 
+## Alternative version
+
+- It's recently become much easier to use MixSIAR through the command line (it's faster, more repeatable and easier to install)
+- There are number of excellent vignettes which show how to use MixSIAR from the command line: see https://cran.r-project.org/web/packages/MixSIAR
+- We will follow the Wolves script available at https://cran.r-project.org/web/packages/MixSIAR/vignettes/wolves_ex.html
+
+## How to run MixSIAR
+
+1. Load the data into MixSIAR
+1. Create the iso-space plot
+1. Write the JAGS model
+1. Run the model
+1. Look at diagnostics
+1. Save the bits you want
+
+## Loading in the data
+
+```{r}
+library(MixSIAR)
+
+# Find the data
+mix.filename = system.file("extdata", "wolves_consumer.csv", package = "MixSIAR")
+
+# Load into MixSIAR
+mix = load_mix_data(filename=mix.filename, 
+                     iso_names=c("d13C","d15N"), 
+                     factors=c("Region","Pack"), 
+                     fac_random=c(TRUE,TRUE), 
+                     fac_nested=c(FALSE,TRUE), 
+                     cont_effects=NULL)
+```
+
+- You can do the same with the sources (`load_source_data`) and the discrimination factors (`load_discr_data`)
+
+```{r, include = FALSE}
+# Replace the system.file call with the path to your file
+source.filename = system.file("extdata", "wolves_sources.csv", package = "MixSIAR")
+
+# Load the source data
+source = load_source_data(filename=source.filename,
+                           source_factors="Region", 
+                           conc_dep=FALSE, 
+                           data_type="means", 
+                           mix)
+
+# Replace the system.file call with the path to your file
+discr.filename = system.file("extdata", "wolves_discrimination.csv", package = "MixSIAR")
+
+# Load the discrimination/TDF data
+discr = load_discr_data(filename=discr.filename, mix)
+```
+
+## Iso-space plot
+
+```{r, eval = FALSE}
+plot_data(filename="isospace_plot", plot_save_pdf = FALSE, plot_save_png = FALSE,
+          mix = mix, source = source, discr = discr)
+```
+
+<center><img src="mixsiar_screen_isospace.tiff" height="450px" /></center>
+
+
+## Write the JAGS model
+
+```{r}
+model_filename = "MixSIAR_model.txt"   # Name of the JAGS model file
+write_JAGS_model(model_filename, resid_err = TRUE, process_err = TRUE, 
+                 mix, source)
+```
+
+- You can go and find this file now. It's saved in the current working directory.
+- Beware: it can be quite hard to read! 
+
+## Run the model
+
+- First do a test run:
+```{r, eval = FALSE}
+jags.1 = run_model(run="test", mix, source, discr, model_filename, 
+                   alpha.prior = 1, resid_err = TRUE, process_err = TRUE)
+```
+
+- Then do a full run:
+```{r, eval = FALSE}
+jags.2 = run_model(run="very short", mix, source, discr, model_filename, 
+                   alpha.prior = 1, resid_err = TRUE, process_err = TRUE)
+```
+
+## Create output
+
+```{r, eval = FALSE}
+output_JAGS(jags.2, mix = mix, source = source)
+```
+
+- Warning - this creates EVERYTHING!
+- Adding an extra argument `output_options` as a list allows for finer-grained controlled
+
 ## MixSIAR output - trace plot
 
 <center><img src="trace.tiff" height="500px" /></center>
@@ -84,4 +180,5 @@ output:
 ## Summary
 
 - We now know how to load in special types of consumers, sources, and discrimination factors in MixSIAR
+- We can use MixSIAR via the GUI or the command line (command line is better in the long run)
 - We have run one of the more complicated MixSIAR examples
