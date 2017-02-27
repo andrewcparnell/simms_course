@@ -25,6 +25,8 @@ Now install all the pacakges required for the course by entering the following c
 ```{r,eval=FALSE}
 install.packages('rjags')
 library(rjags)
+install.packages('compositions')
+library(compositions)
 install.packages('devtools')
 library(devtools) 
 install_github("andrewljackson/siar") 
