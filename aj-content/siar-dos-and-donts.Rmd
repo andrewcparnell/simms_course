@@ -113,7 +113,7 @@ points(sources[,1] - 1, sources[,2] - 3,
 <img src="images/fry-feasible.png" alt="Brian Fry's concerns in graphic form" width="430" style="float:right;">
 
 > - Fry, B. 2013. Alternative approaches for solving underdetermined isotope mixing problems. MEPS.
-> - Brett, M. 2016. Resource polygon geometry predicts Bayesian stable isotope mixing model bias.  MEPS.
+> - Brett, M. 2016. Resource polygon geometry predicts Bayesian stable isotope mixing model bias. MEPS.
 > - these are over-simplifications as we will see later in the course when we remember to look at the full posterior estimates and not just focus on the means
 > - Brett used simulations of only a single consumer to show that the prior dominates the solutions...
 
