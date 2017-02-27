@@ -26,3 +26,9 @@ border: solid;
   font-size: 0.6em;
   
 }
+
+.centerImage
+{
+text-align:center;
+display:block;
+}

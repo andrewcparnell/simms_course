@@ -30,11 +30,11 @@ Time  | Class
 10:45-11:30 | [The statistical model behind SIAR (AP)](https://rawgit.com/andrewcparnell/simms_course/master/ap_notes/siar_stats/siar_stats.html)
 11:30-13:00 | [Practical: using SIAR for real-world data sets (AP)](https://rawgit.com/andrewcparnell/simms_course/master/ap_notes/prac_using_siar/prac_using_siar.html), _or_ why not try using [simmr](https://rawgit.com/andrewcparnell/simms_course/master/ap_notes/prac_using_siar/prac_using_simmr.html)?
 13:00-14:00 | Lunch 
-14:00-14:30 | [Creating and understanding Stable Isotope Bayesian Ellipses (SIBER) (AJ)](https://rawgit.com/andrewcparnell/simms_course/master/aj-content/siber-intro.html)
-14:30-15:30 | [Practical: Using SIBER to compare populations using ellipses (AJ)](https://rawgit.com/andrewcparnell/simms_course/master/aj-content/siber-comparing-populations.html)
+14:00-14:30 | [Creating and understanding Stable Isotope Bayesian Ellipses (SIBER) (AJ)](https://rawgit.com/andrewcparnell/simms_course/master/aj-content/siber-intro-ellipses.html)
+14:30-15:30 | [Practical: Using SIBER to compare populations using ellipses (AJ)](https://rawgit.com/andrewcparnell/simms_course/master/aj-content/practicals/siber-comparing-populations.html)
 15:30-16:00 | Break
-16:00-16:30 | [Community level metrics using SIBER (AJ)](https://rawgit.com/simms_course/master/aj-content/siber-intro.html)
-16:30-17:30 | [Practical: Using SIBER to compare communities using convex hulls (AJ)](https://rawgit.com/simms_course/master/aj-content/siber-comparing-communities.html)
+16:00-16:30 | [Community level metrics using SIBER (AJ)](https://rawgit.com/simms_course/master/aj-content/siber-intro-hulls.html)
+16:30-17:30 | [Practical: Using SIBER to compare communities using convex hulls (AJ)](https://rawgit.com/simms_course/master/aj-content/practicals/siber-comparing-communities.html)
 
 ## Thursday
 
@@ -61,4 +61,3 @@ Time  | Class
 12:00-12:45 | Practical (continued)
 12:45-14:00 | Lunch
 14:00-17:30 | Discussion: bring your own data set
-
