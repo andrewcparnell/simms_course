@@ -1,64 +1,62 @@
 ---
 title: "Stable Isotope Mixing Models: course timetable"
 author: "Andrew Parnell and Andrew Jackson"
-date: "January 2016"
+date: "February 2017"
 output: html_document
 ---
 
-Course pre-requisites can be found [here](https://rawgit.com/andrewcparnell/simms_course/master/Prerequisites.html). All the raw files and code can be found [here](https://github.com/andrewcparnell/simms_course) (for AP files) and [here](https://github.com/AndrewLJackson/SIAR-examples-and-queries) (for AJ files). Click 'Download ZIP' near the top right if you want offline versions of everything. The course wiki page can be found [here](https://github.com/AndrewLJackson/SIA-for-Ecologists/wiki). Please feel free to contribute and add questions, comments, papers, etc. 
+Course pre-requisites can be found [here](https://rawgit.com/andrewcparnell/simms_course/master/Prerequisites.html). All the raw files and code can be found [here](https://github.com/andrewcparnell/simms_course) (for AP files) and [here](https://github.com/AndrewLJackson/SIAR-examples-and-queries) (for AJ files). Click 'Download ZIP' near the top right if you want offline versions of everything. 
 
 ## Tuesday
 
 Time  | Class
-------------- | -------------
-9:00  | Students arrive
-9:15-10:00 | Introduction; why use a SIMM? (AJ) [Module 1](https://rawgit.com/andrewljackson/SIAR-examples-and-queries/master/learning-resources/intro-why-use-a-SIMM.html)
-10:00-10:45 | Discussion and coffee 
-10:45-11:30 | An introduction to Bayesian statistics (AP) [Module 2](https://rawgit.com/andrewcparnell/simms_course/master/ap_notes/mod_2_intro_bayes/module_2_introbayes.html)
+------------- | --------------------------
+9:00-10:00 | Introduction; why use a SIMM? (AJ) [Module 1](https://rawgit.com/andrewljackson/SIAR-examples-and-queries/master/learning-resources/intro-why-use-a-SIMM.html) CHECK
+10:00-10:30 | Discussion and coffee 
+10:30-11:30 | An introduction to Bayesian statistics (AP) [Module 2](https://rawgit.com/andrewcparnell/simms_course/master/ap_notes/mod_2_intro_bayes/module_2_introbayes.html) CHECK
 11:30-12:00 | Discussion and break 
-12:00-12:45 | Differences between regression models and SIMMs. (AP) [Module 3](https://rawgit.com/andrewcparnell/simms_course/master/ap_notes/mod_3_reg_and_simms/module_3_reg_and_simms.html)
-12:45-14:00 | Lunch
-14:00-15:30 | Practical: Revision on using R to load data, create plots and fit statistical models (AJ) [Practical 1](https://rawgit.com/andrewljackson/SIAR-examples-and-queries/master/learning-resources/monday-practical.html)
+12:00-13:00 | Differences between regression models and SIMMs. (AP) [Module 3](https://rawgit.com/andrewcparnell/simms_course/master/ap_notes/mod_3_reg_and_simms/module_3_reg_and_simms.html) CHECK
+13:00-14:00 | Lunch
+14:00-15:30 | Practical: Revision on using R to load data, create plots and fit statistical models (AJ) [Practical 1](https://rawgit.com/andrewljackson/SIAR-examples-and-queries/master/learning-resources/monday-practical.html) CHECK
 15:30-16:00 | Break 
 16:00-17:30 | Discussion: understanding Bayesian models.
 
 ## Wednesday
 
 Time  | Class
-------------- | -------------
-9:00 | Students arrive 
-9:15-10:00 | Dos and donts of using mixing models (AJ) [Module 4](https://rawgit.com/andrewljackson/SIAR-examples-and-queries/master/learning-resources/siar-dos-and-donts.html)
-10:00-10:45 | Discussion and coffee 
-10:45-11:30 | The statistical model behind SIAR (AP) [Module 5](https://rawgit.com/andrewcparnell/simms_course/master/ap_notes/mod_5_siar_stats/module_5_siar_stats.html)
-11:30-12:00 | Discussion and break 
-12:00-12:45 | Creating and understanding Stable Isotope Bayesian Ellipses (SIBER) (AJ) [Module 6](https://rawgit.com/andrewljackson/SIAR-examples-and-queries/master/learning-resources/siber-intro.html)
-12:45-14:00 | Lunch 
-14:00-15:30 | Practical: using SIAR for real-world data sets (AP) [Practical 2](https://rawgit.com/andrewcparnell/simms_course/master/ap_notes/prac_2_using_siar/prac_2_using_siar.html), _or_ why not try using [simmr](https://rawgit.com/andrewcparnell/simmr/master/vignettes/simmr.html)? 
+------------- | --------------------------
+9:00-10:30 | Dos and donts of using mixing models with discussion (AJ) [Module 4](https://rawgit.com/andrewljackson/SIAR-examples-and-queries/master/learning-resources/siar-dos-and-donts.html) CHECK
+10:30-10:45 | Discussion and coffee 
+10:45-11:30 | The statistical model behind SIAR (AP) [Module 5](https://rawgit.com/andrewcparnell/simms_course/master/ap_notes/mod_5_siar_stats/module_5_siar_stats.html) CHECK AND MENTION SIMMR
+11:30-13:00 | Practical: using SIAR for real-world data sets (AP) [Practical 2](https://rawgit.com/andrewcparnell/simms_course/master/ap_notes/prac_2_using_siar/prac_2_using_siar.html), _or_ why not try using [simmr](https://rawgit.com/andrewcparnell/simmr/master/vignettes/simmr.html)?  TURN SIMMR VIGNETTE INTO PRACTICAL
+13:00-14:00 | Lunch 
+14:00-14:30 | Creating and understanding Stable Isotope Bayesian Ellipses (SIBER) (AJ) [Module 6](https://rawgit.com/andrewljackson/SIAR-examples-and-queries/master/learning-resources/siber-intro.html) SPLIT
+14:30-15:30 | Practical: Using SIBER to compare populations using ellipses (AJ) [Practical 3b](https://rawgit.com/andrewljackson/SIAR-examples-and-queries/master/learning-resources/siber-comparing-populations.html) CHECK
 15:30-16:00 | Break
-16:00-17:30 | Discussion: issues when using simple SIMMs 
+16:00-16:30 | Community level metrics using SIBER (AJ) [Module 6](https://rawgit.com/andrewljackson/SIAR-examples-and-queries/master/learning-resources/siber-intro.html) SPLIT
+16:30-17:30 | Practical: Using SIBER to compare communities using convex hulls (AJ) [Practical 3a](https://rawgit.com/andrewljackson/SIAR-examples-and-queries/master/learning-resources/siber-comparing-communities.html) CHECK
 
 ## Thursday
 
 Time  | Class
-------------- | -------------
-9:00-9:45 | From SIAR to MixSIAR? (AP) [Module 7](https://rawgit.com/andrewcparnell/simms_course/master/ap_notes/mod_7_siar_mixsiar/module_7_siar_mixsiar.html)
+------------- | --------------------------
+9:00-9:45 | From SIAR to MixSIAR (AP) [Module 7](https://rawgit.com/andrewcparnell/simms_course/master/ap_notes/mod_7_siar_mixsiar/module_7_siar_mixsiar.html) CHECK
 9:45-10:15 | Discussion and coffee 
-10:15-11:00 | Using MixSIAR (AP) [Module 8](https://rawgit.com/andrewcparnell/simms_course/master/ap_notes/mod_8_complex_simms/module_8_using_mixsiar.html)
+10:15-11:00 | Using MixSIAR (AP) [Module 8](https://rawgit.com/andrewcparnell/simms_course/master/ap_notes/mod_8_complex_simms/module_8_using_mixsiar.html) CHECK/RE_WRITE
 11:00-11:15 | Break 
-11:15-12:00 | Source grouping, when and how? (AJ) [Module 9](https://github.com/AndrewLJackson/SIAR-examples-and-queries/blob/master/siar-mixing-models/source_aggregation.r)
-12:00-13:00 | Practical part 3a: Using SIBER (AJ) [Practical 3a](https://rawgit.com/andrewljackson/SIAR-examples-and-queries/master/learning-resources/siber-comparing-communities.html)
+11:15-12:30 | Source grouping, when and how? (AJ) [Module 9](https://github.com/AndrewLJackson/SIAR-examples-and-queries/blob/master/siar-mixing-models/source_aggregation.r) ADD IN PRACTICAL 
+12:30-13:00 | Estimating trophic discimination factors (AJ) WRITE 
 13:00-14:00 | Lunch 
-14:00-15:00 | Practical part 3b: Using SIBER (AJ) [Practical 3b](https://rawgit.com/andrewljackson/SIAR-examples-and-queries/master/learning-resources/siber-comparing-populations.html)
+14:00-15:00 | Practical part 2: Estimating trophic discrimination factors using SIDER (AJ) WRITE PRACTICAL FROM VIGNETTE
 15:00-18:00 | Walk up a mountain!
 
 ## Friday
 
 Time  | Class
-------------- | -------------
-9:00 | Students arrive
-9:15-10:00 | SIMMs for complex data sets: time series and mixed effects models (AP) [Module 10](https://rawgit.com/andrewcparnell/simms_course/master/ap_notes/mod_10_complex_simms/module_10_complex_SIMMs.html)
-10:00-10:45 | Discussion and coffee
-10:45-11:30 | Practical: using MixSIAR and JAGS on real world data sets; benefits over SIAR (AP) [Practical 4](https://rawgit.com/andrewcparnell/simms_course/master/ap_notes/prac_4_mixsiar_and_jags/prac_4_mixsiar_and_jags.html)
+------------- | --------------------------
+9:00-10:00 | SIMMs for complex data sets: time series and mixed effects models (AP) [Module 10](https://rawgit.com/andrewcparnell/simms_course/master/ap_notes/mod_10_complex_simms/module_10_complex_SIMMs.html) CHECK
+10:00-10:30 | Discussion and coffee
+10:30-11:30 | Practical: using MixSIAR and JAGS on real world data sets; benefits over SIAR (AP) [Practical 4](https://rawgit.com/andrewcparnell/simms_course/master/ap_notes/prac_4_mixsiar_and_jags/prac_4_mixsiar_and_jags.html) CHECK ESP MIXSIAR
 11:30-12:00 | Break 
 12:00-12:45 | Practical (continued)
 12:45-14:00 | Lunch

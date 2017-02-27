@@ -35,6 +35,8 @@ install_github("andrewljackson/siar")
 library(siar)
 install_github("andrewljackson/SIBER") 
 library(SIBER)
+install_github("healyke/SIDER") 
+library(SIDER)
 install_github("andrewcparnell/simmr",build_vignettes=TRUE) 
 library(simmr)
 ```
