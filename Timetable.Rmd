@@ -33,8 +33,8 @@ Time  | Class
 14:00-14:30 | [Creating and understanding Stable Isotope Bayesian Ellipses (SIBER) (AJ)](https://rawgit.com/andrewcparnell/simms_course/master/aj-content/siber-intro-ellipses.html)
 14:30-15:30 | [Practical: Using SIBER to compare populations using ellipses (AJ)](https://rawgit.com/andrewcparnell/simms_course/master/aj-content/practicals/siber-comparing-populations.html)
 15:30-16:00 | Break
-16:00-16:30 | [Community level metrics using SIBER (AJ)](https://rawgit.com/simms_course/master/aj-content/siber-intro-hulls.html)
-16:30-17:30 | [Practical: Using SIBER to compare communities using convex hulls (AJ)](https://rawgit.com/simms_course/master/aj-content/practicals/siber-comparing-communities.html)
+16:00-16:30 | [Community level metrics using SIBER (AJ)](https://rawgit.com/andrewcparnell/simms_course/master/aj-content/siber-intro-hulls.html)
+16:30-17:30 | [Practical: Using SIBER to compare communities using convex hulls (AJ)](https://rawgit.com/andrewcparnell/simms_course/master/aj-content/practicals/siber-comparing-communities.html)
 
 ## Thursday
 
@@ -47,7 +47,7 @@ Time  | Class
 11:15-12:30 | [Practical: Source grouping, when and how? (AJ)](https://rawgit.com/andrewcparnell/simms_course/master/aj-content/practicals/source-aggregation.html) 
 12:30-13:00 | [Estimating trophic discimination factors using SIDER (AJ)](https://rawgit.com/andrewcparnell/simms_course/master/aj-content/sider-intro.html)
 13:00-14:00 | Lunch 
-14:00-15:00 | [Practical: Estimating trophic discrimination factors using SIDER (AJ)](https://rawgit.com/simms_course/master/aj-content/practicals/Introduction-to-SIDER.html)
+14:00-15:00 | [Practical: Estimating trophic discrimination factors using SIDER (AJ)](https://rawgit.com/andrewcparnell/simms_course/master/aj-content/practicals/Introduction-to-SIDER.html)
 15:00-18:00 | Walk up a mountain!
 
 ## Friday
