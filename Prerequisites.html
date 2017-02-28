@@ -138,19 +138,22 @@ $(document).ready(function () {
 <p>Now install all the pacakges required for the course by entering the following code in to R</p>
 <pre class="r"><code>install.packages('rjags')
 library(rjags)
+install.packages('compositions')
+library(compositions)
 install.packages('devtools')
 library(devtools) 
 install_github(&quot;andrewljackson/siar&quot;) 
 library(siar)
+install_github(&quot;andrewcparnell/simmr&quot;,build_vignettes=TRUE) 
+library(simmr)
 install_github(&quot;andrewljackson/SIBER&quot;, build_vignettes = TRUE) 
 library(SIBER)
 install_github(&quot;TGuillerme/mulTree@release&quot;)
 install_github(&quot;healyke/SIDER&quot;, build_vignettes = TRUE) 
-library(SIDER)
-install_github(&quot;andrewcparnell/simmr&quot;,build_vignettes=TRUE) 
-library(simmr)</code></pre>
-<p>These will install the most up to date versions of the package. You might run into the following problems:</p>
+library(SIDER)</code></pre>
+<p>These will install the most up to date versions of the packages. You might run into the following problems:</p>
 <ul>
+<li>If you are on Windows and you get an error about not having Rtools please install Rtools from the link it provides you in the error message</li>
 <li>If you are on a Mac you might need to install X11 from <a href="http://www.xquartz.org" class="uri">http://www.xquartz.org</a>.</li>
 <li>You may get a pop up window be asking if you want ‘additional build tools’. Please select ‘yes’.</li>
 <li>If you get an error about package <code>stringi</code> try typing <code>install.packages('stringi',type='win.binary')</code> if on Windows or <code>install.packages('stringi',type='mac.binary')</code> if on Mac. Then re-run the commands above</li>
