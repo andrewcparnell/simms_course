@@ -23,11 +23,9 @@ Install the following using the corresponding links
 Now install all the pacakges required for the course by entering the following code in to R
 
 ```{r,eval=FALSE}
-install.packages('rjags')
+install.packages(c('rjags', 'compositions', 'devtools'))
 library(rjags)
-install.packages('compositions')
 library(compositions)
-install.packages('devtools')
 library(devtools) 
 install_github("andrewljackson/siar") 
 library(siar)
