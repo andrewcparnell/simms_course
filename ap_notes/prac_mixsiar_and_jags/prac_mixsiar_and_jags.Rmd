@@ -15,7 +15,7 @@ In this practical, we will go through:
 - Creating superior plots of output
 - Extending the JAGS SIMMs as discussed in the lectures
 
-This document is an alternative version of the MixSIAR manual (see [here](http://github.com/brianstock/MixSIAR/blob/master/MixSIAR%20GUI%20User%20Manual%201.0.pdf)) and a much simplified version of our 2013 [Environmetrics paper](http://onlinelibrary.wiley.com/doi/10.1002/env.2221/abstract) (also available in the Google shared directory). 
+This document is an alternative version of the MixSIAR manual (see [here](https://github.com/brianstock/MixSIAR/blob/master/Manual/mixsiar_manual_3.1.pdf)) and a much simplified version of our 2013 [Environmetrics paper](http://onlinelibrary.wiley.com/doi/10.1002/env.2221/abstract) (also available in the Google shared directory). 
 
 As in previous labs you should follow and run the commands shown in the grey boxes below. At various points you will see a horizontal line in the text which indicates a question you should try to answer. If you get stuck, please get our attention and we will try to help. There are no prepared answers to these questions so keep you own record as you go. At the end of the practical are harder questions which you can attempt if you get through all of the material. If you find any mistakes in the document please let us know.
 
@@ -23,11 +23,10 @@ You can run the code from these practicals by loading up the `.Rmd` file in the 
 
 ## Running MixSIAR
 
-Assuming you have followed the [instructions](http://github.com/brianstock/MixSIAR/blob/master/MixSIAR%20GUI%20User%20Manual%201.0.pdf) for installing MixSIAR you can run it with:
+Assuming you have followed the [instructions](https://github.com/brianstock/MixSIAR/blob/master/Manual/mixsiar_manual_3.1.pdf) for installing MixSIAR you can run it with:
 
 ```{r,eval=FALSE}
-setwd("/path/to/MixSIAR/r")
-source("mixsiar_gui.r")
+library(MixSIAR)
 mixsiar_gui()
 ```
 
@@ -40,8 +39,8 @@ At this point you should go back to the module 'Using MixSIAR' and run the Wolve
 ***
 
 1. Go back and run the same examples using the `mixsiar_script.r` file. Check that you understand the output
-2. Compare the results with random effects structures. How do the posterior distributions change?
-3. The Geese data are also included in MixSIAR, as detailed in the manual in Section 3.4 (P29). run through the Geese example. How does it compare to the SIAR output?
+2. Compare the results with different random effects structures. How do the posterior distributions change?
+3. The Geese data are also included in MixSIAR, as detailed in the manual and the vignettes. Run through the Geese example. How does it compare to the SIAR output?
 
 ***
 
