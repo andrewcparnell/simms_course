@@ -34,7 +34,7 @@ Turning now to Andrew Parnell's files in his folder of content you downloaded:
 - copy R code from
   - `library(rjags)`
   - `library(siar)`
-  - lines 194 to 211 in `/ap_notes/module_3_reg_and_simms.Rmd`
+  - lines 194 to 211 in `/ap_notes/reg_and_simms.Rmd`
   - lines 155 - 166
 - run the model and explore the posterior samples
 - check for convergence

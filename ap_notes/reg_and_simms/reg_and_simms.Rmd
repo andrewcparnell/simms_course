@@ -202,11 +202,13 @@ model {
   sigma ~ dunif(0,10)
 }
 '
-data=list(y=consumers,s_1_mean=sources[1,1],s_1_sd=sources[1,2],
+data=list(y=consumers,s_1_mean=sources[1,1],
+          s_1_sd=sources[1,2],
           s_2_mean=sources[2,1],s_2_sd=sources[2,2],
           N=length(consumers))
 model=jags.model(textConnection(modelstring), data=data)
-output=coda.samples(model=model,variable.names=c("p_1","p_2"),
+output=coda.samples(model=model,
+                    variable.names=c("p_1","p_2"),
                     n.iter=10000)
 ```
 

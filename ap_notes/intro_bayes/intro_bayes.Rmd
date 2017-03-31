@@ -3,7 +3,7 @@ title: "Introduction to Bayesian Statistics"
 author: "Andrew Parnell, School of Mathematics and Statistics, University College Dublin"
 output:
   ioslides_presentation:
-    logo: https://static1.squarespace.com/static/54f81b8ce4b0dc6e6b10371b/54f87babe4b0ffd48a81bf58/54f87bbee4b087c5398e4a2a/1425570919146/ucd_brandmark_colour.gif?format=500w
+    logo: ../ucd_brandmark_colour.gif
     transition: slower
     widescreen: yes
   beamer_presentation: default
@@ -26,7 +26,7 @@ A bigger aim, either:
 
 $$P(A|B) = \frac{P(B|A) P(A)}{P(B)}$$
 
-<center><img src="https://upload.wikimedia.org/wikipedia/commons/d/d4/Thomas_Bayes.gif" width=40%/></center>
+<center><img src="Thomas_Bayes.gif" width=40%/></center>
 
 ## What is Bayesian statistics?
 
