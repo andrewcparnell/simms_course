@@ -44,10 +44,10 @@ Time  | Class
 ------------- | ----------------------------------------------------
 9:00-9:45 | [From SIAR to MixSIAR (AP)](https://rawgit.com/andrewcparnell/simms_course/master/ap_notes/siar_mixsiar/siar_mixsiar.html)
 9:45-10:15 | Discussion and coffee 
-10:15-11:00 | [Using MixSIAR (AP)](https://rawgit.com/andrewcparnell/simms_course/master/ap_notes/using_mixsiar/using_mixsiar.html)
-11:00-11:15 | Break 
-11:15-12:30 | [Practical: Source grouping, when and how? (AJ)](https://rawgit.com/andrewcparnell/simms_course/master/aj-content/practicals/source-aggregation.html) 
-12:30-13:00 | [Estimating trophic discimination factors using SIDER (AJ)](https://rawgit.com/andrewcparnell/simms_course/master/aj-content/sider-intro.html)
+10:15-10:45 | [Using MixSIAR (AP)](https://rawgit.com/andrewcparnell/simms_course/master/ap_notes/using_mixsiar/using_mixsiar.html)
+10:45-11:30 | [Practical: using MixSIAR and JAGS on real world data sets; benefits over SIAR (AP)](https://rawgit.com/andrewcparnell/simms_course/master/ap_notes/prac_mixsiar_and_jags/prac_mixsiar_and_jags.html)
+11:30-12:00 | Break 
+12:00-13:00 | [Estimating trophic discimination factors using SIDER (AJ)](https://rawgit.com/andrewcparnell/simms_course/master/aj-content/sider-intro.html)
 13:00-14:00 | Lunch 
 14:00-15:00 | [Practical: Estimating trophic discrimination factors using SIDER (AJ)](https://rawgit.com/andrewcparnell/simms_course/master/aj-content/practicals/Introduction-to-SIDER.html)
 15:00-18:00 | Activity!
@@ -58,7 +58,7 @@ Time  | Class
 ------------- | ----------------------------------------------------
 9:00-10:00 | [SIMMs for complex data sets: time series and mixed effects models (AP)](https://rawgit.com/andrewcparnell/simms_course/master/ap_notes/complex_simms/complex_SIMMs.html)
 10:00-10:30 | Discussion and coffee
-10:30-11:30 | [Practical: using MixSIAR and JAGS on real world data sets; benefits over SIAR (AP)](https://rawgit.com/andrewcparnell/simms_course/master/ap_notes/prac_mixsiar_and_jags/prac_mixsiar_and_jags.html)
+10:30-11:30 | [Practical: Source grouping, when and how? (AJ)](https://rawgit.com/andrewcparnell/simms_course/master/aj-content/practicals/source-aggregation.html) 
 11:30-12:00 | Break 
 12:00-12:45 | Practical (continued)
 12:45-14:00 | Lunch

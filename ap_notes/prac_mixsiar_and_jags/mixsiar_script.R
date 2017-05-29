@@ -47,6 +47,7 @@ jags.1 = run_model(run="test", mix, source, discr, model_filename,
 # Long run - change run to 'normal' if you have 5 hours to kill
 jags.2 = run_model(run="very short", mix, source, discr, model_filename, 
                    alpha.prior = 1, resid_err = TRUE, process_err = TRUE)
+stop()
 
 # Get the output
 output_JAGS(jags.2, mix = mix, source = source)

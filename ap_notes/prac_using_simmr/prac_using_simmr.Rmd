@@ -2,8 +2,8 @@
 title: 'Practical: Using simmr'
 author: "Andrew Parnell"
 output:
-  pdf_document: default
   html_document: default
+  pdf_document: default
 ---
 
 ## Introduction
