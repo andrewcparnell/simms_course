@@ -176,7 +176,7 @@ modelstring ='
   }
 '
 # Set up data
-data=list(x=c(3.1,2.7,4.2,3.6),n=4)
+data=list(x=c(3.1,2.7,4.2,3.6), n=4)
 # Run jags
 model=jags.model(textConnection(modelstring), data=data)
 output=coda.samples(model=model,variable.names=
