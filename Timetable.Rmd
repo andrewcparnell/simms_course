@@ -17,12 +17,12 @@ Time  | Class
 ------------- | ----------------------------------------------------
 9:00-10:30 | [Introduction: why use a SIMM? (AJ)](https://rawgit.com/andrewcparnell/simms_course/master/aj-content/intro-why-use-a-SIMM.html)
 10:30-10:45 | Coffee
-10:45-12:00 | Guided practical: Intro to [SI data](https://rawgit.com/andrewcparnell/simms_course/master/aj-content/day-1-am/Exploring-Basic-SIAR-Data.html) and [biplots](https://rawgit.com/andrewcparnell/simms_course/master/aj-content/day-1-am/first-biplot.html)
+10:45-12:00 | Guided practical: Intro to [SI data](https://rawgit.com/andrewcparnell/simms_course/master/aj-content/practicals/day-1-am/Exploring-Basic-SIAR-Data.html) and [biplots](https://rawgit.com/andrewcparnell/simms_course/master/aj-content/practicals/day-1-am/first-biplot.html)
 12:00-13:00 | Lunch
 13:00-14:00 | [An introduction to Bayesian statistics (AP)](https://rawgit.com/andrewcparnell/simms_course/master/ap_notes/intro_bayes/intro_bayes.html)
 14:00-15:00 | [Differences between regression models and SIMMs (AP)](https://rawgit.com/andrewcparnell/simms_course/master/ap_notes/reg_and_simms/reg_and_simms.html)
 15:00-15:15 | Break 
-15:15-17:00 | Guided Practical: [Simple linear models to explain SIA data](https://rawgit.com/andrewcparnell/simms_course/master/aj-content/day-1-pm/basic-SIA-linear-models.html)
+15:15-17:00 | Guided Practical: [Simple linear models to explain SIA data](https://rawgit.com/andrewcparnell/simms_course/master/aj-content/practicals/day-1-pm/basic-SIA-linear-models.html)
 
 
 ## Tuesday
