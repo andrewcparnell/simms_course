@@ -1,13 +1,13 @@
 ---
 title: "First-practical"
 author: "Andrew L Jackson"
-date: "26 February 2017"
+date: "`r Sys.Date()`"
 output: html_document
 ---
 
 ## R revision
 
-Download my [teaching files](https://github.com/AndrewLJackson/teaching) as a zip. In the folder `/podcasts` you can find some basic example R script files to practice and remind yourself how R works. At home you can follow my [video podcast](http://www.tcd.ie/Zoology/research/research/theoretical/Rpodcasts.php) instructions that go with these, but they are large files and wont load from here, and besides, you have us in person for this course!
+Download my [teaching files](https://github.com/adzidic/R_lectures) as a zip. In the folder `/podcasts` you can find some basic example R script files to practice and remind yourself how R works. At home you can follow my [video podcast](https://www.youtube.com/playlist?list=PLXXzyqr0tEhPRNDuEQ6wcvMcpAkGRjVqs) instructions that go with these, but they are large files and wont load from here, and besides, you have us in person for this course!
 
 
 ### Graphics

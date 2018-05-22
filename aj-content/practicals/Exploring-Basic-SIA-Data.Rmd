@@ -1,0 +1,186 @@
+---
+title: "First Look At SIA Data"
+author: "Andrew L Jackson & Chris Harrod"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, fig.width = 9, fig.height = 6)
+```
+
+In this file, we will import our already semi-cleaned up stable isotope dataset and explore it using some basic summary statistics, visualisation and tests.
+
+## Import the data
+
+Your data should already have been tidied up, probably in Excel, so as to remove any of the additional lines at the start that often come back from analytical laboratories. As with all data files, your first line (row) should be the names of each of the columns. When naming columns, it is important to not use any unusual, non-standard characters, as these can confuse the functions that are parsing (reading and processing) the datafile: if you need to separate words in a column header you should use "_" or ".", e.g. "delta_C" or "delta.C" but not "delta/C".
+
+Thereafter, unless otherwise stated (as is the case when supplying source data for `siar` for example, which we will come to later in the course) each row should represent a single, unique observation (sample) with corresponding name of the sample, $\delta^{13}\text{C}$, $\delta^{15}\text{N}$ values etc...
+
+You then have a choice of how to save so that R can more easily import it. I favour comma separated files (`*.csv`) whereby each cell is delimited (separated) by a comma ",". Depending on where in the world you are from, you may need to be very careful about this, as some regions often us the comma to indicate thousands in numers, so `1000` might entered or appear as `1,000` in Excel. Similarly, some regions use the comma to indicate a decimal place, so `10.34` might be `10,34`. This can seriously mess up the importation process. Sometimes you have to change the *region* settings on your computer in order to change this automatic behaviour in Excel, or you can do a "find and replace" in the `*.csv` file if you open it in a basic text editor after saving it. Alternatively again, you might chose to use a different delimiter, such as ";" to separate the cells in your dataset, and if you do so, you can tell R this is the case by exploring the help files associated with `?read.table`.
+
+The function `read.csv()` is a shortcut to importing `*.csv` files and in my experience is the most stable function to use. When calling it, I specify the name of the file (and location if it is not in the current working directory) and that the first row contain the header names (`header = TRUE`). I also like to not let the function automatically interpret strings of letters in cells as being special `factor` type data which is R's way of encoding categorical variables. My view is that if we want a column to be a factor, we should do it in the code ourselves, as we may not want all our character data to be factors, and in any case, most R functions will convert them to factors internally if when presented with them.
+
+```{r import-data}
+# import the data. 
+# If you get an error about "No such file or directory" then you 
+# need to take care about where R is currently working, and where your 
+# data file is in relation to this.
+mydata <- read.csv("Practical01.csv", 
+                   header = TRUE, stringsAsFactors = FALSE)
+
+# verify that our data looks correct by printing the first1 10 lines
+# to screen
+head(mydata)
+
+# if the data is not a massive dataset, you might like to look  
+# at it all
+mydata
+```
+
+## What are my data?
+
+One of the first things you should do with an imported dataset, is to take some time to understand how it is encoded, and how R is going to treat each variable. The function `str` does this by telling us what type of encoding each of the columns in the data are.
+
+In this case, `mydata` is a `data.frame` object, and inside it, `Taxon` and `ID` are character vectors, while the rest are `numeric`.
+
+```{r what-are-data}
+str(mydata)
+```
+
+The next obvious thing we might want to know is how big are these numbers, and how many observations we have etc... Accessing columns within a data.frame object is achieved using the `$` notation, so `mydata$Taxon` is the vector of characters with the taxon identifier for each observation. *N.B. in a previous existance I advocated the use of teh function attach() but no longer: it can get you into all manner of mischief thats best avoided.*
+
+```{r summary-data}
+
+# prove to ourselves that the $ notation works.
+mydata$Taxon
+
+# a basic summary of each column in the data.frame
+summary(mydata)
+
+# how many obverations do we have per Taxon might also be of use
+table(mydata$Taxon)
+```
+
+It is not so easy to get summary statistics on each Taxonomic group within our dataset using the basic R functions. There are many packages out there to help, but Hadley Wickham's suite of packages are impossible to beat in my opinion, and we will be using his `ggplot2` package for pretty graphs later on so lets stick with the "tidyverse" set of functions.
+
+```{r summarise-data-by-group}
+# Install dplyr if required
+# install.packages('dplyr')
+
+# load the library
+library(dplyr)
+
+# generate summary statitsics by group
+mydata %>% group_by(Taxon) %>% summarise(count = length(Taxon),
+                                         mC = mean(d13C), 
+                                         sdC = sd(d13C), 
+                                         mN = mean(d15N), 
+                                         sdN = sd(d15N))
+
+
+```
+
+## Basic Visualisation
+
+Visualising the data is often the next step. You can generate histograms of the data very easily.
+
+```{r histo}
+# set up a multi-panel plot, 1 row, 3 columns
+par(mfrow =c(1,3)) 
+hist(mydata$d13C)
+hist(mydata$d15N)
+hist(mydata$C.N)
+```
+
+We might also be interested visualising the correlations among variables in our dataset. The `pairs` function does this very nicely, and should be something you use regularly at the start of analyses since you get the histograms, and the pair-wise scatter plots and correlations all in one figure. The associated help function has lots of examples and explains more about where the following code comes from `?pairs`.
+
+```{r pairs-vis}
+# = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
+# These functions are copied from the help file for pairs()
+## put histograms on the diagonal
+panel.hist <- function(x, ...)
+{
+    usr <- par("usr"); on.exit(par(usr))
+    par(usr = c(usr[1:2], 0, 1.5) )
+    h <- hist(x, plot = FALSE)
+    breaks <- h$breaks; nB <- length(breaks)
+    y <- h$counts; y <- y/max(y)
+    rect(breaks[-nB], 0, breaks[-1], y, col = "cyan", ...)
+}
+
+panel.cor <- function(x, y, digits = 2, prefix = "", cex.cor, ...)
+{
+    usr <- par("usr"); on.exit(par(usr))
+    par(usr = c(0, 1, 0, 1))
+    r <- abs(cor(x, y))
+    txt <- format(c(r, 0.123456789), digits = digits)[1]
+    txt <- paste0(prefix, txt)
+    if(missing(cex.cor)) cex.cor <- 0.8/strwidth(txt)
+    # text(0.5, 0.5, txt, cex = cex.cor * r)
+    text(0.5, 0.5, txt, cex = 3)
+}
+
+# = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
+
+# this select function comes from the package dplyr and allows us to 
+# select a subset of columns to plot.
+pairs(select(mydata, d13C, d15N, C.N), 
+      diag.panel = panel.hist,
+      upper.panel = panel.smooth,
+      lower.panel = panel.cor)
+
+
+```
+
+Boxplots are a quick way to visualise the variation among taxa. Note the use of the `~` which means `d13C ~ Taxon` reads as, do something, in this case draw a boxplot, of `d13C` as a function of `Taxon`. This `formula` approach then allows us to tell it to find these variables in `mydata` and then finally we specify a main label for each graph for this summary so we can keep track of what we are looking at.
+
+```{r boxplots-by-group}
+
+# first Carbon
+boxplot(d13C ~ Taxon, data = mydata, main = "d13C")
+
+# second Nitrogen
+boxplot(d15N ~ Taxon, data = mydata, main = "d15N")
+
+# third the C/N ratio
+boxplot(C.N ~ Taxon, data = mydata, main = "C/N ratio")
+
+```
+
+QQ-plots are also a great way to visualise how normal your data are. If they are perfectly normally distributed then they will sit on the diagonal line.
+
+```{r qq-plots}
+# another 1x3 panel plot
+par(mfrow = c(1,3))
+
+qqnorm(mydata$d13C)
+qqline(mydata$d13C)
+
+qqnorm(mydata$d15N)
+qqline(mydata$d15N)
+
+qqnorm(mydata$C.N)
+qqline(mydata$C.N)
+
+```
+
+
+One of the d13C values for the Benthic Algae appears to be very high in relation to the others, both on the boxplots and the qq-plots. If you are satisfied this is an error in the sample process which is entirely possible, then you may choose to remove it. But, I would caution against taking a strict approach based on statistical tests designed to find outliers, especially when your sample size within a group is low (n = `r table(mydata$Taxon)["Benthic.algae"]` in this case).
+
+If you wanted, you could remove this data point, which we will do in this case.
+
+```{r}
+subset_mydata <- mydata %>% filter(d13C < max(d13C))
+
+# check our boxplots again
+boxplot(d13C ~ Taxon, data = subset_mydata, main = "d13C")
+```
+
+
+
+
+
+
+
+
