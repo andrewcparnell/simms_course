@@ -1,0 +1,444 @@
+---
+title: "Basic Analyses of Isotopic Variation"
+author: "Andrew L Jackson & Chris Harrod"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, fig.width = 9, fig.height = 6)
+```
+
+In this practical, we will explore our data in more detail using some basic statistical tests to identify where the variation in our data lies, and hence where the interesting ecological insights might lie. In this example dataset, we have d13C, d15N and C:N ratio from three fish species.
+
+```{r import-data}
+mydata <- read.csv("Practical02.csv", header = TRUE, stringsAsFactors = FALSE)
+
+# force species to be a factor tpe variable
+mydata$Species <- factor(mydata$Species)
+
+# verify that it imported as expected
+head(mydata)
+
+```
+
+## Lipid correction
+
+```{r liver-by-cn}
+# code to do this using base R graphics
+# plot(Liver.d13C ~ Liver.CN, data = mydata, 
+#      subset = Species == "Arrowtooth.Flounder", main = "Arrowtooth.Flounder")
+# 
+# # lowess smoother not working like this for the subset.
+# # lines(lowess(mydata$Liver.CN, mydata$Liver.d13C), col = "red")
+# 
+# plot(Liver.d13C ~ Liver.CN, data = mydata, 
+#      subset = Species == "Pacific.cod", main = "Pacific.cod")
+# 
+# plot(Liver.d13C ~ Liver.CN, data = mydata, 
+#      subset = Species == "Pollock", main = "Pollock")
+
+# try to do this in ggplot using facets
+library(ggplot2)
+liver.plot <- ggplot(data = mydata, aes(Liver.CN, Liver.d13C)) + 
+  geom_point() +
+  geom_smooth(method = "loess", alpha = 0.5) +
+  facet_grid(Species~.)
+print(liver.plot)
+
+```
+
+
+The liver in particular has a large quantity of lipids, and in this example, we apply a simple numerical correction based on **[citation needed]**. This correction is weighted by the C/N ratio, such that high amounts of C require a greater correction.
+
+```{r lipid-correction}
+
+# constants used in the correction for liver tissue
+a <-   6.059
+b <- -22.270
+c <-  -1.397
+
+# add columns for lipid corrected liver to the data.frame
+mydata$Liver.d13C.crtd <-  mydata$Liver.d13C + 
+  (a * mydata$Liver.CN + b) / (mydata$Liver.CN + c)
+
+# check that it worked as expected
+head(mydata)
+
+# specify a color pallete with 3 colours for this example
+palette(c("black", "red", "blue"))
+
+# plot the correlation between the corrected and raw values, and 
+# indicate which observations have large C/N ratios by the 
+# size of the datapoints.
+plot(Liver.d13C.crtd ~ Liver.d13C, data = mydata, 
+     col = Species, cex = 5 * Liver.CN / max(Liver.CN), pch = 19, asp = 1)
+
+# add the 1:1 line
+abline(a = 0, b = 1, col = "grey", lty = 1, lwd = 2)
+
+
+# reset the colour palette to the default
+palette("default")
+
+# now plot the corrected values on top of our raw data from before 
+# and add a vertical line at 3.6 which is "pure protein"
+liver.plot.2 <- liver.plot + 
+  geom_point(data = mydata, aes(Liver.CN, Liver.d13C.crtd), col = "red") +
+  geom_vline(xintercept = 3.6, col = "black")
+print(liver.plot.2)
+```
+
+
+## Basic summary statistics
+
+As always, it is sensible to start by taking a quick look at the summary statistics describing the data, and how the data are encoded in R. The only bit of code I've changed here is to make the text of the correlation coefficient text a bit smaller when defining the function `panel.cor()`.
+
+```{r summary-data}
+
+# how are the data encoded in R?
+str(mydata)
+
+# a basic summary of each column in the data.frame
+summary(mydata)
+
+# how many obverations do we have per Taxon might also be of use
+table(mydata$Species)
+
+# Using datq from our first practical, generate all pair-wise scatterplots
+# = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
+# source("my_functions.R")
+# These functions are copied from the help file for pairs()
+## put histograms on the diagonal
+panel.hist <- function(x, ...)
+{
+    usr <- par("usr"); on.exit(par(usr))
+    par(usr = c(usr[1:2], 0, 1.5) )
+    h <- hist(x, plot = FALSE)
+    breaks <- h$breaks; nB <- length(breaks)
+    y <- h$counts; y <- y/max(y)
+    rect(breaks[-nB], 0, breaks[-1], y, col = "cyan", ...)
+}
+
+panel.cor <- function(x, y, digits = 2, prefix = "", cex.cor, ...)
+{
+    usr <- par("usr"); on.exit(par(usr))
+    par(usr = c(0, 1, 0, 1))
+    r <- cor(x, y)
+    txt <- format(c(r, 0.123456789), digits = digits)[1]
+    txt <- paste0(prefix, txt)
+    if(missing(cex.cor)) cex.cor <- 0.4/strwidth(txt)
+    # text(0.5, 0.5, txt, cex = cex.cor * r)
+    text(0.5, 0.5, txt, cex = 2)
+}
+
+# = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
+
+# this select function comes from the package dplyr and allows us to 
+# select a subset of columns to plot.
+pairs(mydata, 
+      diag.panel = panel.hist,
+      upper.panel = panel.smooth,
+      lower.panel = panel.cor)
+
+
+
+```
+
+## Focus on variation among species
+
+Using code from the first practical, we can use the package `dplyr` to generate summary statistics on the means and variation of each species in the dataset. I summarise the muscle and liver (using the lipid-corrected d13C) data separately only to keep the resulting table smaller and nicer to print.
+
+```{r summarise-by-group}
+# Summarise the data by group using the package dplyr (install if required)
+
+# load the library
+library(dplyr)
+
+summarise.muscle <- mydata %>% group_by(Species) %>%  
+  summarise(count = length(Species),
+            musC = mean(Muscle.d13C), musSdC =  sd(Muscle.d13C), 
+            musN = mean(Muscle.d15N), musSdN =  sd(Muscle.d15N),
+            musCN = mean(Muscle.CN),  musSdCN = sd(Muscle.CN))
+
+# print a pretty table
+knitr::kable(summarise.muscle, digits = 2)
+# print(summarise.muscle)
+
+
+summarise.liver <- mydata %>% group_by(Species) %>% 
+  summarise(count = length(Species),
+            livC.c = mean(Liver.d13C.crtd), 
+            livSdC.c =  sd(Liver.d13C.crtd),
+            livN = mean(Liver.d15N), 
+            livSdN =  sd(Liver.d15N),
+            livCN = mean(Liver.CN),  
+            livSdCN = sd(Liver.CN) )
+
+# print a pretty table
+knitr::kable(summarise.liver, digits = 2)
+# print(summarise.liver)
+```
+
+The most suitable way to visualise the variation in the key tissues by species is probably to use simple boxplots. From here on in we will probably focus on the muscle data only and will put analysis of the liver samples on hold.
+
+```{r boxplots-by-group}
+
+boxplot(Length ~ Species, data = mydata, col="grey", 
+        xlab="Species", ylab="Length (cm)", 
+        main = " variation in fish size")
+
+
+boxplot(Muscle.d13C ~ Species, data = mydata, col="grey", 
+        xlab="Species", ylab="Muscle d13C", 
+        main = " variation in muscle d13C")
+
+#now d15N
+boxplot(Muscle.d15N ~ Species, data = mydata, col="grey", 
+        xlab="Species", ylab="Muscle d15N", 
+        main = " variation in muscle d15N")
+
+#now d15N
+boxplot(log(Muscle.CN) ~ Species, data = mydata, col="grey", 
+        xlab="Species", ylab="log Muscle C/N", 
+        main = " variation in muscle C/N")
+
+
+```
+
+An appropriate statistical test to determine whether the means of these boxplots are significantly different from one another is a simple ANOVA. You need to take a little care here, as the function you want when analysing data is called `aov()` in R (for Analysis of Variance) whereas there is also a function `anova()` but it is used to compare fitted linear model objects (a discussion point for another day, and one i wouldnt recommend in any case). I have log-transformed the C/N data owing to the heavy skew evident in the pairs plot above.
+
+```{r anovas}
+
+# length by species
+length.aov <-  aov(Length ~ Species, data = mydata)
+summary(length.aov)
+
+# muscle carbon by species
+muscleC.aov <- aov(Muscle.d13C ~ Species, data = mydata)
+summary(muscleC.aov)
+
+# muscle N by species
+muscleN.aov <- aov(Muscle.d15N ~ Species, data = mydata)
+summary(muscleN.aov)
+
+# muscle C/N ratio by species
+muscleCN.aov <- aov(log(Muscle.CN) ~ Species, data = mydata)
+summary(muscleCN.aov)
+
+```
+
+Identifying which species are different from each other can be acheived using post-hoc tests that correct the p-values to take account of the multiple testing involved. Just looking at the d13C muscle data in this example (you can try the others as you like):
+
+```{r post-hoc}
+TukeyHSD(muscleC.aov)
+```
+
+
+## Is it length or species that drives variation in d13C and d15N?
+
+The larger Pacific Cod appears to be the largest of the fish on average, and they also have the larget d13C and d15N values. We might rightly want to know if this is due to their larger body size (length) or whether it is true species variation. We use analysis of covariance to investigate.
+
+```{r}
+# specify a color pallete with 3 colours for this example
+palette(c("black", "red", "blue"))
+
+par(mfrow = c(1,2))
+plot(Muscle.d13C ~ Length, col = mydata$Species, data = mydata, 
+     main = "Muscle d13C")
+legend("topleft", levels(mydata$Species), col = 1:3, pch = 1)
+
+plot(Muscle.d15N~ Length, col = mydata$Species, data = mydata,
+     main = "Muscle d15N")
+legend("topleft", levels(mydata$Species), col = 1:3, pch = 1)
+
+# reset the palette
+palette("default")
+
+d13C.length.model <- glm(Muscle.d13C ~ Species + Length, data = mydata)
+summary(d13C.length.model)
+
+d15N.length.model <- glm(Muscle.d15N ~ Species + Length, data = mydata)
+summary(d15N.length.model)
+
+
+```
+
+While d15N appears to scale positively with length (**and you can probably think why this might be**), d13C does not appear to be affected by length. You could assess this by comparing a model without `length` using AIC, where we are looking for AIC to be lower by more than 2 units if we are to justify the inclusion of `length` in the model:
+
+```{r test-C-length}
+
+d13C.species.model <- glm(Muscle.d13C ~ Species, data = mydata)
+summary(d13C.species.model)
+
+```
+
+Based on this comparison, with an AIC of `r round(AIC(d13C.length.model),2)` for the model with length, and an AIC of `r round(AIC(d13C.species.model),2)` without length, we can conclude that length does not add sufficient explanatory information to warrant its inclusion.
+
+_**Task:**_ You might want to check whether there is an interaction between species and length in this relationship. Essentially this involves fitting 3 lines, one for each species by length. You can add an interaction to the `glm()` formulae, using a `:` to specify which variables interact.
+
+## Pair-wise comparisons of the different tissues
+
+We might well ask whether the isotope values are the same between the liver and muscle tissues within the individual fish. To acheive this, we can conduct a pair-wise t-test that adds power over a standard t-test by treating the observations as being matched, or paired. Since we can't use the formula method (`y~x`) easily when we have two columns (vectors) of data to compare, we can't use the `data = mydata` option, and so we have to use the `$` notation to provide the two vectors for comparison. We can't even use the `subset = ` option so instead we have to subset each of our vectors manually: `mydata$Muscle.d13C[mydata$Species == "Arrowtooth.Flounder"]`.
+
+You could take this code, copy it and modify it to run paired t-tests on the other species.
+
+```{r pair-wise-t-tests}
+t.test(mydata$Muscle.d13C[mydata$Species == "Arrowtooth.Flounder"],
+       mydata$Liver.d13C.crtd[mydata$Species == "Arrowtooth.Flounder"],
+       paired = TRUE)
+```
+
+## Use multivariate statistics to compare d13C and d15N simultaneously among species
+
+Visualising the multivariate data is easiest if we add ellipses over each species group as we did in the first practical session. The code that follows is taken from there and modified accordingly to make sure the $x$ and $y$ data names are appropriate for this new dataset.
+
+First we need our utitlity function to calculate our ellipse coordinates from the data and we need to change some of the names to match those in the current dataset. In order to run this code, you will need the package `ellipse` installed.
+
+```{r ellipses-fun}
+
+# = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
+  # function to calculate ellipses
+  my.ell.fun <- function(df, p.ell){
+
+    # ifelse only calcs ellipse if >2 data points
+    # cov() fails otherwise
+    ifelse (nrow(df)>1, {
+      # a two-column matrix of the isotope data only
+      # If you use your own data, you might need to change the names here from 
+      # d13C and d15N to whatever you have in your own data object.
+      Y <- cbind(df$Muscle.d13C, df$Muscle.d15N)
+      
+      # the covariance matrix of the data
+      Sigma <- stats::cov(Y)
+      
+      # the centroid (means)
+      mu <- colMeans(Y)
+      
+      # the ellipse coordinates
+      out <- ellipse::ellipse(Sigma, centre = mu , level = p.ell)
+    },
+    {
+      # if not enough data, return NAs
+      out <- matrix(c(NA,NA), nrow = 1, ncol = 2)
+    })
+    out <- as.data.frame(out)
+    return(out)
+  }
+
+  # = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
+
+```
+
+Now we can make a nice plot with `ggplot` taking care to change the aesthetics to make our column names if we just copied and pasted this in from the first practical file.
+
+```{r ellipse-plots}
+
+# load the library
+library(ggplot2)
+
+# use our ellipse function to generate the ellipses for plotting
+
+# decide how big an ellipse you want to draw
+# NB 50% ellipses this time for no reason other than i dont need them huge
+# to get a sense for their size and shape.. indeed we could plot 
+# Standard Ellipses using p.ell <- stats::pchisq(1, df = 2) which
+# results in 0.39
+p.ell <- 0.50
+
+# calculate the points for each group's ellipse
+ell.points <- mydata %>% group_by(Species) %>%
+                           do(my.ell.fun(., p.ell = p.ell))
+
+# this is the basic plot, which im not actually going to plot
+# as i won't call print(first.plot). Doing this is purely choice, 
+# and for me it keeps my code tidier and easier to interpret
+first.plot <- ggplot(data = mydata, aes(Muscle.d13C, Muscle.d15N)) +
+  geom_point(aes(color = Species), size = 2)+
+  ylab(expression(paste(delta^{15}, "N (\u2030)")))+
+  xlab(expression(paste(delta^{13}, "C (\u2030)"))) + 
+  theme(text = element_text(size=15))
+
+# now add our ellipses as an additional layer
+second.plot <- first.plot + 
+  geom_polygon(data = ell.points, 
+               mapping = aes(x, y, group = Species, 
+                             fill = Species, color = Species), 
+               alpha = 0.2)
+print(second.plot)
+
+```
+
+Analysing these data to test whether the means of both the d13C and the d15N muscle data are simultaneously different can be achieved using Multivariate Analysis of Variance (MANOVA) or PERMANOVA if you are not happy with the assumptions of MANOVA, e.g. that the data are multivariate normal and that they have similar (assumed the same) covariance. In this case, both assumptions seem pretty reasonable to me so I will go with MANOVA here in the first instance. Both models require that we bind the two (or more) column vectors of data together into a matrix which we can do using `cbind()`. Remember that both these methods take the `subet = ` option should you wish to restrict your comparison to a subset of groups. A useful trick here might be to use the `match` function (which has an odd, but nice to use alias `%in%`) and in this example something like: `subset = (Species %in% c("Arrowtooth.Flounder", "Pacific.cod"))` could provide a useful template for you, especially should you wish to restrict a larger dataset to only the fish or only the invertebrates if they were all in the same dataset. Alternateively, you could create new data.frames of only the data you want, and call them something helpful; you could acheive this with the function `dplyr::filter()`
+
+```{r MANOVA-up}
+
+multivar.model <- manova(cbind(Muscle.d13C, Muscle.d15N) ~ Species, 
+                         data = mydata)
+
+summary(multivar.model)
+```
+
+<!-- This section currently not working as i intend... -->
+<!-- Use contrasts to set up the pairwise comparisons: (im only trying here from http://stats.stackexchange.com/questions/89021/how-to-get-only-desirable-comparisons-from-post-hoc) -->
+
+<!-- ```{r manova-contrasts} -->
+
+<!-- # define the contrasts we want -->
+<!-- cts <- cbind(c(1, -0.5, -0.5),c(-0.5, 1, -0.5),c(-0.5, -0.5, 1)) -->
+
+<!-- # create the contrasts for the Species column -->
+<!-- contrasts(mydata$Species) <- cts -->
+
+<!-- # re-run the MANOVA -->
+<!-- multivar.contrasts <- manova(cbind(Muscle.d13C, Muscle.d15N) ~ Species,  -->
+<!--                          data = mydata) -->
+
+<!-- # look at the summary -->
+<!-- summary.lm(multivar.contrasts) -->
+
+
+<!-- ``` -->
+
+
+## Permanova
+Running the PERMANOVA analysis requires the package `vegan` so you will need to `install.packages("vegan")` if you do not already have it. The PERMANOVA method is a randomisation process that jumbles up the data among the groups and determines how likely our observed data are given random chance. It therefore does make the same parametric assumptions about the data being multivariate normal distributed with a common covariance structure among groups.
+
+```{r PERMANOVA-up }
+library(vegan)
+
+perm.model <- adonis(cbind(Muscle.d13C, Muscle.d15N) ~ Species, 
+                     data = mydata, 
+                     method = "euclidean", permutations = 9999)
+
+perm.model
+
+```
+
+## Distance between centroids
+
+Some additional context we might like to add to this analysis is how far apart the centroids are. The centroids of these ellipses are simply the mean(d13C)
+ and the mean(d15N) of each group, and we have already calculated these for the graph above and the results held in the object `summarise.muscle`. We can then extract the two columns of means, and use the `dist()` function in R to calculate the pairwise euclidean distances between them.
+ 
+ 
+```{r dist-between-centroids}
+
+centroids <- cbind(summarise.muscle$musC, summarise.muscle$musN)
+
+dist.to.centoids <- dist(centroids)
+
+print(dist.to.centoids)
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
