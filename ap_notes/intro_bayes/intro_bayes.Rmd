@@ -1,13 +1,17 @@
 ---
 title: "Introduction to Bayesian Statistics"
-author: "Andrew Parnell, School of Mathematics and Statistics, University College Dublin"
+author: Andrew Parnell \newline \texttt{andrew.parnell@mu.ie}   \newline \vspace{1cm}
+  \newline \includegraphics[width=3cm]{../maynooth_uni_logo.jpg}
 output:
-  ioslides_presentation:
-    logo: ../ucd_brandmark_colour.gif
-    transition: slower
-    widescreen: yes
-  beamer_presentation: default
+  beamer_presentation:
+    includes:
+      in_header: ../header.tex
 ---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(dev = 'pdf')
+par(mar=c(3,3,2,1), mgp=c(2,.7,0), tck=-.01,las=1)
+```
 
 ## Learning outcomes
 
@@ -26,7 +30,9 @@ A bigger aim, either:
 
 $$P(A|B) = \frac{P(B|A) P(A)}{P(B)}$$
 
-<center><img src="Thomas_Bayes.gif" width=40%/></center>
+\begin{center}
+\includegraphics[width=4cm]{../Thomas_Bayes.pdf}
+\end{center}
 
 ## What is Bayesian statistics?
 
@@ -69,15 +75,14 @@ $$p(\theta|x) = \frac{p(x|\theta) \times p(\theta)}{p(x)}$$
 
 Suppose you had some data that looked like this:
 ```{r, echo=FALSE}
-dat = read.csv('../data/earnings.csv')
-with(dat, plot(height_cm, log(earn)))
+with(stackloss, plot(Air.Flow, stack.loss))
 ```
 
 ## What you are used to doing
 
 \tiny
 ```{r}
-model = lm(log(earn) ~ height_cm, data = dat)
+model = lm(stack.loss ~ Air.Flow, data = stackloss)
 summary(model)
 ```
 \normalsize
@@ -85,94 +90,71 @@ summary(model)
 ## What you will now get instead
 
 ```{r, echo=FALSE, results='hide', message=FALSE}
-library(rstan)
-rstan_options(auto_write = TRUE)
-options(mc.cores = parallel::detectCores())
-stan_code = '
-data {
-  int<lower=0> N;
-  vector[N] x;
-  vector[N] y;
-}
-parameters {
-  real intercept;
-  real slope;
-  real<lower=0> residual_sd;
-} 
+library(rjags)
+modelstring ='
 model {
-  y ~ normal(intercept + slope * x, residual_sd);
+  for(i in 1:N) { 
+    y[i] ~ dnorm(intercept + slope*x[i], residual_sd^-2) 
+  }
+  intercept ~ dnorm(0,100^-2)
+  slope ~ dnorm(0,100^-2)
+  residual_sd ~ dunif(0,100)
 }
 '
-stan_run = stan(data = list(N=nrow(dat), 
-                            y = log(dat$earn),
-                            x = dat$height_cm),
-                model_code = stan_code)
+data=list(x=stackloss$Air.Flow,
+          y=stackloss$stack.loss,
+          N=nrow(stackloss))
+model=jags.model(textConnection(modelstring), data=data)
+output=coda.samples(model=model,variable.names=c("intercept","slope","residual_sd"), n.iter=10000)
 ```
 \tiny
 ```{r}
-print(stan_run)
+summary(output)
 ```
 \normalsize 
 
 ## Using prior information
 
-- The Bayesian model in the previous slide divided up everything into _parameters_ (the intercept, slope and residual standard deviation), and data (the height and log(earnings) values)
+- The Bayesian model in the previous slide divided up everything into _parameters_ (the intercept, slope and residual standard deviation), and data (the x and y values)
 - The software in the background created a posterior probability distribution of the parameters given the data
-- The model I fitted used no _prior information_. However, if we had done a previous experiment that suggested the intercept should be around 9 with standard deviation 0.5 we can put this in the model
+- The model I fitted used vague _prior information_. However, if we had done a previous experiment that suggested the intercept should be around -30 with standard deviation 5 we can put this in the model
 
 ## A model with prior information
 
 ```{r, echo=FALSE, results='hide', message=FALSE}
-stan_code_2 = '
-data {
-  int<lower=0> N;
-  vector[N] x;
-  vector[N] y;
-}
-parameters {
-  real intercept;
-  real slope;
-  real<lower=0> residual_sd;
-} model {
-  intercept ~ normal(9, 0.5);
-  y ~ normal(intercept + slope * x, residual_sd);
+modelstring2 ='
+model {
+  for(i in 1:N) { 
+    y[i] ~ dnorm(intercept + slope*x[i], residual_sd^-2) 
+  }
+  intercept ~ dnorm(-30,5^-2)
+  slope ~ dnorm(0,100^-2)
+  residual_sd ~ dunif(0,100)
 }
 '
-stan_run_2 = stan(data = list(N=nrow(dat), 
-                            y = log(dat$earn),
-                            x = dat$height_cm),
-                model_code = stan_code_2)
+model2=jags.model(textConnection(modelstring2), data=data)
+output2=coda.samples(model=model2,variable.names=c("intercept","slope","residual_sd"), n.iter=10000)
 ```
 \tiny
 ```{r}
-print(stan_run_2)
+summary(output2)
 ```
 \normalsize 
 
 ## An early example of a Bayesian model
 
-- To create the Bayesian version of this model I used the following Stan code:
+- To create the Bayesian version of this model I used the following JAGS code:
 
 \scriptsize
 ```{r, eval = FALSE}
-stan_code = '
-data {
-  int N;
-  vector[N] x;
-  vector[N] y;
-}
-parameters {
-  real intercept;
-  real slope;
-  real<lower=0> residual_sd;
-} 
+modelstring ='
 model {
-  // Likelihood
-  y ~ normal(intercept + slope * x, residual_sd);
-  // Priors
-  intercept ~ normal(0, 100);
-  slope ~ normal(0, 100);
-  residual_sd ~ uniform(0, 100);
+  for(i in 1:N) { 
+    y[i] ~ dnorm(intercept + slope*x[i], residual_sd^-2) 
+  }
+  intercept ~ dnorm(0,100^-2)
+  slope ~ dnorm(0,100^-2)
+  residual_sd ~ dunif(0,100)
 }
 '
 ```
@@ -182,31 +164,35 @@ model {
 
 There are several choices when it comes to specifying prior distributions:
 
-- _Informative_, when there is information from a previous study, or other good external source, e.g $\theta \sim N(2.3,0.5^2)$
-- _Vague_, when there is only weak information, perhaps as to the likely range of the parameter e.g. $\theta \sim U(0,100)$
-- _Flat_, when there is no information at all about a parameter (very rare). In JAGS, write `theta ~ dflat()`
+- _Informative_, when there is information from a previous study, or other good external source, e.g slope $\sim N(-30,5^2)$
+- _Vague_, when there is only weak information, perhaps as to the likely range of the parameter e.g. slope $\sim N(0,100^2)$
+- _Flat_, when there is no information at all about a parameter (very rare). In JAGS, write `slope ~ dflat()`
 
-Choosing the prior and choosing the likelihood are very similar problems
+In fact, choosing the prior and choosing the likelihood are very similar problems
 
 ## Choosing likelihoods and priors {.smaller}
 
 When creating Bayesian models it's helpful to know a lot of probability distributions. The ones we will use most are:
 
-Distribution  | Range         | Useful for:
-------------- | ------------- | --------------------------
-Normal, $N(\mu,\sigma^2)$        | $(-\infty,\infty$)  | A good default choice
-Uniform, $U(a,b)$  | $(a,b)$  | Vague priors when we only know the range of the parameter
-Binomial, $Bin(k,\theta)$ | $[0,k]$ | Count or binary data restricted to have an upper value
-Poisson, $Po(\lambda)$ | $[0,\infty)$ | Count data with no upper limit
-Gamma, $Ga(\alpha,\beta)$ | $(0,\infty)$ | Continuous data with a lower bound of zero
-Multivariate Normal, $MVN(\mu,\Sigma)$ | $(-\infty,\infty$) | Multivariate unbounded data with correlation between parameters/observations
-Dirichlet, $Dir(\alpha_1, \ldots, \alpha_k)$ | $(0, 1)$ | Multivariate proportions which must sum to 1
-
+\small
+\begin{tabular}{p{3cm}lp{4cm}}
+\hline
+Distribution & Range of parameter & Useful for \\
+\hline
+Normal, $N(\mu,\sigma^2)$ & $(-\infty,\infty$) & A good default choice \\
+Uniform, $U(a,b)$ & $(a,b)$ & Vague priors when we only know the range of the parameter \\
+Binomial, $Bin(k,\theta)$ & $[0,k]$ & Count or binary data restricted to have an upper value \\
+Poisson, $Po(\lambda)$ & $[0,\infty)$ & Count data with no upper limit \\
+Gamma, $Ga(\alpha,\beta)$ & $(0,\infty)$ & Continuous data with a lower bound of zero \\
+Multivariate Normal, $MVN(\mu,\Sigma)$ & $(-\infty,\infty$) & Multivariate unbounded data with correlation between parameters/observations \\
+\hline
+\end{tabular}
 
 ## Creating the posterior distribution
 
-- In the very simple example, I was able to calculate the posterior distribution in just a couple of lines of `R` code 
-- When we have lots of parameters, and complicated prior distributions, we have to resort to _simulation_
+- It only takes a few lines of `R` code (and a few more lines of JAGS code) to calculate the posterior distribution
+- However this processes will be slower and harder when we have lots of parameters, and complicated prior distributions
+- Almost always in the Bayesian world we have to resort to _simulation_ rather than maths to get to the posterior distribution
 - This means that we obtain _samples_ from the posterior distribution rather than creating the probability distribution directly
 - JAGS uses Markov chain Monte Carlo (MCMC) to create these samples. We will talk about this a bit more in later lectures/discussion
 
@@ -221,29 +207,39 @@ Dirichlet, $Dir(\alpha_1, \ldots, \alpha_k)$ | $(0, 1)$ | Multivariate proportio
 ## Example: {.smaller}
 
 ```{r,include=FALSE}
-library(rjags)
 modelstring ='
 model {
-  x ~ dnorm(theta,1/pow(0.8,2))
-  theta ~ dnorm(2.3,1/pow(0.5,2))
+  for(i in 1:N) { 
+    y[i] ~ dnorm(intercept + slope*x[i], residual_sd^-2) 
+  }
+  intercept ~ dnorm(0,100^-2)
+  slope ~ dnorm(0,100^-2)
+  residual_sd ~ dunif(0,100)
 }
 '
-data=list(x=3.1)
-model=jags.model(textConnection(modelstring), data=data)
-output=coda.samples(model=model,variable.names=c("theta"), n.iter=10000)
+data=list(x = stackloss$Air.Flow,
+          y = stackloss$stack.loss,
+          N = nrow(stackloss))
+model=jags.model(textConnection(modelstring), 
+                 data=data)
+output=coda.samples(model = model,
+                    variable.names = c("intercept",
+                                       "slope",
+                                       "residual_sd"), 
+                    n.iter =  10000)
 ```
 
-From the earlier simple example. First 5 posterior samples
+From the earlier simple example. First 5 posterior samples of the slope
 ```{r}
-output[[1]][1:5]
+output[[1]][1:5,'slope']
 ```
 The mean and standard deviation: 
 ```{r}
-c(mean(output[[1]]),sd(output[[1]]))
+c(mean(output[[1]][,'slope']),sd(output[[1]][,'slope']))
 ```
 A 95% credible interval
 ```{r}
-quantile(output[[1]],probs=c(0.025,0.975))
+quantile(output[[1]][,'slope'],probs=c(0.025,0.975))
 ```
 
 ## Why is this better?
