@@ -18,7 +18,7 @@ output:
 A bigger aim, either:
 
 1. Stop using SIAR (for dietary proportions) and start writing your own JAGS code
-2. Stop using SIAR and start using MixSIAR/simmr/SiBER instead
+2. Stop using SIAR and start using MixSIAR/simmr instead
 
 ## Who was Bayes?
 
@@ -65,146 +65,118 @@ $$p(\theta|x) = \frac{p(x|\theta) \times p(\theta)}{p(x)}$$
 - The _prior_ represents external knowledge about the parameters
 
 
-## A simple example
+## A very simple linear regression example
 
-- An ecologist listens for the calls of the southern brown tree frog (_Litoria ewingi_)
-- She wants to know the mean length of the calls
-- We will assume that the standard deviation of the calls is known to be 0.8 seconds
-- She hears a call of length 3.1 seconds
-- A study conducted the previous year estimated the mean to be 2.3 seconds with standard error 0.5 seconds
-
-If we assume that the calls she hears are normally distributed then $x$ follows a normal distribution with mean $\theta$ and standard deviation 0.8s, written $x|\theta \sim N(\theta,0.8^2)$. The prior distribution is $\theta \sim N(2.3,0.5^2)$.
-
-## Simple example (continued) {.smaller}
-
-```{r,echo=FALSE,fig.align='center'}
-theta = seq(0,6,length=100)
-likelihood = dnorm(3.1,mean=theta,sd=0.8)
-prior = dnorm(theta,mean=2.3,sd=0.5)
-par(mar=c(3,3,2,1), mgp=c(2,.7,0), tck=-.01,las=1)
-plot(theta,likelihood/sum(likelihood),type='l',ylab='Probability',ylim=c(0,0.06),xlab='theta (mean length of call in seconds)')
-lines(theta,prior/sum(prior),col='red')
-posterior = prior*likelihood
-lines(theta,posterior/sum(posterior),col='blue')
-legend('topright',legend=c('Likelihood','Prior','Posterior'),col=c('black','red','blue'),lty=1)
-true_post = posterior/sum(posterior)
+Suppose you had some data that looked like this:
+```{r, echo=FALSE}
+dat = read.csv('../data/earnings.csv')
+with(dat, plot(height_cm, log(earn)))
 ```
 
-Note: posterior mean is `r round(sum(theta*true_post),2)` seconds and standard deviation is `r round(sqrt(sum(theta^2*true_post)-sum(theta*true_post)^2),2)` seconds. 
+## What you are used to doing
 
-## Simple example (continued)
-
-Code used to produce previous plot:
-```{r,eval=FALSE}
-# Create grid for theta
-theta = seq(0,6,length=100)
-# Evalutate prior, likelihood and posterior
-prior = dnorm(theta,mean=2.3,sd=0.5)
-likelihood = dnorm(3.1,mean=theta,sd=0.8)
-posterior = prior*likelihood
-# Produce plot
-plot(theta,likelihood/sum(likelihood),type='l',
-     ylab='Probability',ylim=c(0,0.06))
-lines(theta,prior/sum(prior),col='red')
-lines(theta,posterior/sum(posterior),col='blue')
-legend('topright',legend=c('Likelihood','Prior',
-                           'Posterior'),
-       col=c('black','red','blue'),lty=1)
+\tiny
+```{r}
+model = lm(log(earn) ~ height_cm, data = dat)
+summary(model)
 ```
+\normalsize
 
-## Simple example in JAGS {.smaller}
+## What you will now get instead
 
-In later modules we will start using JAGS to fit models like this. The code is much simpler than the previous R version:
-```{r,eval=FALSE}
-library(rjags)
-modelstring ='
-  model {
-    # Likelihood
-    x ~ dnorm(theta,0.8^-2)
-    # Prior
-    theta ~ dnorm(2.3,0.5^-2)
-  }
-'
-# Set up data
-data=list(x=3.1)
-# Run jags
-model=jags.model(textConnection(modelstring), data=data)
-output=coda.samples(model=model,variable.names=c("theta"), n.iter=1000)
-# Plot output
-plot(density(output[[1]]))
-```
-Beware that JAGS uses _precision_ (1/variance) rather than standard deviation in `dnorm`
-
-
-## Plot from JAGS {.smaller}
-
-```{r,include=FALSE}
-library(rjags)
-modelstring ='
+```{r, echo=FALSE, results='hide', message=FALSE}
+library(rstan)
+rstan_options(auto_write = TRUE)
+options(mc.cores = parallel::detectCores())
+stan_code = '
+data {
+  int<lower=0> N;
+  vector[N] x;
+  vector[N] y;
+}
+parameters {
+  real intercept;
+  real slope;
+  real<lower=0> residual_sd;
+} 
 model {
-  x ~ dnorm(theta,0.8^-2)
-  theta ~ dnorm(2.3,0.5^-2)
+  y ~ normal(intercept + slope * x, residual_sd);
 }
 '
-data=list(x=3.1)
-model=jags.model(textConnection(modelstring), data=data)
-output=coda.samples(model=model,variable.names=c("theta"), n.iter=10000)
+stan_run = stan(data = list(N=nrow(dat), 
+                            y = log(dat$earn),
+                            x = dat$height_cm),
+                model_code = stan_code)
 ```
-
-```{r, echo=FALSE,fig.align='center'}
-plot(density(output[[1]]),main='Posterior for theta',xlab='theta',las=1)
+\tiny
+```{r}
+print(stan_run)
 ```
+\normalsize 
 
-Posterior mean is `r round(mean(output[[1]]),2)` seconds and standard deviation is `r round(sd(output[[1]]),2)` seconds. 
+## Using prior information
 
-## What are the assumptions involved in this example?
+- The Bayesian model in the previous slide divided up everything into _parameters_ (the intercept, slope and residual standard deviation), and data (the height and log(earnings) values)
+- The software in the background created a posterior probability distribution of the parameters given the data
+- The model I fitted used no _prior information_. However, if we had done a previous experiment that suggested the intercept should be around 9 with standard deviation 0.5 we can put this in the model
 
-- We've assumed that the normal distribution is appropriate for the likelihood and the prior
-- We've only observed one data point. What if we observed many?
-- We've assumed that the likelihood standard deviation is fixed at 0.8
+## A model with prior information
 
-## A more complicated JAGS version
-
-```{r,eval=FALSE}
-modelstring ='
-  model {
-    # Likelihood
-    for(i in 1:n) { x[i] ~ dnorm(theta,sd^-2) }
-    # Prior
-    theta ~ dnorm(2.3,0.5^-2)
-    sd ~ dunif(0,100)
-  }
+```{r, echo=FALSE, results='hide', message=FALSE}
+stan_code_2 = '
+data {
+  int<lower=0> N;
+  vector[N] x;
+  vector[N] y;
+}
+parameters {
+  real intercept;
+  real slope;
+  real<lower=0> residual_sd;
+} model {
+  intercept ~ normal(9, 0.5);
+  y ~ normal(intercept + slope * x, residual_sd);
+}
 '
-# Set up data
-data=list(x=c(3.1,2.7,4.2,3.6), n=4)
-# Run jags
-model=jags.model(textConnection(modelstring), data=data)
-output=coda.samples(model=model,variable.names=
-                      c("theta","sd"), n.iter=1000)
+stan_run_2 = stan(data = list(N=nrow(dat), 
+                            y = log(dat$earn),
+                            x = dat$height_cm),
+                model_code = stan_code_2)
 ```
-Now have four data points, two parameters and a prior for each
+\tiny
+```{r}
+print(stan_run_2)
+```
+\normalsize 
 
-## What if the observations aren't normal? {.smaller}
+## An early example of a Bayesian model
 
-No problem! We just choose distributions which are appropriate for the type of data
-```{r,eval=FALSE}
-modelstring ='
-  model {
-    # Likelihood
-    for(i in 1:n) { 
-      x[i] ~ dgamma(alpha,beta) 
-    }
-    # Prior
-    alpha ~ dunif(0,100)
-    beta ~ dunif(0,100)
-    # Mean
-    mean <- alpha/beta
-  }
+- To create the Bayesian version of this model I used the following Stan code:
+
+\scriptsize
+```{r, eval = FALSE}
+stan_code = '
+data {
+  int N;
+  vector[N] x;
+  vector[N] y;
+}
+parameters {
+  real intercept;
+  real slope;
+  real<lower=0> residual_sd;
+} 
+model {
+  // Likelihood
+  y ~ normal(intercept + slope * x, residual_sd);
+  // Priors
+  intercept ~ normal(0, 100);
+  slope ~ normal(0, 100);
+  residual_sd ~ uniform(0, 100);
+}
 '
-data=list(x=c(3.1,2.7,4.2,3.6),n=4)
-model=jags.model(textConnection(modelstring), data=data)
-output=coda.samples(model=model,variable.names=c("mean"),n.iter=1000)
 ```
+\normalsize
 
 ## How do I specify the prior distribution?
 
