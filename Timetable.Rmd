@@ -38,7 +38,7 @@ Time  | Class
 13:00-14:00 | [From SIAR to MixSIAR (AP)](https://rawgit.com/andrewcparnell/simms_course/master/ap_notes/siar_mixsiar/siar_mixsiar.html)
 14:00-15:00 | [Dos and don'ts of using mixing models with discussion (AJ)](https://rawgit.com/andrewcparnell/simms_course/master/aj-content/siar-dos-and-donts.html)
 15:00-15:15 | Break
-15:15-17:00 | Guided practical using [MixSIAR (AP)](https://rawgit.com/andrewcparnell/simms_course/master/ap_notes/using_mixsiar/using_mixsiar.html) & [Practical: using MixSIAR and JAGS on real world data sets; benefits over SIAR (AP)](https://rawgit.com/andrewcparnell/simms_course/master/ap_notes/prac_mixsiar_and_jags/prac_mixsiar_and_jags.html) *Suggestion for AP to do goose example in MixSIAR and perhaps the Lakes example from MixSIAR*
+15:15-17:00 | Guided practical using [MixSIAR (AP)](https://rawgit.com/andrewcparnell/simms_course/master/ap_notes/using_mixsiar/using_mixsiar.html) & [Practical: using MixSIAR and JAGS on real world data sets; benefits over SIAR (AP)](https://rawgit.com/andrewcparnell/simms_course/master/ap_notes/prac_mixsiar_and_jags/prac_mixsiar_and_jags.html) <!--*Suggestion for AP to do goose example in MixSIAR and perhaps the Lakes example from MixSIAR*-->
 
 
 ## Wednesday 
@@ -64,7 +64,7 @@ Hierarchical MixSIAR, source grouping and own data.
 
 Time  | Class
 ------------- | ----------------------------------------------------
-9:00-10:30 | [SIMMs for complex data sets: time series and mixed effects models (AP)](https://rawgit.com/andrewcparnell/simms_course/master/ap_notes/complex_simms/complex_SIMMs.html) *AP to check content... perhaps a guided practical going through either the swallows example, or one of the more complex MixSIAR models. Suggest cover only hierarchical simms using the wolves example.*
+9:00-10:30 | [SIMMs for complex data sets: time series and mixed effects models (AP)](https://rawgit.com/andrewcparnell/simms_course/master/ap_notes/complex_simms/complex_SIMMs.html) <!--*AP to check content... perhaps a guided practical going through either the swallows example, or one of the more complex MixSIAR models. Suggest cover only hierarchical simms using the wolves example.*--> 
 10:30-10:45 | Coffee
 10:45-12:00 | [Practical: Source grouping, when and how? (AJ)](https://rawgit.com/andrewcparnell/simms_course/master/aj-content/practicals/source-aggregation.html) 
 12:00-13:00 | Lunch
