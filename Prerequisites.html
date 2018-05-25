@@ -159,29 +159,29 @@ install_github(&quot;healyke/SIDER&quot;, build_vignettes = TRUE)
 library(SIDER)
 
 install.packages('MixSIAR')</code></pre>
-<p>These will install the most up to date versions of the packages <code>update.packages(ask = FALSE)</code>. You might run into the following problems:</p>
+<p>These will install the most up to date versions of the packages. Note that this might take a while as some of these are pretty big and complicated packages.</p>
+</div>
+<div id="step-3" class="section level3">
+<h3>Step 3</h3>
+<p>Finally if you would like to do some pre-course reading (recommended) there are some papers which can be accessed <a href="https://github.com/andrewcparnell/simms_course/tree/master/papers">here</a>.</p>
+</div>
+<div id="troubleshooting" class="section level3">
+<h3>Troubleshooting</h3>
+<p>Here are some common problems with solutions:</p>
 <ul>
 <li>If you are on Windows and you get an error about not having Rtools please install Rtools from the link it provides you in the error message</li>
 <li>If you are trying to install Rtools with R 3.5.0 and are getting an error message about incompatibility of Rtools, run the command:</li>
 </ul>
 <pre class="r"><code>library(devtools)
 assignInNamespace(&quot;version_info&quot;, c(devtools:::version_info, list(&quot;3.5&quot; = list(version_min = &quot;3.3.0&quot;, version_max = &quot;99.99.99&quot;, path = &quot;bin&quot;))), &quot;devtools&quot;)</code></pre>
+<p>Then try the <code>install_github</code> command again.</p>
 <ul>
-<li>Then try the <code>install_github</code> command again.</li>
 <li>If you are on a Mac you might need to install X11 from <a href="http://www.xquartz.org" class="uri">http://www.xquartz.org</a>.</li>
 <li>You may get a pop up window be asking if you want ‘additional build tools’. Please select ‘yes’.</li>
 <li>If you get an error about package <code>stringi</code> try typing <code>install.packages('stringi',type='win.binary')</code> if on Windows or <code>install.packages('stringi',type='mac.binary')</code> if on Mac. Then re-run the commands above</li>
 <li>If you get some errors about <code>pandoc</code> when installing simmr leave out the <code>build_vignettes=TRUE</code> argument</li>
 </ul>
-</div>
-<div id="step-3" class="section level3">
-<h3>Step 3</h3>
-<p>Finally if you would like to do some pre-course reading (recommended) there are some papers which can be accessed <a href="https://github.com/andrewcparnell/simms_course/tree/master/papers">here</a>.</p>
-<p>Note: this might take a while as these are pretty big and complicated packages.</p>
-</div>
-<div id="troubleshooting" class="section level3">
-<h3>Troubleshooting</h3>
-<p>If you run into any problems please drop us a line at <a href="mailto:andrew.parnell@ucd.ie">andrew.parnell@ucd.ie</a> (for SIAR/simmr/MixSIAR queries) or <a href="mailto:a.jackson@tcd.ie">a.jackson@tcd.ie</a> (for SIBER/SIDER queries).</p>
+<p>If you run into any other problems please drop us a line at <a href="mailto:andrew.parnell@ucd.ie">andrew.parnell@ucd.ie</a> (for SIAR/simmr/MixSIAR queries) or <a href="mailto:a.jackson@tcd.ie">a.jackson@tcd.ie</a> (for SIBER/SIDER queries).</p>
 </div>
 
 

@@ -48,7 +48,17 @@ install.packages('MixSIAR')
 
 ```
 
-These will install the most up to date versions of the packages `update.packages(ask = FALSE)`. You might run into the following problems:
+These will install the most up to date versions of the packages. Note that this might take a while as some of these are pretty big and complicated packages.
+
+ 
+### Step 3
+ 
+Finally if you would like to do some pre-course reading (recommended) there are some papers which can be accessed [here](https://github.com/andrewcparnell/simms_course/tree/master/papers).
+
+
+### Troubleshooting
+
+Here are some common problems with solutions:
 
   - If you are on Windows and you get an error about not having Rtools please install Rtools from the link it provides you in the error message
   - If you are trying to install Rtools with R 3.5.0 and are getting an error message about incompatibility of Rtools, run the command:
@@ -56,20 +66,13 @@ These will install the most up to date versions of the packages `update.packages
 library(devtools)
 assignInNamespace("version_info", c(devtools:::version_info, list("3.5" = list(version_min = "3.3.0", version_max = "99.99.99", path = "bin"))), "devtools")
 ```
-  - Then try the `install_github` command again.
+  Then try the `install_github` command again.
+  
   - If you are on a Mac you might need to install X11 from [http://www.xquartz.org](http://www.xquartz.org). 
   - You may get a pop up window be asking if you want 'additional build tools'. Please select 'yes'.
   - If you get an error about package `stringi` try typing `install.packages('stringi',type='win.binary')` if on Windows or `install.packages('stringi',type='mac.binary')` if on Mac. Then re-run the commands above
   - If you get some errors about `pandoc` when installing simmr leave out the `build_vignettes=TRUE` argument
 
- 
-### Step 3
- 
-Finally if you would like to do some pre-course reading (recommended) there are some papers which can be accessed [here](https://github.com/andrewcparnell/simms_course/tree/master/papers).
 
-Note: this might take a while as these are pretty big and complicated packages.
-
-### Troubleshooting
-
-If you run into any problems please drop us a line at <andrew.parnell@ucd.ie> (for SIAR/simmr/MixSIAR queries) or <a.jackson@tcd.ie> (for SIBER/SIDER queries).
+If you run into any other problems please drop us a line at <andrew.parnell@ucd.ie> (for SIAR/simmr/MixSIAR queries) or <a.jackson@tcd.ie> (for SIBER/SIDER queries).
 

@@ -15,7 +15,7 @@ output:
 
 ## Revision: our best SIMM in JAGS
 
-\small
+\tiny
 
 ```{r}
 modelstring ='
@@ -46,210 +46,15 @@ model {
 ## Key features
 
 - The key features of our current SIMM are:
-
-  1. We are accounting for uncertainty in sources and TEFs
-  2. Individual dietary proportions are provided for each consumer, arising from an overall mean
-  3. The dietary proportions are linked to normal distributions via the _centralised log-ratio_ (CLR) transform
+    1. We are accounting for uncertainty in sources and TEFs
+    1. Individual dietary proportions are provided for each consumer, arising from an overall mean
+    1. The dietary proportions are linked to normal distributions via the _centralised log-ratio_ (CLR) transform
 
 - Some remaining restrictions
-
-  1. We still haven't seen code that incorporates covariates
-  2. The sources, TEFs and consumers, are all assumed to be independent across isotope (i.e. 'circular' on an isospace plot). Could there be covariance between them?
-
-
-<!--
-
-## The multivariate normal distribution
-
-- The multivariate normal (MVN) distribution will account for covariance (i.e. correlation) between data or parameters
-- The MVN takes a mean vector $M$ and a variance matrix $V$ as its two arguments. $M$ represents the mean of each element, whilst $V$ contains the variances and covariances between the elements
-- In JAGS, the MVN distribution is represented by `dmnorm` function, which takes the _precision_ rather than the variance matrix, similar to `dnorm`
-
--->
-<!--
-
-## MVN example - Old faithful data
-
-\small
-
-```{r}
-data(faithful)
-plot(faithful,xlab='Eruption length (minutes)',ylab='Waiting time (minutes)',las=1)
-```
-
-
--->
-<!--
-
-
-## MVN example - JAGS code
-
-\small
-
-```{r,include=FALSE}
-library(rjags)
-```
-```{r,results='hide'}
-modelstring ='
-model {
-  for(i in 1:N) { y[i,] ~ dmnorm(M,V_inv) }
-  V_inv <- inverse(V)
-  V[1,1] <- pow(sigma[1],2)
-  V[2,1] <- rho*sigma[1]*sigma[2]
-  V[2,2] <- pow(sigma[2],2)
-  V[1,2] <- V[2,1]
-  for(j in 1:2) { 
-    M[j] ~ dnorm(0,100^-2) 
-    sigma[j] ~ dunif(0,1000)
-  }
-  rho ~ dunif(-1,1)
-}'
-data=list(y=faithful,N=nrow(faithful))
-model=jags.model(textConnection(modelstring), data=data)
-output=coda.samples(model=model,variable.names=c("sigma","M","rho"),n.iter=1000)
-```
-
-
--->
-<!--
-
-
-
-## MVN output 1
-
-```{r}
-summary(output)$statistics
-```
-
-
--->
-<!--
-
-
-## MVN output 2
-
-```{r}
-library(MASS)
-post_mean = mvrnorm(10000,mu=c(3.45,70.4),Sigma=
-                      matrix(c(1.14^2,0.898*1.14*13.59,0.898*1.14*13.59,
-                               13.59^2),2,2))
-plot(faithful)
-contour(kde2d(post_mean[,1],post_mean[,2]),add=TRUE)
-```
-
-
--->
-<!--
-
-
-## Prior distributions for covariance matrices
-
-- When working in only two dimensions it can be helpful to split up the covariance matrix into two variances/standard deviations and a correlation parameter
-- When working in more than two dimensions this gets tricky. People often use the _Wishart_ distribution which is a probability distribution for covariance matrices
-- Be careful when using the Wishart in high dimensions as it again suffers from some unrealistic restrictions on the resulting matrix 
-
--->
-<!--
-
-
-## The MVN in a SIMM
-
-\small
-
-```{r,include=FALSE}
-modelstring ='
-model {
-  for(i in 1:N) { 
-      y[i,] ~ dmnorm(M[i,],V_inv)
-      for(j in 1:J) { M[i,j] <- inprod(p[i,]*q[,j],s[,j]+c[,j])/inprod(p[i,],q[,j]) }
-  }
-  V_inv <- inverse(V)
-  V[1,1] <- pow(sigma[1],2)
-  V[2,1] <- rho*sigma[1]*sigma[2]
-  V[2,2] <- pow(sigma[2],2)
-  V[1,2] <- V[2,1]
-  for(j in 1:2) { 
-    sigma[j] ~ dunif(0,100)
-  }
-  rho ~ dunif(-1,1)
+    1. We still haven't seen code that incorporates covariates
+    1. We don't know how to compare between different model structures
+    1. The sources, TEFs and consumers, are all assumed to be independent across isotope (i.e. 'circular' on an isospace plot). Could there be covariance between them?
   
-  for(k in 1:K) { 
-    for(j in 1:J) {
-      s[k,j] ~ dnorm(s_mean[k,j],s_sd[k,j]^-2) 
-      c[k,j] ~ dnorm(c_mean[k,j],c_sd[k,j]^-2) 
-    }
-  }
-  for(i in 1:N) {
-    p[i,1:K] <- expf[i,]/sum(expf[i,])
-    for(k in 1:K) {
-      expf[i,k] <- exp(f[i,k])
-      f[i,k] ~ dnorm(mu_f[k],sigma_f[k]^-2)
-    }
-  }
-  for(k in 1:K) { 
-    mu_f[k] ~ dnorm(0,1)
-    sigma_f[k] ~ dgamma(2,1)
-  }
-}
-'
-library(siar)
-data(geese1demo,sourcesdemo,correctionsdemo,concdepdemo)
-con = geese1demo
-sources = as.matrix(sourcesdemo[,2:5])
-tefs = as.matrix(correctionsdemo[,2:5])
-cd = as.matrix(concdepdemo[,c(2,4)])
-data=list(y=con,s_mean=sources[,c(1,3)],s_sd=sources[,c(2,4)],
-          c_mean=tefs[,c(1,3)],c_sd=tefs[,c(2,4)],
-          q=cd,N=nrow(con),K=nrow(sources),
-          J=ncol(con))
-model=jags.model(textConnection(modelstring), data=data)
-output=coda.samples(model=model,variable.names=c('sigma','mu_f','sigma_f','rho'),
-                    n.iter=10000)
-```
-
-```{r,eval=FALSE}
-modelstring ='
-model {
-  for(i in 1:N) { 
-      y[i,] ~ dmnorm(M[i,],V_inv)
-      for(j in 1:J) { M[i,j] <- inprod(p[i,]*q[,j],s[,j]+c[,j])/inprod(p[i,],q[,j]) }
-  }
-  V_inv <- inverse(V)
-  V[1,1] <- pow(sigma[1],2)
-  V[2,1] <- rho*sigma[1]*sigma[2]
-  V[2,2] <- pow(sigma[2],2)
-  V[1,2] <- V[2,1]
-  for(j in 1:2) { 
-    sigma[j] ~ dunif(0,100)
-  }
-  rho ~ dunif(-1,1)
-  ...
-}
-'
-```
-
--->
-<!--
-
-
-## Output from the multivariate SIMM
-
-```{r}
-round(summary(output)$quantiles,3)
-```
-
--->
-<!--
-
-
-## Notes about the multivariate SIMM
-
-- On this small data set there doesn't seem to be much strong evidence for the value of $\rho$ (note: this doesn't mean that it's not important - see later slides on model selection)
-- Often it is more useful to put the multivariate normal distribution on the sources and TEFs rather than the isotope residuals
-- To do this, simply re-use the earlier `faithful` example but with the raw source/TEF data, then use the means/variances/covariances in the prior distribution for $s$ and $c$ in the SIMM
-- Another alternative is to put the MVN on the CLR transformed $f$ values - the model can now learn the dependencies between the dietary proportions
-
--->
 
 ## Adding covariates
 
@@ -402,62 +207,44 @@ where $L$ is the likelihood and $p_D$ is the _effective number of parameters_
 - Compare the Geese model with the time series structure to a model without including the sine or cosine terms
 - Procedure
 
-  1. Run each model through JAGS
+  1. Set up each model in JAGS as normal
+  1. Additionally run the `dic.samples` function
   1. Extract the DIC and $p_D$ value
   1. Choose the model that has the smallest value
   
-- Can also do this amongst multiple different models, providing they all use the same data. 
+- Can also do this amongst multiple different models, providing they all use the same data
+- Need to make sure that each model has converged
  
+ 
+## DIC example - code
+ 
+\tiny
 ```{r,eval=FALSE}
-modelstring ='
-model {
-  for(i in 1:N) { y[i,] ~ dmnorm(M,V_inv) }
-  V_inv <- inverse(V)
-  V[1,1] <- pow(sigma[1],2)
-  V[2,1] <- rho*sigma[1]*sigma[2]
-  V[2,2] <- pow(sigma[2],2)
-  V[1,2] <- V[2,1]
-  for(j in 1:2) { 
-    M[j] ~ dnorm(0,100^-2) 
-    sigma[j] ~ dunif(0,1000)
-  }
-  rho ~ dunif(-1,1)
-}'
-data=list(y=faithful,N=nrow(faithful))
-model=jags.model(textConnection(modelstring), data=data,n.chains=4)
+X = cbind(1,sin(2*pi*con$julianday/365),cos(2*pi*con$julianday/365))
+data=list(y=con[,2:3],s_mean=sources[,c(1,3)],s_sd=sources[,c(2,4)],
+          c_mean=tefs[,c(1,3)],c_sd=tefs[,c(2,4)],
+          q=cd,N=nrow(con),K=nrow(sources),
+          J=ncol(con[,2:3]),X=X,L=ncol(X))
+model=jags.model(textConnection(modelstring), data=data, n.chains=3)
 dic.samples(model,n.iter=2000)
-# Mean deviance:  1585 
-# penalty 5.09 
-# Penalized deviance: 1590 
-```
-
-## DIC example 2 - standard normal model {.smaller}
-
-```{r,eval=FALSE}
-modelstring ='
-model {
-  for(i in 1:N) { y[i,] ~ dmnorm(M,V_inv) }
-  V_inv <- inverse(V)
-  V[1,1] <- pow(sigma[1],2)
-  V[2,1] <- 0
-  V[2,2] <- pow(sigma[2],2)
-  V[1,2] <- 0
-  for(j in 1:2) { 
-    M[j] ~ dnorm(0,100^-2) 
-    sigma[j] ~ dunif(0,1000)
-  }
-}'
-data=list(y=faithful,N=nrow(faithful))
-model=jags.model(textConnection(modelstring), data=data,n.chains=4)
-dic.samples(model,n.iter=2000)
-# Mean deviance:  2038 
-# penalty 4.122 
-# Penalized deviance: 2042 
+# Mean deviance:  1793 
+# penalty 9.512 
+# Penalized deviance: 1802 
+X2 = cbind(1,con$julianday/365)
+data2=list(y=con[,2:3],s_mean=sources[,c(1,3)],s_sd=sources[,c(2,4)],
+          c_mean=tefs[,c(1,3)],c_sd=tefs[,c(2,4)],
+          q=cd,N=nrow(con),K=nrow(sources),
+          J=ncol(con[,2:3]),X=X2,L=ncol(X2))
+model2=jags.model(textConnection(modelstring), data=data2, n.chains=3)
+dic.samples(model2,n.iter=2000)
+# Mean deviance:  1879 
+# penalty 8.922 
+# Penalized deviance: 1888 
 ```
 
 ## Some final notes on the DIC
 
-- DIC can be quite sensitive to model focus. Compare the model in the previous slide with that of a standard `dnorm` version of the same model
+- DIC can be quite sensitive to model focus. If you move parameters around (like in the centered random effects model) you can get different DIC values
 - The value of $p_D$ is useful. For simple models, it should be roughly the true number of parameters (e.g. 5 and 4 in the previous models). However, in hierarchical models in can be non-integer representing the fact that the parameters are shared between groups. In some cases $p_D$ can be negative!
 - JAGS contains the option to create a 'superior' version of $p_D$ called `popt` which you specify via the `type` argument. This penalises extra parameters more harshly but isn't quite as interpretable. However, it is often more stable in more complicated models.
 
