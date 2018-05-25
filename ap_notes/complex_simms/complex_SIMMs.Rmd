@@ -1,20 +1,21 @@
 ---
 title: "SIMMs for complex data sets"
-author: "Andrew Parnell, School of Mathematics and Statistics, University College Dublin"
+author: Andrew Parnell \newline \texttt{andrew.parnell@mu.ie}   \newline \vspace{1cm}
+  \newline \includegraphics[width=3cm]{../maynooth_uni_logo.jpg}
 output:
-  beamer_presentation: default
-  ioslides_presentation:
-    logo: https://static1.squarespace.com/static/54f81b8ce4b0dc6e6b10371b/54f87babe4b0ffd48a81bf58/54f87bbee4b087c5398e4a2a/1425570919146/ucd_brandmark_colour.gif?format=500w
-    transition: slower
-    widescreen: yes
+  beamer_presentation:
+    includes:
+      in_header: ../header.tex
 ---
 
 ## Learning outcomes
-- Understand how multivariate distributions might better capture variability in sources and dietary proportions
-- Understand how richer covariates might be included in a SIMM
+
+- Understand how covariates might be included in a SIMM
 - Understand how to compare models using DIC
 
-## Revision: our best SIMM in JAGS {.smaller}
+## Revision: our best SIMM in JAGS
+
+\small
 
 ```{r}
 modelstring ='
@@ -53,7 +54,10 @@ model {
 - Some remaining restrictions
 
   1. We still haven't seen code that incorporates covariates
-  2. The sources, TEFs and consumers, are all assumed to be independent across isotope (i.e. 'circular' on an isospace plot). Could there by covariance between them?
+  2. The sources, TEFs and consumers, are all assumed to be independent across isotope (i.e. 'circular' on an isospace plot). Could there be covariance between them?
+
+
+<!--
 
 ## The multivariate normal distribution
 
@@ -61,14 +65,26 @@ model {
 - The MVN takes a mean vector $M$ and a variance matrix $V$ as its two arguments. $M$ represents the mean of each element, whilst $V$ contains the variances and covariances between the elements
 - In JAGS, the MVN distribution is represented by `dmnorm` function, which takes the _precision_ rather than the variance matrix, similar to `dnorm`
 
+-->
+<!--
+
 ## MVN example - Old faithful data
 
-```{r,fig.align='center'}
+\small
+
+```{r}
 data(faithful)
 plot(faithful,xlab='Eruption length (minutes)',ylab='Waiting time (minutes)',las=1)
 ```
 
+
+-->
+<!--
+
+
 ## MVN example - JAGS code
+
+\small
 
 ```{r,include=FALSE}
 library(rjags)
@@ -93,16 +109,26 @@ model=jags.model(textConnection(modelstring), data=data)
 output=coda.samples(model=model,variable.names=c("sigma","M","rho"),n.iter=1000)
 ```
 
+
+-->
+<!--
+
+
+
 ## MVN output 1
 
-```{r,fig.align='center',fig.height=3.5}
+```{r}
 summary(output)$statistics
 ```
 
 
+-->
+<!--
+
+
 ## MVN output 2
 
-```{r,fig.align='center',fig.height=3.5}
+```{r}
 library(MASS)
 post_mean = mvrnorm(10000,mu=c(3.45,70.4),Sigma=
                       matrix(c(1.14^2,0.898*1.14*13.59,0.898*1.14*13.59,
@@ -112,13 +138,23 @@ contour(kde2d(post_mean[,1],post_mean[,2]),add=TRUE)
 ```
 
 
+-->
+<!--
+
+
 ## Prior distributions for covariance matrices
 
 - When working in only two dimensions it can be helpful to split up the covariance matrix into two variances/standard deviations and a correlation parameter
 - When working in more than two dimensions this gets tricky. People often use the _Wishart_ distribution which is a probability distribution for covariance matrices
 - Be careful when using the Wishart in high dimensions as it again suffers from some unrealistic restrictions on the resulting matrix 
 
+-->
+<!--
+
+
 ## The MVN in a SIMM
+
+\small
 
 ```{r,include=FALSE}
 modelstring ='
@@ -192,11 +228,19 @@ model {
 '
 ```
 
+-->
+<!--
+
+
 ## Output from the multivariate SIMM
 
 ```{r}
 round(summary(output)$quantiles,3)
 ```
+
+-->
+<!--
+
 
 ## Notes about the multivariate SIMM
 
@@ -205,7 +249,9 @@ round(summary(output)$quantiles,3)
 - To do this, simply re-use the earlier `faithful` example but with the raw source/TEF data, then use the means/variances/covariances in the prior distribution for $s$ and $c$ in the SIMM
 - Another alternative is to put the MVN on the CLR transformed $f$ values - the model can now learn the dependencies between the dietary proportions
 
-## More on covariates
+-->
+
+## Adding covariates
 
 - Let's now create a model with covariates on the dietary proportions
 - Recall that we can do this using the CLR transform on the $p$:
@@ -248,7 +294,7 @@ model {
 
 ## The Geese data
 
-<center><img src="Geese2IsoSpace.png" height="500px" /></center>
+\includegraphics[width=\textwidth]{Geese2IsoSpace.png}
 
 ## A Fourier basis
 
@@ -326,7 +372,7 @@ Full script in `run_geese_harmonic.R` file
 
 ## Output
 
-<center><img src="Geese2Harmonic.png" height="500px" /></center>
+\includegraphics[width=\textwidth]{Geese2Harmonic.png}
 
 ## Comparing models
 
@@ -351,7 +397,16 @@ where $L$ is the likelihood and $p_D$ is the _effective number of parameters_
 - $p_D$ is approximately calculated as the difference between how well the model fits the data at the mean value of the parameters, and how well the model fits the data at the mean of the likelihood
 - From JAGS, we can get DIC by running the extra command `dic.samples`. Note that the DIC sometimes takes much longer to converge than the parameters
 
-## DIC example 1 - MVN model {.smaller}
+## DIC example 
+
+- Compare the Geese model with the time series structure to a model without including the sine or cosine terms
+- Procedure
+
+  1. Run each model through JAGS
+  1. Extract the DIC and $p_D$ value
+  1. Choose the model that has the smallest value
+  
+- Can also do this amongst multiple different models, providing they all use the same data. 
  
 ```{r,eval=FALSE}
 modelstring ='

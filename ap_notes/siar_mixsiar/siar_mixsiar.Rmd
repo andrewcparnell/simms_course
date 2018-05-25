@@ -1,12 +1,11 @@
 ---
 title: "From SIAR to MixSIAR"
-author: "Andrew Parnell, School of Mathematics and Statistics, University College Dublin"
+author: Andrew Parnell \newline \texttt{andrew.parnell@mu.ie}   \newline \vspace{1cm}
+  \newline \includegraphics[width=3cm]{../maynooth_uni_logo.jpg}
 output:
-  beamer_presentation: default
-  ioslides_presentation:
-    logo: https://static1.squarespace.com/static/54f81b8ce4b0dc6e6b10371b/54f87babe4b0ffd48a81bf58/54f87bbee4b087c5398e4a2a/1425570919146/ucd_brandmark_colour.gif?format=500w
-    transition: slower
-    widescreen: yes
+  beamer_presentation:
+    includes:
+      in_header: ../header.tex
 ---
 
 ## Learning outcomes
@@ -14,9 +13,9 @@ output:
 - Understand how MixSIAR (and simmr) extends MixSIR and SIAR
 - Understand the differences in likelihoods and priors
 
-## Revision: SIAR model in JAGS
+## Revision: simmr model in JAGS
 
-- Let's move back to the proper SIAR model defined yesterday:
+- Let's go back to the model defined earlier:
 $$ y_{ij} \sim N \left( \frac{\sum_{k=1}^K p_k q_{jk} (\mu_{s,jk}+\mu_{c,jk})}{\sum_{k=1}^K p_k q_{jk}}, \frac{\sum_{k=1}^K p_k^2 q_{jk}^2 (\sigma_{s,jk}^2+\sigma_{c,jk}^2)}{(\sum_{k=1}^K p_k q_{jk})^2} +  \sigma_j^2\right) $$
 - We also have prior distributions (usually uniform) on $\sigma^2$ and a Dirichlet prior on $p$
 - How is this model still a simplification of reality?
@@ -41,6 +40,8 @@ $$y_{ij} \sim N(\mu + b_j, \sigma^2),\; b_j \sim N(0,\sigma_b^2)$$
 - $\sigma$ measures the standard deviation _within_ a group whilst $\sigma_b$ measures the standard deviation _between_ groups
 
 ## Fitting a random effects model in JAGS
+
+\small
 
 ```{r,include=FALSE}
 library(rjags)
@@ -80,6 +81,8 @@ output=coda.samples(model=model,
 
 ## Output from the random effects model
 
+\small
+
 ```{r,include=FALSE}
 modelstring ='
 model {
@@ -102,7 +105,8 @@ output=coda.samples(model=model,
 ```
 
 ```{r}
-t(round(apply(output[[1]],2,quantile,probs=c(0.025,0.5,0.975)),2))
+t(round(apply(output[[1]],2,quantile,
+              probs=c(0.025,0.5,0.975)),2))
 ```
 - You need a reasonable number of groups to estimate $\sigma_b$ well. When the number of groups is very small you might run into problems
 - You could also include `b` in the `variable.names` if you want the deviations from the overall mean
@@ -113,18 +117,18 @@ t(round(apply(output[[1]],2,quantile,probs=c(0.025,0.5,0.975)),2))
 - In the SIMM case we might have information that some consumers might share the same dietary proportions
 - We might be interested in how the dietary proportions vary between groups and within groups, just as in the simple example
 - An issue is: how do we achieve this in the SIMM case?
-- One solution was elegantly proposed by Semmens _et al_ in their PLoS ONE 2009 paper
+- There are two ways to deal with probability distributions for proportions; use a direct probability distribution (e.g. the Dirichlet) or _transform_ to another set of parameters
 
-## A hierchical SIMM
+<!--## A hierchical SIMM
 
 - Semmens _et al_ differentiate between the _overall_ or _mean_ dietary proportions $p_{mean}$, and the _deviations_ $p_{dev,j}$ from this mean for each _group_ $p_j$ 
 - They use the relationship:
 $$ p_j = w p_{mean} + (1-w) p_{dev,j} $$
 where $w$ is a mixing constant which determines how much the group behaves like the mean (high $w$), or not (low $w$)
 - They give the mean and the deviation dietary proportions Dirichlet($\alpha_1,\ldots,\alpha_K$) prior distributions
-- They give $w$ a standard $U(0,1)$ prior
+- They give $w$ a standard $U(0,1)$ prior-->
 
-## More on  random effects in proportions
+## More on random effects in proportions
 
 - A slightly more flexible prior distribution for proportions is obtained by transforming the proportions instead
 - We already met this with logistic regression where we can use:
@@ -137,7 +141,6 @@ $$\left[ p_1,\ldots,p_K \right] = \left[ \frac{\exp(f_1)}{\sum_j \exp (f_j)}, \l
 - In logistic regression we can put a prior distribution on $f$ (i.e. $logit(p)$) e.g. $f \sim N(\alpha + \beta x, \sigma^2)$ which allows us to relate the probability $p$ to a covariate $x$. We can use the normal distribution because $f$ is unrestricted
 - In CLR regression, we put a prior on the $f_k$ so that each one relates to the covariate with different coefficient values
 - The CLR transformation guarantees that all the dietary proportions will sum to 1
-- More on this tomorrow
 
 ## Random effects for individuals
 
@@ -145,7 +148,10 @@ $$\left[ p_1,\ldots,p_K \right] = \left[ \frac{\exp(f_1)}{\sum_j \exp (f_j)}, \l
 - In a SIMM we might reasonably assume that every consumer is eating something slightly different and want to quantify the overall mean diet as well as the variability between consumers
 - We can do this by modelling each consumer's dietary proportion $p_{ik}$ with a normally distributed prior on the CLR transform of $p$
 
-## A 'simple' CLR example {.smaller}
+## A 'simple' CLR example
+
+\small 
+
 ```{r,eval=FALSE}
 modelstring ='
 model {
@@ -208,17 +214,23 @@ tefs = as.matrix(correctionsdemo[,2:5])
 cd = as.matrix(concdepdemo[,c(2,4)])
 ```
 ```{r,results='hide'}
-data=list(y=con,s_mean=sources[,c(1,3)],s_sd=sources[,c(2,4)],
+data=list(y=con,s_mean=sources[,c(1,3)],
+          s_sd=sources[,c(2,4)],
           c_mean=tefs[,c(1,3)],c_sd=tefs[,c(2,4)],
           q=cd,N=nrow(con),K=nrow(sources),
           J=ncol(con))
 model=jags.model(textConnection(modelstring), data=data)
-output=coda.samples(model=model,variable.names=c('p','sigma','mu_f','sigma_f'),
+output=coda.samples(model=model,
+                    variable.names=c('p','sigma',
+                                     'mu_f','sigma_f'),
                     n.iter=10000)
 out_summ = summary(output)
 ```
 
 ## Output
+
+\small
+
 ```{r}
 head(out_summ$statistics,12)
 ```

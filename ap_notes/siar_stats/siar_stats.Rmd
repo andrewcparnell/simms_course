@@ -1,17 +1,22 @@
 ---
-title: "The statistical model behind SIAR (and simmr)"
-author: "Andrew Parnell, School of Mathematics and Statistics, University College Dublin"
+title: "The statistical model behind simmr (and SIAR)"
+author: Andrew Parnell \newline \texttt{andrew.parnell@mu.ie}   \newline \vspace{1cm}
+  \newline \includegraphics[width=3cm]{../maynooth_uni_logo.jpg}
 output:
-  ioslides_presentation:
-    logo: ../ucd_brandmark_colour.gif
-    transition: slower
-    widescreen: yes
-  beamer_presentation: default
+  beamer_presentation:
+    includes:
+      in_header: ../header.tex
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(dev = 'pdf')
+par(mar=c(3,3,2,1), mgp=c(2,.7,0), tck=-.01,las=1)
+```
 ---
 
 ## Learning outcomes:
-- Understand the statistical model behind SIAR
-- Know how to run a model in SIAR and check that it works
+- Understand the statistical model behind simmr/SIAR
+- Know how to run a model in simmr/SIAR and check that it works
 - Be able to follow the technical details of the 2010 SIAR Plos ONE paper
 
 ## Our simple SIMM
@@ -30,7 +35,7 @@ with $s_k \sim N(\mu_{s_k},\sigma_{s_k}^2)$, $p_1 \sim U(0,1)$ and $\sigma \sim 
     - including concentration dependence
     - allowing for multiple isotopes
     - allowing for richer source sampling by consumers
-- If we include all of these factors we end up with the SIAR model
+- If we include all of these factors we end up with the simmr/SIAR model
 - We will take them in turn and add them into our JAGS code
 
 ## Reminder: the SIAR geese data
@@ -39,24 +44,41 @@ with $s_k \sim N(\mu_{s_k},\sigma_{s_k}^2)$, $p_1 \sim U(0,1)$ and $\sigma \sim 
 library(siar)
 ```
 ```{r}
-data(geese1demo,sourcesdemo)
+data(geese1demo,sourcesdemo, correctionsdemo, concdepdemo)
 head(geese1demo,3)
 sourcesdemo
 ```
 
 ## Plotting the data {.smaller}
-
+\small
 A plot in isotope space:
-```{r,fig.align='center',results='hide',fig.height=4}
-data(correctionsdemo,concdepdemo)
-out = siarmcmcdirichletv4(geese1demo,sourcesdemo,correctionsdemo,concdepdemo)
-out$TITLE = 'Geese data'
-siarplotdata(out)
+```{r,results='hide',message=FALSE, echo = FALSE, warning=FALSE}
+library(simmr)
+mix = geese1demo
+colnames(mix) = c('d13C','d15N')
+s_names=as.character(sourcesdemo[,1])
+s_means = sourcesdemo[,c(2,4)]
+s_sds = sourcesdemo[,c(3,5)]
+c_means = correctionsdemo[,c(2,4)]
+c_sds = correctionsdemo[,c(3,5)]
+conc = concdepdemo[,c(2,4)]
+# Load
+simmr_in = simmr_load(mixtures=mix,
+                     source_names=s_names,
+                     source_means=s_means,
+                     source_sds=s_sds,
+                     correction_means=c_means,
+                     correction_sds=c_sds,
+                     concentration_means = conc)
+```
+
+```{r, warning=FALSE}
+plot(simmr_in)
 ```
 
 ## Including multiple sources
 
-- Adding in multiple sources to the likelihood is straightforward:
+- Adding in multiple sources to the likelihood means having more terms in the sum:
 $$ y_i \sim N\left(\sum_{k=1}^K p_ks_k,\sigma^2\right)$$
 - In the above we have $K$ sources and hence $K$ dietary proportions
 - We also now need $K$ source prior distributions
@@ -79,6 +101,7 @@ consumers = geese1demo[,2]
 set.seed(4)
 ```
 
+\small
 ```{r,results='hide'}
 modelstring ='
 model {
@@ -92,17 +115,21 @@ sources = sourcesdemo[,4:5]
 data=list(y=consumers,s_mean=sources[,1],s_sd=sources[,2],
           N=length(consumers),K=nrow(sources),
           alpha=rep(1,nrow(sources)))
+set.seed(123)
 model=jags.model(textConnection(modelstring), data=data)
-output=coda.samples(model=model,variable.names=c("p"),n.iter=1000)
+output=coda.samples(model=model,variable.names=c("p"),
+                    n.iter=1000)
 ```
 This is now running with all 4 sources
 
 ## Results
 
+\small
+
 - We can explore/plot results with `summary(output)`, `plot(output)`, and also run multiple chains, form predictive distributions, check convergence, etc
 - One important thing to note is that the fitting method (MCMC) produces a joint posterior distribution of the dietary proportions. This means that each set of samples will sum to 1:
 ```{r}
-head(as.matrix(output[[1]]),2)
+head(as.matrix(output[[1]]),4)
 ```
 - The key implication of this is that, aside from exploring the _marginal_ posterior distributions (with means, sds, etc) we can explore the _joint_ uncertainty of the dietary proportions
 
@@ -123,10 +150,11 @@ panel.cor <- function(x, y, digits = 2, prefix = "", cex.cor, ...)
 
 ```
 
-```{r,fig.align='center'}
+```{r, fig.height = 5}
 out_2 = as.matrix(output[[1]])
 colnames(out_2) = sourcesdemo[,1]
-pairs(out_2, lower.panel = panel.smooth, upper.panel = panel.cor)
+pairs(out_2, lower.panel = panel.smooth, 
+      upper.panel = panel.cor)
 ```
 
 ## Trophic enrichment factors and concentration dependence {.smaller}
@@ -140,6 +168,7 @@ $$ y_i \sim N \left( \frac{\sum_{k=1}^K p_k q_k (s_k+c_k)}{\sum_{k=1}^K p_k q_k}
 
 ## Including TEFs and CD - JAGS model {.smaller}
 
+\small
 ```{r,results='hide'}
 modelstring ='
 model {
@@ -154,8 +183,7 @@ model {
   sigma ~ dunif(0,100)
 }
 '
-data(concdepdemo)
-data(correctionsdemo)
+data(concdepdemo); data(correctionsdemo)
 data=list(y=consumers,s_mean=sources[,1],s_sd=sources[,2],
           c_mean=correctionsdemo[,4],c_sd=correctionsdemo[,5],
           q=concdepdemo[,4],N=length(consumers),K=nrow(sources),
@@ -194,7 +222,7 @@ for(k in 1:K) {
 - We can do the same with the concentration dependence values
 - In fact with a bit of clever maths we can remove (_marginalise over_) the $s_{ik}$ values to get a simpler model with fewer parameters.
 
-## The full SIAR model
+## The full simmr/SIAR model
 
 - Using the trick mentioned on the last slide, we end up with a full model which looks like this:
 $$ y_{ij} \sim N \left( \frac{\sum_{k=1}^K p_k q_{jk} (\mu_{s,jk}+\mu_{c,jk})}{\sum_{k=1}^K p_k q_{jk}}, \frac{\sum_{k=1}^K p_k^2 q_{jk}^2 (\sigma_{s,jk}^2+\sigma_{c,jk}^2)}{(\sum_{k=1}^K p_k q_{jk})^2} +  \sigma_j^2\right) $$
@@ -220,21 +248,26 @@ model {
 '
 ```
 
-## Full SIAR model: R code
+## Full simmr/SIAR model: R code
+
+\small
 ```{r,results='hide'}
 sources = as.matrix(sourcesdemo[,2:5])
 tefs = as.matrix(correctionsdemo[,2:5])
 cd = as.matrix(concdepdemo[,c(2,4)])
-data=list(y=geese1demo,s_mean=sources[,c(1,3)],s_sd=sources[,c(2,4)],
+data=list(y=geese1demo,s_mean=sources[,c(1,3)],
+          s_sd=sources[,c(2,4)],
           c_mean=tefs[,c(1,3)],c_sd=tefs[,c(2,4)],
           q=cd,N=nrow(geese1demo),
           J=ncol(geese1demo),alpha=rep(1,nrow(sources)))
 model=jags.model(textConnection(modelstring), data=data)
-output=coda.samples(model=model,variable.names=c("p",'sigma'),n.iter=10000,nthin=10)
+output=coda.samples(model=model,variable.names=c("p",'sigma'),
+                    n.iter=10000,nthin=10)
 ```
 
 ## Summary of posterior dietary proportions
 
+\small
 ```{r,fig.align='center'}
 out_2 = as.matrix(output[[1]])
 colnames(out_2) = c(as.character(sourcesdemo[,1]),'SD1','SD2')
@@ -253,7 +286,10 @@ Some of these proportions are quite imprecise: perhaps see better with matrix pl
 
 ## Running SIAR 2
 
+\small
+
 - Running SIAR is as simple as giving it the relevant parts:
+
 ```{r,results='hide'}
 out = siarmcmcdirichletv4(geese1demo,sourcesdemo,correctionsdemo,concdepdemo)
 ```
@@ -262,19 +298,60 @@ out_2 = out$output
 colnames(out_2) = c(as.character(sourcesdemo[,1]),'SD1','SD2')
 t(round(apply(out_2,2,quantile,probs=c(0.025,0.5,0.975)),2))
 ```
-- Most people get stuck using SIAR just getting their data into the right format
 
+- Most people get stuck using SIAR just getting their data into the right format
 
 ## Matrix plot of dietary proportions
 
-```{r,fig.align='center',fig.height=4}
+```{r,message = FALSE, results = 'hide'}
 siarmatrixplot(out)
+```
+
+## simmr version
+
+- `simmr` is a much more elegantly written version of SIAR with neater plots and many more features
+- Four steps to run a `simmr` model
+  1. Call `simmr_load` to load in the data
+  1. Call `plot` to see the iso-space plot
+  1. Call `simmr_mcmc` to run the model
+  1. Call `plot` or `summary` to access the output
+- `simmr` has further features to combine sources and to compare dietary proportions
+
+## simmr code
+
+```{r, echo = FALSE}
+library(simmr)
+mix = geese1demo
+colnames(mix) = c('d13C','d15N')
+s_names=as.character(sourcesdemo[,1])
+s_means = sourcesdemo[,c(2,4)]
+s_sds = sourcesdemo[,c(3,5)]
+c_means = correctionsdemo[,c(2,4)]
+c_sds = correctionsdemo[,c(3,5)]
+conc = concdepdemo[,c(2,4)]
+```
+
+```{r, eval = FALSE}
+# Load
+simmr_in = simmr_load(mixtures=mix,
+                     source_names=s_names,
+                     source_means=s_means,
+                     source_sds=s_sds,
+                     correction_means=c_means,
+                     correction_sds=c_sds,
+                     concentration_means = conc)
+# Iso-space plot
+plot(simmr_in)
+# MCMC run
+simmr_out = simmr_mcmc(simmr_in)
+# Box-plots
+plot(simmr_out, type = 'boxplot')
 ```
 
 ## Summary
 
-- The SIAR model is just a complicated regression-type model 
+- The simmr and SIAR models are just complicated versions of linear regression
 - The response is multivariate and the prior distributions on some of the parameters have to be constrained to sum to 1
-- It used to be the case that JAGS was slow and couldn't run SIMM-type models. This is no longer true. You can fit much richer models in JAGS (and now MixSIAR) than with SIAR
-- More details on running SIAR in the practical this afternoon
+- It used to be the case that JAGS was slow and couldn't run SIMM-type models. This is no longer true. You can fit much richer models in JAGS (and now MixSIAR) than with SIAR/simmr
+- More details on running simmr in the practical next
 
