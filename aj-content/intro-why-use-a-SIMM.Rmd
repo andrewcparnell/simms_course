@@ -1,7 +1,7 @@
 ---
-title: 'Monday 09:15--10:00: Isotope Models for Ecology'
+title: 'Day 1 - Isotope Models for Ecology'
 author: "Andrew Jackson"
-date: "21st July 2015"
+date: "26 May 2018"
 output:
   ioslides_presentation:
     logo: images/tcd-stacked-square-2.png
@@ -14,18 +14,20 @@ output:
 - Why use a Stable Isotope Mixing Model
 - Introduction to Bayesian statistics
 - Regression models and SIMMS
-- Dos and Donts of using SIAR
-- Statistical model behind SIAR
+- Dos and Donts of using SIMMS
+- Statistical model behind SIAR / simmr / MixSIAR
 - Stable Isotope Bayesian Ellipses (SIBER)
-- SIAR Vs MixSIAR
+- Estimating Trophic Discrimination Factors with SIDER
+- SIAR Vs simmr Vs MixSIAR
 - SIMMS for complex data
 - Source grouping
 - Building your own SIMM with jags
 
 ## Practicals
 - R revision
-- SIAR
+- SIAR / simmr
 - SIBER
+- SIDER
 - MixSIAR and jags
 
 ## Questions ecologists often ask

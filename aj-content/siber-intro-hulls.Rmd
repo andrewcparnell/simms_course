@@ -1,7 +1,7 @@
 ---
 title: "SIBER introduction - Hulls"
 author: "Andrew L Jackson"
-date: "12 December 2015"
+date: "23 May 2018"
 output:
   ioslides_presentation:
     css: mystyle.css

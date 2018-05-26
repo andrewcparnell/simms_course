@@ -49,7 +49,7 @@ print(liver.plot)
 ```
 
 
-The liver in particular has a large quantity of lipids, and in this example, we apply a simple numerical correction based on **[citation needed]**. This correction is weighted by the C/N ratio, such that high amounts of C require a greater correction.
+The liver in particular has a large quantity of lipids, and in this example, we apply a simple numerical correction based on [Logan et al 2008](https://doi.org/10.1111/j.1365-2656.2008.01394.x ). This correction is weighted by the C/N ratio, such that high amounts of C require a greater correction.
 
 ```{r lipid-correction}
 

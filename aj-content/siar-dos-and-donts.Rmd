@@ -1,7 +1,7 @@
 ---
 title: "SIAR dos and don'ts: a discussion"
 author: "Andrew L Jackson"
-date: "24 February 2017"
+date: "24 May 2018"
 output:
   ioslides_presentation:
     logo: images/tcd-stacked-square-2.png
