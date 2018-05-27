@@ -2,8 +2,8 @@
 title: 'Practical: Using SIAR'
 author: "Andrew Parnell"
 output:
-  html_document: default
   pdf_document: default
+  html_document: default
 ---
 
 ## Introduction

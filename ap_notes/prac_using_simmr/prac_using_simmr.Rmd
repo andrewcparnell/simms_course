@@ -2,8 +2,8 @@
 title: 'Practical: Using simmr'
 author: "Andrew Parnell"
 output:
-  html_document: default
   pdf_document: default
+  html_document: default
 ---
 
 ## Introduction
@@ -219,7 +219,7 @@ Usually the default values will be fine, but you could double them if you wanted
 
 To include such extra values a run might be:
 
-```{r,results='hide', message=FALSE}
+```{r,results='hide', message=FALSE, eval = FALSE}
 simmr_out_long = simmr_mcmc(simmr_in,
                             mcmc.control = list(iter = 20000,
                                                 burn = 2000,
@@ -338,7 +338,7 @@ Occasionally it is the case that previous studies have given insight into the li
 
 simmr has a special function for the inclusion of prior distributions. For example suppose we had prior information that the four sources in the Geese example had means (0.5, 0.1, 0.2, 0.2) and standard deviations (0.1, 0.05, 0.01, 0.02), we would run:
 
-```{r}
+```{r, eval = FALSE}
 prior = simmr_elicit(simmr_in,
                      proportion_means = c(0.5,0.1,0.2,0.2),
                      proportion_sds = c(0.1,0.05,0.01,0.02))
@@ -347,9 +347,9 @@ prior = simmr_elicit(simmr_in,
 This requires some optimisation routines in the background and can often be slow. 
 The function will print out some values to use in the prior distribution for the CLR-transformed values. We can use these as follows:
 
-```{r, results='hide', message=FALSE}
+```{r, results='hide', message=FALSE, eval = FALSE}
 simmr_out_prior = simmr_mcmc(simmr_in,
-                             prior.control = list(means = prior$mean,
+                             prior_control = list(means = prior$mean,
                                                   sd = prior$sd))
 ```
 
