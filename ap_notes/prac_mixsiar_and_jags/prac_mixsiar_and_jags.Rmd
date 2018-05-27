@@ -23,7 +23,7 @@ You can run the code from these practicals by loading up the `.Rmd` file in the 
 
 ## Running MixSIAR
 
-Assuming you have followed the [instructions](https://github.com/brianstock/MixSIAR/blob/master/Manual/mixsiar_manual_3.1.pdf) for installing MixSIAR you can run it with:
+Assuming you have followed the [instructions](https://github.com/brianstock/MixSIAR/blob/master/Manual/mixsiar_manual_3.1.pdf) for installing MixSIAR _with the GUI_ you can run it with:
 
 ```{r,eval=FALSE}
 library(MixSIAR)
