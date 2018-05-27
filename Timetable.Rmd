@@ -31,14 +31,14 @@ siar / simmr / MixSIAR
 
 Time  | Class
 ------------- | ----------------------------------------------------
-09:00-10:30 | [The statistical model behind simmr / SIAR (AP)](https://rawgit.com/andrewcparnell/simms_course/master/ap_notes/siar_stats/siar_stats.html)
+09:00-10:30 | [The statistical model behind simmr / SIAR (AP)](https://rawgit.com/andrewcparnell/simms_course/master/ap_notes/siar_stats/siar_stats.pdf)
 10:30-10:45 | Coffee
-10:45-12:00 | Guided practical: Intro to  [SIAR](https://rawgit.com/andrewcparnell/simms_course/master/ap_notes/prac_using_siar/prac_using_siar.html) or [simmr](https://rawgit.com/andrewcparnell/simms_course/master/ap_notes/prac_using_simmr/prac_using_simmr.html) for real-world data sets (AP)
+10:45-12:00 | Guided practical: intro to [simmr](https://rawgit.com/andrewcparnell/simms_course/master/ap_notes/prac_using_simmr/simmr_vignette_code.R) or [SIAR](https://rawgit.com/andrewcparnell/simms_course/master/ap_notes/prac_using_siar/prac_using_siar.html)
 12:00-13:00 | Lunch
-13:00-14:00 | [From SIAR to MixSIAR (AP)](https://rawgit.com/andrewcparnell/simms_course/master/ap_notes/siar_mixsiar/siar_mixsiar.html)
+13:00-14:00 | [From SIAR to MixSIAR (AP)](https://rawgit.com/andrewcparnell/simms_course/master/ap_notes/siar_mixsiar/siar_mixsiar.pdf)
 14:00-15:00 | [Dos and don'ts of using mixing models with discussion (AJ)](https://rawgit.com/andrewcparnell/simms_course/master/aj-content/siar-dos-and-donts.html)
 15:00-15:15 | Break
-15:15-17:00 | Guided practical using [MixSIAR (AP)](https://rawgit.com/andrewcparnell/simms_course/master/ap_notes/using_mixsiar/using_mixsiar.html) & [Practical: using MixSIAR and JAGS on real world data sets; benefits over SIAR (AP)](https://rawgit.com/andrewcparnell/simms_course/master/ap_notes/prac_mixsiar_and_jags/prac_mixsiar_and_jags.html) <!--*Suggestion for AP to do goose example in MixSIAR and perhaps the Lakes example from MixSIAR*-->
+15:15-17:00 | Guided practical using [MixSIAR (AP)](https://rawgit.com/andrewcparnell/simms_course/master/ap_notes/prac_misxiar_and_jags/mixsiar_script.R) and [JAGS (AP)](https://rawgit.com/andrewcparnell/simms_course/master/ap_notes/prac_mixsiar_and_jags/prac_mixsiar_and_jags.html)
 
 
 ## Wednesday 
