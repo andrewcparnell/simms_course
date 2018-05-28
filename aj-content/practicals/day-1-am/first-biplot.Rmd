@@ -113,7 +113,7 @@ The ggplot2 function `stat_ellipse` allows us to easily add ellipses, of varying
 # use our ellipse function to generate the ellipses for plotting
 
 # decide how big an ellipse you want to draw
-p.ell <- 0.70 
+p.ell <- 0.95
 
 # create our plot based on first.plot above
 # adding the stat_ellipse() geometry. We 
