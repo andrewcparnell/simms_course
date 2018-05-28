@@ -23,7 +23,7 @@ Install the following using the corresponding links and *make sure you have the 
 Now install all the pacakges required for the course by entering the following code in to R
 
 ```{r,eval=FALSE}
-install.packages(c('rjags', 'compositions', 'devtools', 'tidyverse', 'vegan'))
+install.packages(c('rjags', 'compositions', 'devtools', 'tidyverse', 'vegan', 'ellipse'))
 
 library(rjags)
 library(compositions)
