@@ -23,7 +23,8 @@ library(ggplot2)
 # need to take care about where R is currently working, and where your 
 # data file is in relation to this.
 mydata <- read.csv("Practical01.csv", 
-                   header = TRUE, stringsAsFactors = FALSE)
+                   header = TRUE, 
+                   stringsAsFactors = FALSE)
 
 # As per the summary statistics file, I am going to remove our outlier
 # note the use of dplyr::filter() to avoid loading the entire 
@@ -74,11 +75,12 @@ Adding the means and error bars in both directions to create the classic isotope
 ```{r classic-biplot}
 
 # Summarise By Group (sbg)
-sbg <- mydata %>% group_by(Taxon) %>% summarise(count = length(Taxon),
-                                                mC = mean(d13C), 
-                                                sdC = sd(d13C), 
-                                                mN = mean(d15N), 
-                                                sdN = sd(d15N) )
+sbg <- mydata %>% group_by(Taxon) %>% 
+  summarise(count = length(Taxon),
+            mC = mean(d13C), 
+            sdC = sd(d13C), 
+            mN = mean(d15N), 
+            sdN = sd(d15N) )
 
 # make a copy of the first.plot object
 # second.plot <- first.plot
@@ -97,8 +99,8 @@ second.plot <- first.plot +
                  mapping = aes(x = mC, y = mN,
                                xmin = mC - 1.96*sdC,
                                xmax = mC + 1.96*sdC),
-                 height = 0) +
-  scale_shape_identity()  # used to let us specify the shape of the means 
+                 height = 0)
+
 print(second.plot)
   
 ```
@@ -148,7 +150,7 @@ Now we can actually do the plotting. The code to apply our ellipse-drawing funct
 # use our ellipse function to generate the ellipses for plotting
 
 # decide how big an ellipse you want to draw
-p.ell <- 0.95 
+p.ell <- 0.70 
 
 # calculate the points for each group's ellipse
   ell.points <- mydata %>% group_by(Taxon) %>%

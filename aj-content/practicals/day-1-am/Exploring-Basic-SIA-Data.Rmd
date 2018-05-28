@@ -21,6 +21,7 @@ You then have a choice of how to save so that R can more easily import it. I fav
 
 The function `read.csv()` is a shortcut to importing `*.csv` files and in my experience is the most stable function to use. When calling it, I specify the name of the file (and location if it is not in the current working directory) and that the first row contain the header names (`header = TRUE`). I also like to not let the function automatically interpret strings of letters in cells as being special `factor` type data which is R's way of encoding categorical variables. My view is that if we want a column to be a factor, we should do it in the code ourselves, as we may not want all our character data to be factors, and in any case, most R functions will convert them to factors internally if when presented with them.
 
+
 ```{r import-data}
 # import the data. 
 # If you get an error about "No such file or directory" then you 
@@ -72,11 +73,12 @@ It is not so easy to get summary statistics on each Taxonomic group within our d
 library(dplyr)
 
 # generate summary statitsics by group
-mydata %>% group_by(Taxon) %>% summarise(count = length(Taxon),
-                                         mC = mean(d13C), 
-                                         sdC = sd(d13C), 
-                                         mN = mean(d15N), 
-                                         sdN = sd(d15N))
+mydata %>% group_by(Taxon) %>% 
+  summarise(count = length(Taxon),
+            mC = mean(d13C), 
+            sdC = sd(d13C), 
+            mN = mean(d15N), 
+            sdN = sd(d15N))
 
 
 ```
@@ -87,7 +89,7 @@ Visualising the data is often the next step. You can generate histograms of the 
 
 ```{r histo}
 # set up a multi-panel plot, 1 row, 3 columns
-par(mfrow =c(1,3)) 
+par(mfrow = c(1,3)) 
 hist(mydata$d13C)
 hist(mydata$d15N)
 hist(mydata$C.N)
@@ -113,7 +115,7 @@ panel.cor <- function(x, y, digits = 2, prefix = "", cex.cor, ...)
 {
     usr <- par("usr"); on.exit(par(usr))
     par(usr = c(0, 1, 0, 1))
-    r <- abs(cor(x, y))
+    r <- cor(x, y)
     txt <- format(c(r, 0.123456789), digits = digits)[1]
     txt <- paste0(prefix, txt)
     if(missing(cex.cor)) cex.cor <- 0.8/strwidth(txt)
