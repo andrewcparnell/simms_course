@@ -63,13 +63,15 @@ data=list(x=c(18.07, 52.59, 54.93, 79.31, 89.58),
           y=c(7.89, 12.41, 13.34, 19.3, 19.52),
           N=5)
 model=jags.model(textConnection(modelstring), data=data)
-output=coda.samples(model=model,variable.names=c("alpha","beta"),
+output=coda.samples(model=model,
+                    variable.names=c("alpha","beta"),
                     n.iter=10000)
 ```
 
 ## Output from linear regression
 
 \small
+
 ```{r,fig.height = 6}
 par(mfrow=c(1,2))
 plot(density(output[[1]][,'alpha']),main='Posterior for alpha')
@@ -79,6 +81,7 @@ plot(density(output[[1]][,'beta']),main='Posterior for beta')
 ## More output from linear regression
 
 \small
+
 ```{r}
 summary(output)
 ```
@@ -227,7 +230,9 @@ output=coda.samples(model=model,
 ```
 
 ## Summarising the output
+
 \small
+
 ```{r,fig.align='center'}
 plot(density(output[[1]][,1]),xlab='Proportion',
      ylab='Probability density',main='Proportion of Zostera')
@@ -260,6 +265,7 @@ modelstring ='
 ## Model checking output
 
 \small
+
 ```{r,include=FALSE}
 modelstring ='
 model {
@@ -292,14 +298,22 @@ Just 1 observation outside the 90% CI. Looks to be an OK model.
 - Mathematical theory says that the samples must eventually come from the posterior distribution but this may take a very long time!
 - Another method for ensuring convergence is to start JAGS with multiple different starting values and see if each model run (known as a _chain_) converges to the same posterior distribution
 - You can supply initial guesses and the number of chains to JAGS when you run it:
+
+\vspace{-0.5cm}
+
 ```{r,results='hide'}
 inits = function() {
   list('p_1'=runif(1),'s_1'=rnorm(1),'s_2'=runif(1),
        'sigma'=runif(1,0,10))
 }
-model=jags.model(textConnection(modelstring), data=data, inits=inits, n.chains=3)
-output=coda.samples(model=model,variable.names=c("p_1"),n.iter=10000)
+model=jags.model(textConnection(modelstring), data=data, 
+                 inits=inits, n.chains=3)
+output=coda.samples(model=model,variable.names=c("p_1"),
+                    n.iter=10000)
 ```
+
+\vspace{-0.7cm}
+
 - The `output` created will now be a list of length 3, so we can look at the different chains with e.g. `output[[2]][,'p_1']`
 
 ## Convergence checking 2

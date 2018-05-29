@@ -42,12 +42,13 @@ help(simmr_load)
 plot(simmr_in)
 
 # Better iso-space plot
-plot(simmr_in,xlab=expression(paste(delta^13, "C (\u2030)",sep="")), 
+plot(simmr_in,
+     xlab=expression(paste(delta^13, "C (\u2030)",sep="")), 
      ylab=expression(paste(delta^15, "N (\u2030)",sep="")), 
      title='Isospace plot of example data')
 
 # Getting help on this is a bit fiddlier
-help(plot.simmr_in)
+help(plot.simmr_input)
 
 # Run simmr!
 simmr_out = simmr_mcmc(simmr_in)
@@ -76,11 +77,10 @@ plot(simmr_out, type = 'boxplot')
 # Do more with the output -------------------------------------------------
 
 # Compare two sources
-compare_sources(simmr_out,source_names=c('Zostera','U.lactuca'))
+compare_sources(simmr_out,source_names=c('U.lactuca','Zostera'))
 
 # Compare multiple sources
 compare_sources(simmr_out,source_names=c('Zostera','U.lactuca','Enteromorpha'))
-
 
 # -----------------------------------------------------------------------
 # Multiple groups ---------------------------------------------------------
