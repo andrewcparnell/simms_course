@@ -15,8 +15,14 @@ mix = load_mix_data(filename=mix.filename,
                     fac_nested=c(FALSE,TRUE), 
                     cont_effects=NULL)
 
+# Have a look at the mixture data
+mix.data = read.csv(mix.filename)
+str(mix.data)
+
 # Replace the system.file call with the path to your file
 source.filename = system.file("extdata", "wolves_sources.csv", package = "MixSIAR")
+
+
 
 # Load the source data
 source = load_source_data(filename=source.filename,
