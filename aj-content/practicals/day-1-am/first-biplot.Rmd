@@ -23,7 +23,8 @@ library(ggplot2)
 # need to take care about where R is currently working, and where your 
 # data file is in relation to this.
 mydata <- read.csv("Practical01.csv", 
-                   header = TRUE, stringsAsFactors = FALSE)
+                   header = TRUE, 
+                   stringsAsFactors = FALSE)
 
 # As per the summary statistics file, I am going to remove our outlier
 # note the use of dplyr::filter() to avoid loading the entire 
@@ -74,11 +75,12 @@ Adding the means and error bars in both directions to create the classic isotope
 ```{r classic-biplot}
 
 # Summarise By Group (sbg)
-sbg <- mydata %>% group_by(Taxon) %>% summarise(count = length(Taxon),
-                                                mC = mean(d13C), 
-                                                sdC = sd(d13C), 
-                                                mN = mean(d15N), 
-                                                sdN = sd(d15N) )
+sbg <- mydata %>% group_by(Taxon) %>% 
+  summarise(count = length(Taxon),
+            mC = mean(d13C), 
+            sdC = sd(d13C), 
+            mN = mean(d15N), 
+            sdN = sd(d15N) )
 
 # make a copy of the first.plot object
 # second.plot <- first.plot
@@ -97,69 +99,39 @@ second.plot <- first.plot +
                  mapping = aes(x = mC, y = mN,
                                xmin = mC - 1.96*sdC,
                                xmax = mC + 1.96*sdC),
-                 height = 0) +
-  scale_shape_identity()  # used to let us specify the shape of the means 
+                 height = 0)
+
 print(second.plot)
   
 ```
 
 ## Ellipses instead of errorbars
 
-Adding ellipses on top of the data involves a little more code to first create a new data.frame (technically a tbl and a data.frame class object) of the coordinates of each ellipse. We need to write our own short function which will be used by `dplyr` to generate the ellipse coordinates for each group.  Again we build our third plot on top of the basic first plot. Running this chunk of R code creates a new function called 'my.ell.fun' which takes a data.frame object and a parameter that determines how big an ellipse should be drawn, and returns x-y coordinates of the corresponding ellipse. Once we run this chunk, we can call our function as we do any other function, via `my.ell.fun()`
-
-```{r ellipses-fun}
-
-# = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
-  # function to calculate ellipses
-  my.ell.fun <- function(df, p.ell){
-
-    # ifelse only calcs ellipse if >2 data points
-    # cov() fails otherwise
-    ifelse (nrow(df)>1, {
-      # a two-column matrix of the isotope data only
-      # If you use your own data, you might need to change the names here from 
-      # d13C and d15N to whatever you have in your own data object.
-      Y <- cbind(df$d13C, df$d15N)
-      
-      # the covariance matrix of the data
-      Sigma <- stats::cov(Y)
-      
-      # the centroid (means)
-      mu <- colMeans(Y)
-      
-      # the ellipse coordinates
-      out <- ellipse::ellipse(Sigma, centre = mu , level = p.ell)
-    },
-    {
-      # if not enough data, return NAs
-      out <- matrix(c(NA,NA), nrow = 1, ncol = 2)
-    })
-    out <- as.data.frame(out)
-    return(out)
-  }
-
-  # = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
-
-```
-
-Now we can actually do the plotting. The code to apply our ellipse-drawing function to each group is acheived via the package `dplyr` and specifically using the `magrittr` style of "piping" using the `%>%` command. Basicaly the line of interest below reads as: take the object `mydata`, then group it by `Taxon` (which cuts it up into little partial data.frames) and apply `my.ell.fun` on each group. We force the object this procedure returns to being a data.frame class object, by wrapping it in `data.frame` (it is a "grouped_df" by default, but ggplot expects a `data.frame` or `tbl` class object).
+The ggplot2 function `stat_ellipse` allows us to easily add ellipses, of varying **level** which corresponds to the prediction interval. This function defaults to using the t-distribution so we will override this and specify the normal distribution as is more fitting with the SIBER approach.  
 
 ```{r nice-ellipses}
 # use our ellipse function to generate the ellipses for plotting
 
 # decide how big an ellipse you want to draw
-p.ell <- 0.95 
+p.ell <- 0.95
 
-# calculate the points for each group's ellipse
-  ell.points <- mydata %>% group_by(Taxon) %>%
-                             do(my.ell.fun(., p.ell = p.ell))
+# create our plot based on first.plot above
+# adding the stat_ellipse() geometry. We 
+# specify thee ellipse to be plotted using 
+# the polygon geom, with fill and edge colour
+# defined by Taxon as a grouping variable, 
+# using the normal distribution and with 
+# a quite high level of transparency.
+ellipse.plot <- first.plot + 
+  stat_ellipse(aes(group = Taxon, 
+                   fill = Taxon, 
+                   color = Taxon), 
+               alpha = 0.3, 
+               level = p.ell,
+               type = "norm",
+               geom = "polygon")
 
-third.plot <- first.plot + 
-  geom_polygon(data = ell.points, 
-               mapping = aes(x, y, group = Taxon, 
-                             fill = Taxon, color = Taxon), 
-               alpha = 0.2)
-print(third.plot)
+print(ellipse.plot)
 
 ```
 

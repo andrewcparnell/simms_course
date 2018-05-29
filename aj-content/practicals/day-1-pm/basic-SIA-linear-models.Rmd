@@ -293,42 +293,6 @@ t.test(mydata$Muscle.d13C[mydata$Species == "Arrowtooth.Flounder"],
 
 Visualising the multivariate data is easiest if we add ellipses over each species group as we did in the first practical session. The code that follows is taken from there and modified accordingly to make sure the $x$ and $y$ data names are appropriate for this new dataset.
 
-First we need our utitlity function to calculate our ellipse coordinates from the data and we need to change some of the names to match those in the current dataset. In order to run this code, you will need the package `ellipse` installed.
-
-```{r ellipses-fun}
-
-# = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
-  # function to calculate ellipses
-  my.ell.fun <- function(df, p.ell){
-
-    # ifelse only calcs ellipse if >2 data points
-    # cov() fails otherwise
-    ifelse (nrow(df)>1, {
-      # a two-column matrix of the isotope data only
-      # If you use your own data, you might need to change the names here from 
-      # d13C and d15N to whatever you have in your own data object.
-      Y <- cbind(df$Muscle.d13C, df$Muscle.d15N)
-      
-      # the covariance matrix of the data
-      Sigma <- stats::cov(Y)
-      
-      # the centroid (means)
-      mu <- colMeans(Y)
-      
-      # the ellipse coordinates
-      out <- ellipse::ellipse(Sigma, centre = mu , level = p.ell)
-    },
-    {
-      # if not enough data, return NAs
-      out <- matrix(c(NA,NA), nrow = 1, ncol = 2)
-    })
-    out <- as.data.frame(out)
-    return(out)
-  }
-
-  # = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
-
-```
 
 Now we can make a nice plot with `ggplot` taking care to change the aesthetics to make our column names if we just copied and pasted this in from the first practical file.
 
@@ -339,17 +303,6 @@ library(ggplot2)
 
 # use our ellipse function to generate the ellipses for plotting
 
-# decide how big an ellipse you want to draw
-# NB 50% ellipses this time for no reason other than i dont need them huge
-# to get a sense for their size and shape.. indeed we could plot 
-# Standard Ellipses using p.ell <- stats::pchisq(1, df = 2) which
-# results in 0.39
-p.ell <- 0.50
-
-# calculate the points for each group's ellipse
-ell.points <- mydata %>% group_by(Species) %>%
-                           do(my.ell.fun(., p.ell = p.ell))
-
 # this is the basic plot, which im not actually going to plot
 # as i won't call print(first.plot). Doing this is purely choice, 
 # and for me it keeps my code tidier and easier to interpret
@@ -359,13 +312,31 @@ first.plot <- ggplot(data = mydata, aes(Muscle.d13C, Muscle.d15N)) +
   xlab(expression(paste(delta^{13}, "C (\u2030)"))) + 
   theme(text = element_text(size=15))
 
-# now add our ellipses as an additional layer
-second.plot <- first.plot + 
-  geom_polygon(data = ell.points, 
-               mapping = aes(x, y, group = Species, 
-                             fill = Species, color = Species), 
-               alpha = 0.2)
-print(second.plot)
+# decide how big an ellipse you want to draw
+# NB 50% ellipses this time for no reason other than i dont need them huge
+# to get a sense for their size and shape.. indeed we could plot 
+# Standard Ellipses using p.ell <- stats::pchisq(1, df = 2) which
+# results in 0.39
+p.ell <- 0.50
+
+
+# create our plot based on first.plot above
+# adding the stat_ellipse() geometry. We 
+# specify thee ellipse to be plotted using 
+# the polygon geom, with fill and edge colour
+# defined by Taxon as a grouping variable, 
+# using the normal distribution and with 
+# a quite high level of transparency.
+ellipse.plot <- first.plot + 
+  stat_ellipse(aes(group = Species, 
+                   fill = Species, 
+                   color = Species), 
+               alpha = 0.3, 
+               level = p.ell,
+               type = "norm",
+               geom = "polygon")
+
+print(ellipse.plot)
 
 ```
 
@@ -407,10 +378,17 @@ Running the PERMANOVA analysis requires the package `vegan` so you will need to 
 ```{r PERMANOVA-up }
 library(vegan)
 
-perm.model <- adonis(cbind(Muscle.d13C, Muscle.d15N) ~ Species, 
-                     data = mydata, 
-                     method = "euclidean", permutations = 9999)
+# extract the isotope data for muscle for 
+# subsequent modelling as a response variable.
+Y_muscle <- with(mydata, cbind(Muscle.d13C, Muscle.d15N))
 
+# run a PERMANOVA model
+perm.model <- adonis(Y_muscle ~ Species, 
+                     data = mydata, 
+                     method = "euclidean", 
+                     permutations = 9999)
+
+# print output of the permanova model to screen
 perm.model
 
 ```
@@ -425,12 +403,53 @@ Some additional context we might like to add to this analysis is how far apart t
 
 centroids <- cbind(summarise.muscle$musC, summarise.muscle$musN)
 
-dist.to.centoids <- dist(centroids)
+dist.btw.centoids <- dist(centroids)
 
-print(dist.to.centoids)
+print(dist.btw.centoids)
 
 ```
 
+## Use the betadisper method to peform pairwise comparisons
+
+```{r betadisper}
+
+# calculate the euclidean distances between observations
+dis <- vegdist(Y_muscle, 
+               method ="euclidean")
+
+# analysis of multivariate homogeneity of 
+# group dispersions (variances)
+mod <- betadisper(dis, mydata$Species)
+
+# print the results of the ANOVA to screen
+knitr::kable(anova(mod))
+
+# perform Tukey's posthoc test between the means
+mod.HSD <- TukeyHSD(mod)
+
+# plot the post hoc test results
+par(mfrow = c(1,1))
+plot(mod.HSD)
+
+```
+
+## Perform CAP analysis / analogue
+
+As per the help files for `?capscale` and the related `?dbrda`, if we use Euclidean distances, as we do here, then `capscale` is identical to `rda` with the latter also being more efficient. Depending on the details of what one wants to achieve with this analysis which has its origins in PRIMER, you may want to explore more about these alternative functions.
+
+```{r}
+
+# fit rda model from the vegan package
+CAP_like_analysis <- vegan::rda( Y_muscle  ~ Species, 
+                 data = mydata, 
+                 dist = "euclidean")
+
+# try to predict a value for an "Arrowtooth.Flounder"
+# for example.
+predict(CAP_like_analysis, 
+        newdata = data.frame(Species = 
+                               "Arrowtooth.Flounder"))
+```
 
 
 
