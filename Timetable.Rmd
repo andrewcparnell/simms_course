@@ -55,7 +55,7 @@ Time  | Class
 14:00-15:00 | [Guided Practical: Using SIBER to compare communities using convex hulls (AJ)](https://rawgit.com/andrewcparnell/simms_course/master/aj-content/practicals/siber-comparing-communities.html)
 15:00-15:15 | Break 
 15:15-16:00 | [Estimating trophic discrimination factors using SIDER (AJ)](https://rawgit.com/andrewcparnell/simms_course/master/aj-content/sider-intro.html)
-16:00 - 17:00 | [Practical: Estimating trophic discrimination factors using SIDER (AJ)](https://rawgit.com/andrewcparnell/simms_course/master/aj-content/practicals/Introduction-to-SIDER.html)
+16:00-17:00 | [Practical: Estimating trophic discrimination factors using SIDER (AJ)](https://rawgit.com/andrewcparnell/simms_course/master/aj-content/practicals/Introduction-to-SIDER.html)
 
 ## Thursday
 
