@@ -126,7 +126,7 @@ pairs(out[,1:4],lower.panel=panel.smooth)
 
 ***
 
-1. Try playing with the JAGS script. Change the priors, change the data (e.g. remove a source), increase the number of iterations, etc
+1. Try playing with the JAGS script. Change the priors on $p$ by changing the values of alpha in the data step, change the data (e.g. remove a source), increase the number of iterations, etc
 2. Can you make the histograms of the different proportions look nicer? Can you plot multiple histograms (i.e. for different sources) on the same plot?
 2. Have a look at the help file for the `pairs` function. See if you can change the code above to create a better SIAR-type matrix plot with histograms on the diagonal and correlations in the upper diagonal.
 

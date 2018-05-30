@@ -69,7 +69,8 @@ assignInNamespace("version_info", c(devtools:::version_info, list("3.5" = list(v
   Then try the `install_github` command again.
   
   - If you are on a Mac you might need to install X11 from [http://www.xquartz.org](http://www.xquartz.org). 
-  - You may get a pop up window be asking if you want 'additional build tools'. Please select 'yes'.
+  - You may get a pop up window be asking if you want 'additional build tools'. Please select 'yes'. 
+  - If on a Mac you will likely need to install Xcode from the Mac App Store. This is a big download so make sure you download it before you get to the course.
   - If you get an error about package `stringi` try typing `install.packages('stringi',type='win.binary')` if on Windows or `install.packages('stringi',type='mac.binary')` if on Mac. Then re-run the commands above
   - If you get some errors about `pandoc` when installing simmr leave out the `build_vignettes=TRUE` argument
 
