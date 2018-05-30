@@ -1,0 +1,18 @@
+---
+title: 'What package should I use?'
+author: "Andrew Parnell and Andrew Jackson"
+date: "May 2018"
+output:
+  html_document: default
+  pdf_document: default
+---
+
+## I am interested in quantifying the __diet/consumption__ of my organisms 
+
+You will need source and consumer isotope data (and optionally discrimination factors and concentration dependence). 
+
+If you have no extra covariates then you should start with __simmr__. If you have extra covariates or raw source data then you should start with __MixSIAR__. If you have no trophic discrimination factors you should start with __SIDER__ and then move to __simmr__ or __MixSIAR__. 
+
+## I am interested in quantifying the __niche behaviour__ of my organisms. 
+
+You will need consumer isotope data only and you should start with __SIBER__. 

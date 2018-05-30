@@ -188,7 +188,7 @@ library(compositions)
 ```{r,eval=FALSE}
 library(compositions)
 ```
-```{r}
+```{r, warning=FALSE}
 # Create matrix of all chains
 out = do.call(rbind,output)
 # Apply the CLR inverse transform to make them into proportions
