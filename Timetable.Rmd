@@ -9,6 +9,8 @@ output:
 
 Course pre-requisites can be found [here](https://rawgit.com/andrewcparnell/simms_course/master/Prerequisites.html). All the raw files and code can be found [here](https://github.com/andrewcparnell/simms_course). Click 'Clone or Download' near the top right and then 'Download ZIP' if you want an offline copy of everything. 
 
+Here is a [simple script for getting started with ggplot](https://rawgit.com/andrewcparnell/simms_course/master/ap_notes/gg_plot_class.R) which might be useful for some but is not compulsory. 
+
 ## Monday
 
 Introduction to SIA data

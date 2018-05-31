@@ -7,9 +7,9 @@ rm(list = ls())
 
 # Get the package
 # Bleeding edge version
-devtools::install_github('andrewcparnell/simmr')
+#devtools::install_github('andrewcparnell/simmr')
 # Stable version
-install.packages('simmr')
+#install.packages('simmr')
 
 # Load in the package
 library(simmr)
