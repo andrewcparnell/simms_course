@@ -283,8 +283,6 @@ summary(simmr_run_1D, type = 'diagnostics')
 # Plot/summarise output - same as before
 plot(simmr_run_1D, type = 'boxplot')
 
-
-
 # Models with individual effects ------------------------------------------
 
 # Run model
