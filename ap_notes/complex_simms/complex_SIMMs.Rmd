@@ -89,8 +89,8 @@ model {
   for(k in 1:K) { 
     for(i in 1:N) { mu_f[i,k] <- alpha[k] + beta[k]*x[i] }
     sigma_f[k] ~ dgamma(2,1)
-    alpha[k] ~ dnorm(0,0.01)
-    beta[k] ~ dnorm(0,0.01)
+    alpha[k] ~ dnorm(0,1)
+    beta[k] ~ dnorm(0,1)
   }
   ...
 }
@@ -164,7 +164,7 @@ model {
     for(k in 1:K) { expf[i,k] <- exp(f[i,k]) }
   }
   for(k in 1:K) { 
-    f[i,k] <- X[1:N,1:L]%*%beta[1:L,k]
+    f[1:N,k] <- X[1:N,1:L]%*%beta[1:L,k]
   }
   for(l in 1:L) {
     for(k in 1:K) { beta[l,k] ~ dnorm(0,1) }
@@ -245,12 +245,11 @@ dic.samples(model2,n.iter=2000)
 ## Some final notes on the DIC
 
 - DIC can be quite sensitive to model focus. If you move parameters around (like in the centered random effects model) you can get different DIC values
-- The value of $p_D$ is useful. For simple models, it should be roughly the true number of parameters (e.g. 5 and 4 in the previous models). However, in hierarchical models in can be non-integer representing the fact that the parameters are shared between groups. In some cases $p_D$ can be negative!
+- The value of $p_D$ is useful. For simple models, it should be roughly the true number of parameters (e.g. 5 and 4 in the previous models). However, in hierarchical models it can be non-integer representing the fact that the parameters are shared between groups. In some cases $p_D$ can be negative!
 - JAGS contains the option to create a 'superior' version of $p_D$ called `popt` which you specify via the `type` argument. This penalises extra parameters more harshly but isn't quite as interpretable. However, it is often more stable in more complicated models.
 
 ## Summary
 
-- Multivariate normal distributions can add some extra richness to the model, if it is required
 - We can add in rich covariate behaviour through the CLR, though need to be careful with priors
 - DIC can help us choose between models. More complex models always fit the data better, but can often over-fit yielding poor predictive and explanatory performance
 
