@@ -91,8 +91,14 @@ img {
 .tabbed-pane {
   padding-top: 12px;
 }
+.html-widget {
+  margin-bottom: 20px;
+}
 button.code-folding-btn:focus {
   outline: none;
+}
+summary {
+  display: list-item;
 }
 </style>
 
@@ -101,14 +107,74 @@ button.code-folding-btn:focus {
 <div class="container-fluid main-container">
 
 <!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
 <script>
 $(document).ready(function () {
   window.buildTabsets("TOC");
 });
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
 </script>
 
 <!-- code folding -->
-
 
 
 
@@ -132,7 +198,7 @@ $(document).ready(function () {
 <ul>
 <li><p>R: <a href="http://www.r-project.org" class="uri">http://www.r-project.org</a></p></li>
 <li><p>Rstudio (optional but recommended): <a href="https://www.rstudio.com" class="uri">https://www.rstudio.com</a></p></li>
-<li><p>JAGS: <a href="http://sourceforge.net/projects/mcmc-jags/files/" class="uri">http://sourceforge.net/projects/mcmc-jags/files/</a></p></li>
+<li><p>JAGS: <a href="http://sourceforge.net/projects/mcmc-jags/files/" class="uri">http://sourceforge.net/projects/mcmc-jags/files/</a> <strong><em>This step is really important and easy to skip over. JAGS is required, and is not installed as part of the R package rjags which is just a set of functions for R to interact with JAGS.</em></strong></p></li>
 </ul>
 </div>
 <div id="step-2" class="section level3">
@@ -145,20 +211,17 @@ library(compositions)
 library(devtools) 
 library(tidyverse)
 
-install_github(&quot;andrewljackson/siar&quot;) 
-library(siar)
-
-install_github(&quot;andrewcparnell/simmr&quot;, build_vignettes = TRUE) 
+# Install the three main SIA packages
+install.packages(c(&quot;simmr&quot;, &quot;SIBER&quot;, &quot;MixSIAR&quot;) 
+                 
 library(simmr)
-
-install_github(&quot;andrewljackson/SIBER&quot;, build_vignettes = TRUE) 
 library(SIBER)
 
+# SIDER is slightly different as it is not hosted on CRAN and 
+# instead needs to be installed from GitHub
 install_github(&quot;TGuillerme/mulTree@release&quot;)
 install_github(&quot;healyke/SIDER&quot;, build_vignettes = TRUE) 
-library(SIDER)
-
-install.packages('MixSIAR')</code></pre>
+library(SIDER)</code></pre>
 <p>These will install the most up to date versions of the packages. Note that this might take a while as some of these are pretty big and complicated packages.</p>
 </div>
 <div id="step-3" class="section level3">
@@ -168,21 +231,25 @@ install.packages('MixSIAR')</code></pre>
 <div id="troubleshooting" class="section level3">
 <h3>Troubleshooting</h3>
 <p>Here are some common problems with solutions:</p>
+<div id="windows-issues" class="section level4">
+<h4>Windows issues</h4>
 <ul>
 <li>If you are on Windows and you get an error about not having Rtools please install Rtools from the link it provides you in the error message</li>
 <li>If you are trying to install Rtools with R 3.5.0 and are getting an error message about incompatibility of Rtools, run the command:</li>
 </ul>
 <pre class="r"><code>library(devtools)
 assignInNamespace(&quot;version_info&quot;, c(devtools:::version_info, list(&quot;3.5&quot; = list(version_min = &quot;3.3.0&quot;, version_max = &quot;99.99.99&quot;, path = &quot;bin&quot;))), &quot;devtools&quot;)</code></pre>
-<p>Then try the <code>install_github</code> command again.</p>
+<p>Then try the <code>install_github</code> command again. - If you get an error about package <code>stringi</code> try typing <code>install.packages('stringi',type='win.binary')</code> then re-run the commands above.</p>
+</div>
+<div id="mac-issues" class="section level4">
+<h4>Mac issues</h4>
 <ul>
+<li>you will more than likely need to install the command line developer tools. Instructions for this are available from (<a href="http://osxdaily.com/2014/02/12/install-command-line-tools-mac-os-x/" class="uri">http://osxdaily.com/2014/02/12/install-command-line-tools-mac-os-x/</a>). There is a larger set of tools called Xcode which is available from the Apple Store, but this is unnecessarily large and we dont recommend it unless you know you need it.</li>
 <li>If you are on a Mac you might need to install X11 from <a href="http://www.xquartz.org" class="uri">http://www.xquartz.org</a>.</li>
-<li>You may get a pop up window be asking if you want ‘additional build tools’. Please select ‘yes’.</li>
-<li>If on a Mac you will likely need to install Xcode from the Mac App Store. This is a big download so make sure you download it before you get to the course.</li>
-<li>If you get an error about package <code>stringi</code> try typing <code>install.packages('stringi',type='win.binary')</code> if on Windows or <code>install.packages('stringi',type='mac.binary')</code> if on Mac. Then re-run the commands above</li>
-<li>If you get some errors about <code>pandoc</code> when installing simmr leave out the <code>build_vignettes=TRUE</code> argument</li>
+<li>If you get an error about package <code>stringi</code> try typing <code>install.packages('stringi',type='mac.binary')</code>. Then re-run the commands above <!-- - If you get some errors about `pandoc` when installing simmr leave out the `build_vignettes=TRUE` argument --></li>
 </ul>
 <p>If you run into any other problems please drop us a line at <a href="mailto:andrew.parnell@ucd.ie">andrew.parnell@ucd.ie</a> (for SIAR/simmr/MixSIAR queries) or <a href="mailto:a.jackson@tcd.ie">a.jackson@tcd.ie</a> (for SIBER/SIDER queries).</p>
+</div>
 </div>
 
 

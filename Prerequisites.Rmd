@@ -62,7 +62,7 @@ Here are some common problems with solutions:
 
   - If you are on Windows and you get an error about not having Rtools please install Rtools from the link it provides you in the error message
   - If you are trying to install Rtools with R 3.5.0 and are getting an error message about incompatibility of Rtools, run the command:
-```{r}
+```{r, eval=FALSE}
 library(devtools)
 assignInNamespace("version_info", c(devtools:::version_info, list("3.5" = list(version_min = "3.3.0", version_max = "99.99.99", path = "bin"))), "devtools")
 ```
