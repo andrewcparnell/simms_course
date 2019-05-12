@@ -16,7 +16,7 @@ Install the following using the corresponding links and *make sure you have the 
 
 -	Rstudio (optional but recommended): [https://www.rstudio.com](https://www.rstudio.com)
 
--	JAGS: http://sourceforge.net/projects/mcmc-jags/files/
+-	JAGS: http://sourceforge.net/projects/mcmc-jags/files/ **_This step is really important and easy to skip over. JAGS is required, and is not installed as part of the R package rjags which is just a set of functions for R to interact with JAGS._**
 
 ### Step 2
 
@@ -30,20 +30,18 @@ library(compositions)
 library(devtools) 
 library(tidyverse)
 
-install_github("andrewljackson/siar") 
-library(siar)
-
-install_github("andrewcparnell/simmr", build_vignettes = TRUE) 
+# Install the three main SIA packages
+install.packages(c("simmr", "SIBER", "MixSIAR") 
+                 
 library(simmr)
-
-install_github("andrewljackson/SIBER", build_vignettes = TRUE) 
 library(SIBER)
 
+# SIDER is slightly different as it is not hosted on CRAN and 
+# instead needs to be installed from GitHub
 install_github("TGuillerme/mulTree@release")
 install_github("healyke/SIDER", build_vignettes = TRUE) 
 library(SIDER)
 
-install.packages('MixSIAR')
 
 
 ```
@@ -60,19 +58,24 @@ Finally if you would like to do some pre-course reading (recommended) there are 
 
 Here are some common problems with solutions:
 
+#### Windows issues
+
   - If you are on Windows and you get an error about not having Rtools please install Rtools from the link it provides you in the error message
   - If you are trying to install Rtools with R 3.5.0 and are getting an error message about incompatibility of Rtools, run the command:
 ```{r}
 library(devtools)
 assignInNamespace("version_info", c(devtools:::version_info, list("3.5" = list(version_min = "3.3.0", version_max = "99.99.99", path = "bin"))), "devtools")
 ```
-  Then try the `install_github` command again.
+Then try the `install_github` command again.
+- If you get an error about package `stringi` try typing `install.packages('stringi',type='win.binary')` then re-run the commands above.
   
+
+#### Mac issues
+
+  - you will more than likely need to install the command line developer tools. Instructions for this are available from (http://osxdaily.com/2014/02/12/install-command-line-tools-mac-os-x/). There is a larger set of tools called Xcode which is available from the Apple Store, but this is unnecessarily large and we dont recommend it unless you know you need it.
   - If you are on a Mac you might need to install X11 from [http://www.xquartz.org](http://www.xquartz.org). 
-  - You may get a pop up window be asking if you want 'additional build tools'. Please select 'yes'. 
-  - If on a Mac you will likely need to install Xcode from the Mac App Store. This is a big download so make sure you download it before you get to the course.
-  - If you get an error about package `stringi` try typing `install.packages('stringi',type='win.binary')` if on Windows or `install.packages('stringi',type='mac.binary')` if on Mac. Then re-run the commands above
-  - If you get some errors about `pandoc` when installing simmr leave out the `build_vignettes=TRUE` argument
+  - If you get an error about package `stringi` try typing `install.packages('stringi',type='mac.binary')`. Then re-run the commands above
+  <!-- - If you get some errors about `pandoc` when installing simmr leave out the `build_vignettes=TRUE` argument -->
 
 
 If you run into any other problems please drop us a line at <andrew.parnell@ucd.ie> (for SIAR/simmr/MixSIAR queries) or <a.jackson@tcd.ie> (for SIBER/SIDER queries).
