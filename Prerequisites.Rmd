@@ -31,7 +31,7 @@ library(devtools)
 library(tidyverse)
 
 # Install the three main SIA packages
-install.packages(c("simmr", "SIBER", "MixSIAR") 
+install.packages(c("simmr", "SIBER", "MixSIAR"))
                  
 library(simmr)
 library(SIBER)
