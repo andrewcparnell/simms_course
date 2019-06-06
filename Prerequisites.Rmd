@@ -51,9 +51,6 @@ library(SIDER)
 # datasets are still in it and we need access to them.
 install_github("andrewljackson/siar@master", build_vingettes = TRUE)
 
-
-
-
 ```
 
 These will install the most up to date versions of the packages. Note that this might take a while as some of these are pretty big and complicated packages.
