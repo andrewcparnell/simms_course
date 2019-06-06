@@ -63,6 +63,8 @@ These will install the most up to date versions of the packages. Note that this 
  
 Finally if you would like to do some pre-course reading (recommended) there are some papers which can be accessed [here](https://github.com/andrewcparnell/simms_course/tree/master/papers).
 
+Andrew Jackson has a youtube channel with [podcasts](https://www.youtube.com/playlist?list=PLXXzyqr0tEhPRNDuEQ6wcvMcpAkGRjVqs) on introduction to using R for linear modelling. There are links in the description to an associated repository of scripts and examples to go with it.  
+
 
 ### Troubleshooting
 
