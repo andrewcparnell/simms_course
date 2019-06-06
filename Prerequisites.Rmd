@@ -24,6 +24,8 @@ Now install all the packages required for the course by entering the following c
 
 ```{r,eval=FALSE}
 install.packages(c('rjags', 'compositions', 'devtools', 'tidyverse', 'vegan', 'ellipse'))
+
+# check that they load
 library(rjags)
 library(compositions)
 library(devtools) 
@@ -31,6 +33,8 @@ library(tidyverse)
 
 # Install the three main SIA packages
 install.packages(c("simmr", "SIBER", "MixSIAR"))
+
+# check that they load
 library(simmr)
 library(SIBER)
 library(MixSIAR)
@@ -39,7 +43,17 @@ library(MixSIAR)
 # instead needs to be installed from GitHub
 install_github("TGuillerme/mulTree@release")
 install_github("healyke/SIDER", build_vignettes = TRUE) 
+
+# check SIDER loads
 library(SIDER)
+
+# NB SIAR is out of date and we will not use it, but some of the example
+# datasets are still in it and we need access to them.
+install_github("andrewljackson/siar@master", build_vingettes = TRUE)
+
+
+
+
 ```
 
 These will install the most up to date versions of the packages. Note that this might take a while as some of these are pretty big and complicated packages.
