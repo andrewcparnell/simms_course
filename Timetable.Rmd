@@ -1,7 +1,7 @@
 ---
 title: 'Stable Isotope Mixing Models: course timetable'
 author: "Andrew Parnell and Andrew Jackson"
-date: "May 2019"
+date: "June 2019"
 output:
   html_document: default
   pdf_document: default
@@ -19,9 +19,9 @@ Time  | Class
 ------------- | ----------------------------------------------------
 9:30-10:30 | [Introduction: why use a SIMM? (AJ)](https://rawgit.com/andrewcparnell/simms_course/master/aj-content/intro-why-use-a-SIMM.html)
 10:30-10:45 | Coffee break
-10:45-11:45 | [Revision of important R concepts (AP)](https://rawgit.com/andrewcparnell/simms_course/master/ap_notes/reg_and_simms/reg_and_simms.pdf)
+10:45-11:45 | [Revision of likelihood and regression (AP)](https://rawgit.com/andrewcparnell/simms_course/master/ap_notes/intro_bayes/revision_of_likelihood_regression/revision_of_likelihood_and_regression.pdf)
 11:45-12:00 | Break 
-12:00-12:45 | [Revision of likelihood and regression (AP)](https://rawgit.com/andrewcparnell/simms_course/master/ap_notes/intro_bayes/intro_bayes.pdf)
+12:00-12:45 | [Guided practical: Revision of important R concepts (AP)](https://rawgit.com/andrewcparnell/simms_course/master/ap_notes/revision_of_R/Revision_of_R.R)
 12:45-13:45 | Lunch
 13:45-15:00 | [Guided practical: Intro to SI data](https://rawgit.com/andrewcparnell/simms_course/master/aj-content/practicals/day-1-am/Exploring-Basic-SIA-Data.html) and [biplots](https://rawgit.com/andrewcparnell/simms_course/master/aj-content/practicals/day-1-am/first-biplot.html) (AJ)
 15:00-15:30 | Coffee break
@@ -35,14 +35,13 @@ Time  | Class
 ------------- | ----------------------------------------------------
 9:30-10:30 | [An introduction to Bayesian statistics (AP)](https://rawgit.com/andrewcparnell/simms_course/master/ap_notes/intro_bayes/intro_bayes.pdf)
 10:30-10:45 | Coffee break
-10:45-11:45 | [Guided practical: R and Bayes (AP)](https://rawgit.com/andrewcparnell/simms_course/master/ap_notes/intro_bayes/intro_bayes.pdf)
+10:45-11:45 | [Guided practical: R, JAGS, and linear regression (AP)](https://rawgit.com/andrewcparnell/simms_course/master/ap_notes/intro_bayes/intro_bayes.pdf)
 11:45-12:00 | Break 
-12:00-12:45 | [Guided practical: JAGS (AP)](https://rawgit.com/andrewcparnell/simms_course/master/ap_notes/intro_bayes/intro_bayes.pdf)
+12:00-12:45 | [Guided practical: JAGS and GLMs (AP)](https://rawgit.com/andrewcparnell/simms_course/master/ap_notes/intro_bayes/intro_bayes.pdf)
 12:45-13:45 | Lunch
 13:45-15:00 | [Differences between regression models and SIMMs (AP)](https://rawgit.com/andrewcparnell/simms_course/master/ap_notes/reg_and_simms/reg_and_simms.pdf)
 15:00-15:30 | Coffee break
-15:30-17:00 | [Guided practical: intro to simmr (AP)](https://rawgit.com/andrewcparnell/simms_course/master/ap_notes/prac_using_simmr/simmr_vignette_code.R)
-
+15:30-17:00 | [Practical: intro to simmr (AP)](https://rawgit.com/andrewcparnell/simms_course/master/ap_notes/prac_using_simmr/simmr_vignette_code.R)
 
 ## Wednesday
 
@@ -58,7 +57,7 @@ Time  | Class
 12:45-13:45 | Lunch
 13:45-15:00 | [From simmr to MixSIAR (AP)](https://rawgit.com/andrewcparnell/simms_course/master/ap_notes/siar_mixsiar/siar_mixsiar.pdf)
 15:00-15:30 | Coffee break
-15:30-17:00 | Guided practical using [MixSIAR (AP)](https://rawgit.com/andrewcparnell/simms_course/master/ap_notes/prac_mixsiar_and_jags/mixsiar_script.R)
+15:30-17:00 | Practical: using [MixSIAR (AP)](https://rawgit.com/andrewcparnell/simms_course/master/ap_notes/prac_mixsiar_and_jags/mixsiar_script.R)
 
 
 ## Thursday 
