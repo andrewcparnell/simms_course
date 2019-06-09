@@ -1,7 +1,7 @@
 ---
 title: "Source Aggregation"
 author: "Andrew L Jackson"
-date: "27 February 2017"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
 output: html_document
 ---
 
@@ -10,94 +10,139 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 ## Create some simulated data for us to work with
-This is essentially the example used in Fry, B. 2013. Alternative approaches for solving underdetermined isotope mixing problems. MEPS.
+This is essentially the example used in Fry, B. 2013. Alternative approaches for solving underdetermined isotope mixing problems. *MEPS*.
+
+Here we use the package simmr to explore the two alternatives to aggregating sources in mixing models. 
 
 ```{r simulate-data}
-library(siar, quietly = TRUE)
+library(simmr, quietly = TRUE)
 
 set.seed(1)
 
 # specify the sources
-sources <- data.frame(sources=c("A","B","C","D"),
-                        muC=c(-5,-5,5,5),sdC=c(1,1,1,1),
-                        muN=c(-5,5,5,-5),sdN=c(1,1,1,1))
+# sources <- data.frame(sources=c("A","B","C","D"),
+#                         muC=c(-5,-5,5,5),sdC=c(1,1,1,1),
+#                         muN=c(-5,5,5,-5),sdN=c(1,1,1,1))
+
+# specify the source names
+S_names = c("A","B","C","D")
+
+# specify the source means
+S_means = cbind(c(-5,-5,5,5), c(-5,5,5,-5))
+
+# specify the source standard deviations
+S_sds = cbind(c(1,1,1,1), c(1,1,1,1))
 
 # speficy the consumer data at the origin
 # Ten consumers for this example around 0 with small sd of error.
-consumers <- data.frame(C = rnorm(10, 0, 0.1),
-                        N = rnorm(10, 0, 0.1) )
+consumers <- cbind(dC = rnorm(10, 0, 0.1),
+                   dN = rnorm(10, 0, 0.1) )
+
+# and create the simmr object
+# here we have no TDFs or concentration values
+simmr_in <- simmr_load(mixtures = consumers,
+                       source_names = S_names,
+                       source_means = S_means,
+                       source_sds = S_sds)
 
 ```
 
-Now we need to run the model and we can then plot the data to visualise our system and the output,
+Now we can plot the data to visualise our system and the output,
 
-```{r run-model}
-model1 <- siarmcmcdirichletv4(consumers, sources)
+```{r plot-isotope-data}
 
-siarplotdata(model1,iso=c(1,2))
-
-siardensityplot(model1$output[, 1:4], xticklabels=c('A','B','C','D'),
-                main = "All 4 sources")
+plot(simmr_in)
 
 ```
+
+## Fit the SIMM
+
+We can fit a simmr model using the defaults, and here supress the output using the `results='hide'` option in the chunk.
+
+```{r, results='hide'}
+simmr_out = simmr_mcmc(simmr_in)
+```
+
+And we should always check for convergence.
+
+```{r}
+# plot the convergence statistics 
+plot(simmr_out, type='convergence')
+```
+
+The results of this toy example are not expected to be overly helpful or meaningful.
+
+```{r}
+summary(simmr_out,type='statistics')
+summary(simmr_out,type='quantiles')
+```
+
 
 ## __*A priori*__ aggregation
-We combine the sources C and D before we run the model as is sometimes suggested. We do this by taking the mean of the means, and we square the SDs to make them variances, then add them, and then square-root them to turn them back into SDs again.
+
+We combine the sources C and D before we run the model as is sometimes suggested. We do this by taking the mean of the means, and we square the SDs to make them variances, then add them, and then square-root them to turn them back into SDs again. We dont need to change the consumer data in any way.
 
 ```{r a-priori}
-combined.sources <- data.frame(sources=c("A","B","CD"),
-                        muC = c(sources$muC[c(1,2)], mean(sources$muC[c(3,4)])),
-                        sdC = c(sources$sdC[c(1,2)], sqrt(sum(sources$sdC[c(3,4)]^2))),
-                        muN = c(sources$muN[c(1,2)], mean(sources$muN[c(3,4)])),
-                        sdN = c(sources$sdN[c(1,2)], sqrt(sum(sources$sdN[c(3,4)]^2)))
-                        )
 
-model2 <- siarmcmcdirichletv4(consumers, combined.sources)
+# specify the source names
+S_names_a_priori = c("A","B","CD")
 
-#dev.new()
-siarplotdata(model2,iso=c(1,2))
+# take the mean of the last two sources C and D
+S_means_a_priori = rbind(S_means[1:2,], colMeans(S_means[3:4,]) )
 
+# square the sds for sources C and D to convert to variance,
+# sum them and convert back to sd
+S_sds_a_priori = rbind( S_sds[1:2,], colSums(S_sds[3:4,]^2) ^ 0.5 )
 
-#dev.new()
-#siarhistograms(model2)
-
-#dev.new()
-siardensityplot(model2$output[ , 1:3],
-                xticklabels=c('A','B','C+D'),
-                main = "Sources C and D combined a priori")
+# and create the new simmr object
+# here we have no TDFs or concentration values
+simmr_in_a_priori <- simmr_load(mixtures = consumers,
+                       source_names = S_names_a_priori,
+                       source_means = S_means_a_priori,
+                       source_sds = S_sds_a_priori)
 
 
-siarhdrs(model2)
 
-siarmatrixplot(model2)
 
+```
+
+Plot this newly combined data. 
+
+```{r}
+# plot the raw data for the a priori aggregated example
+plot(simmr_in_a_priori)
+```
+
+Run the model on the a priori combined data.
+
+```{r}
+# fit the a priori aggregated models
+simmr_out_a_priori = simmr_mcmc(simmr_in_a_priori)
+
+```
+And plot
+
+```{r}
+# Plot the a priori aggregated diet estimatess
+plot(simmr_out_a_priori, type = "density")
 ```
 
 ... and now apparently we are very sure about the contributions of all sources to the diet. There is some correlation between A and B since they need to balance each other out in combination to yield a dB value of 0. You would now incorrectly assume that  CD represents pretty much a guaranteed 43% of the diet.
 
 ## __*A posteriori*__ aggregation
-Far more honest is to fit the model as before, with the sources as we believe them to be *a priori* and then simply add our prortions together from the posterior distribution.
+Far more honest is to fit the model as before, with the sources as we believe them to be *a priori* and then simply add our prortions together from the posterior distribution. This is made very easy in SIMMR and also MixSIAR with dedicated functions. In fact, MixSIAR also allows easier a priori aggregation by hiding the routine outlined in the preceding section.
 
 ```{r a-posteriori}
-CD.posteriori.aggregated <-  cbind(model1$output[,c("A","B")],
-                                   rowSums(model1$output[,c("C","D")]))
+# combine sources C and D which are in positions 3 and 4
+simmr_out_a_posteriori <- combine_sources(
+  simmr_out, 
+  to_combine = simmr_out$input$source_names[c(3,4)], 
+  new_source_name = "CD")
 
-BCD.posteriori.aggregated <-  cbind(model1$output[,c("A")],
-                                   rowSums(model1$output[,c("B","C","D")]))
+# Plot the a posteriori aggregated diet estimatess
+plot(simmr_out_a_posteriori, type = "density")
 
 
-# this figure illustrates how uncertain we are in the estiamtes, and 
-# it differs starkly with the relatively much more certain results stemming 
-# from the a priori aggregation.
-#dev.new()
-siardensityplot(CD.posteriori.aggregated,
-                xticklabels=c('A','B','C+D'),
-                main = "Sources C and D combined a posteriori")
-
-pairs(CD.posteriori.aggregated,
-      diag.panel = panelhist,
-      lower.panel = panelcor,
-      upper.panel = panelcontour)
 ```
 This result fits much better with what we would predict: that if the model is still not sure about the contribution of the four sources to the mixture, but that it is pretty sure that on average, 50% of the diet is comprised of both C and D. This concept continues until the model is entirely certain, with no error, that the diet is wholly 100% of A+B+C+D.
 
