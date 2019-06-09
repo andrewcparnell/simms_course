@@ -6,6 +6,8 @@ output:
   beamer_presentation:
     includes:
       in_header: ../header.tex
+editor_options: 
+  chunk_output_type: console
 ---
 
 ```{r setup, include=FALSE}
@@ -90,8 +92,8 @@ summary(model)
 ## What you will now get instead
 
 ```{r, echo=FALSE, results='hide', message=FALSE}
-library(rjags)
-modelstring ='
+library(R2jags)
+model_code ='
 model {
   for(i in 1:N) { 
     y[i] ~ dnorm(intercept + slope*x[i], residual_sd^-2) 
@@ -104,12 +106,14 @@ model {
 data=list(x=stackloss$Air.Flow,
           y=stackloss$stack.loss,
           N=nrow(stackloss))
-model=jags.model(textConnection(modelstring), data=data)
-output=coda.samples(model=model,variable.names=c("intercept","slope","residual_sd"), n.iter=10000)
+model_parameters =  c("intercept", "slope", "residual_sd")
+model_run = jags(data = data,
+                 parameters.to.save = model_parameters,
+                 model.file = textConnection(model_code))
 ```
 \tiny
 ```{r}
-summary(output)
+print(model_run)
 ```
 \normalsize 
 
@@ -122,7 +126,7 @@ summary(output)
 ## A model with prior information
 
 ```{r, echo=FALSE, results='hide', message=FALSE}
-modelstring2 ='
+model_code2 ='
 model {
   for(i in 1:N) { 
     y[i] ~ dnorm(intercept + slope*x[i], residual_sd^-2) 
@@ -132,12 +136,13 @@ model {
   residual_sd ~ dunif(0,100)
 }
 '
-model2=jags.model(textConnection(modelstring2), data=data)
-output2=coda.samples(model=model2,variable.names=c("intercept","slope","residual_sd"), n.iter=10000)
+model_run2 = jags(data = data,
+                 parameters.to.save = model_parameters,
+                 model.file = textConnection(model_code2))
 ```
 \tiny
 ```{r}
-summary(output2)
+print(model_run2)
 ```
 \normalsize 
 
@@ -147,7 +152,7 @@ summary(output2)
 
 \scriptsize
 ```{r, eval = FALSE}
-modelstring ='
+model_code ='
 model {
   for(i in 1:N) { 
     y[i] ~ dnorm(intercept + slope*x[i], residual_sd^-2) 
@@ -207,7 +212,7 @@ Multivariate Normal, $MVN(\mu,\Sigma)$ & $(-\infty,\infty$) & Multivariate unbou
 ## Example: {.smaller}
 
 ```{r,include=FALSE}
-modelstring ='
+model_code ='
 model {
   for(i in 1:N) { 
     y[i] ~ dnorm(intercept + slope*x[i], residual_sd^-2) 
@@ -220,26 +225,24 @@ model {
 data=list(x = stackloss$Air.Flow,
           y = stackloss$stack.loss,
           N = nrow(stackloss))
-model=jags.model(textConnection(modelstring), 
-                 data=data)
-output=coda.samples(model = model,
-                    variable.names = c("intercept",
-                                       "slope",
-                                       "residual_sd"), 
-                    n.iter =  10000)
+model_parameters =  c("intercept", "slope", "residual_sd")
+model_run = jags(data = data,
+                 parameters.to.save = model_parameters,
+                 model.file = textConnection(model_code))
 ```
 
 From the earlier simple example. First 5 posterior samples of the slope
 ```{r}
-output[[1]][1:5,'slope']
+post_slope = model_run$BUGSoutput$sims.list$slope
+post_slope[1:5]
 ```
 The mean and standard deviation: 
 ```{r}
-c(mean(output[[1]][,'slope']),sd(output[[1]][,'slope']))
+c(mean(post_slope),sd(post_slope))
 ```
 A 95% credible interval
 ```{r}
-quantile(output[[1]][,'slope'],probs=c(0.025,0.975))
+quantile(post_slope,probs=c(0.025,0.975))
 ```
 
 ## Why is this better?
