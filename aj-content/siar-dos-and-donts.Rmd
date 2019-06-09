@@ -1,7 +1,7 @@
 ---
 title: "SIAR dos and don'ts: a discussion"
 author: "Andrew L Jackson"
-date: "24 May 2018"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
 output:
   ioslides_presentation:
     logo: images/tcd-stacked-square-2.png
@@ -104,7 +104,7 @@ points(sources[,1] - 1, sources[,2] - 3,
 > - Some people worry about internal routing
     - different nutrients are sent along different pathways depending on physiological state of the organism and anabolic processes (building of tissues)
 > - My own view that the uncertainty one includes encompasses all these concerns
-> - We are working on a neat method to estimate these factors on species for which we dont have observed factors: SIDER
+> - There are statistically phenomenological ways these can be predicted using phylogenetic regression using our package SIDER and people like Sebastien Lefebvre are working on more physiological mechanistic models that use body mass and metabolic rate to predict them.
 
 ## Plot your data - 5a
 <img src="images/siar-biplot.png" alt="biplot of goose data and sources" width="450">
@@ -204,5 +204,6 @@ points(sources[,1] - 1, sources[,2] - 3,
 > - amino acids
 > - better informed priors
     - from e.g. DNA or abundance data
+> - detailed models of movement of elements through organisms: physiology & metabolism
 
 
