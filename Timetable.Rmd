@@ -19,7 +19,7 @@ Time  | Class
 ------------- | ----------------------------------------------------
 9:30-10:30 | [Introduction: why use a SIMM? (AJ)](https://rawgit.com/andrewcparnell/simms_course/master/aj-content/intro-why-use-a-SIMM.html)
 10:30-10:45 | Coffee break
-10:45-11:45 | [Revision of likelihood and regression (AP)](https://rawgit.com/andrewcparnell/simms_course/master/ap_notes/intro_bayes/revision_of_likelihood_regression/revision_of_likelihood_and_regression.pdf)
+10:45-11:45 | [Revision of likelihood and regression (AP)](https://rawgit.com/andrewcparnell/simms_course/master/ap_notes/revision_of_likelihood_regression/revision_of_likelihood_and_regression.pdf)
 11:45-12:00 | Break 
 12:00-12:45 | [Guided practical: Revision of important R concepts (AP)](https://rawgit.com/andrewcparnell/simms_course/master/ap_notes/revision_of_R/Revision_of_R.R)
 12:45-13:45 | Lunch
@@ -35,9 +35,9 @@ Time  | Class
 ------------- | ----------------------------------------------------
 9:30-10:30 | [An introduction to Bayesian statistics (AP)](https://rawgit.com/andrewcparnell/simms_course/master/ap_notes/intro_bayes/intro_bayes.pdf)
 10:30-10:45 | Coffee break
-10:45-11:45 | [Guided practical: R, JAGS, and linear regression (AP)](https://rawgit.com/andrewcparnell/simms_course/master/ap_notes/prac_jags/pactical_R_jags_and_lr.R)
+10:45-11:45 | [Guided practical: R, JAGS, and linear regression (AP)](https://rawgit.com/andrewcparnell/simms_course/master/ap_notes/prac_jags/practical_R_jags_and_lr.R)
 11:45-12:00 | Break 
-12:00-12:45 | Guided practical: JAGS and GLMs (AP) [part 1](https://rawgit.com/andrewcparnell/simms_course/master/ap_notes/prac_jags/pactical_jags_logistic.R) [part 2](https://rawgit.com/andrewcparnell/simms_course/master/ap_notes/prac_jags/pactical_jags_poisson.R) 
+12:00-12:45 | Guided practical: JAGS and GLMs (AP) [part 1](https://rawgit.com/andrewcparnell/simms_course/master/ap_notes/prac_jags/practical_jags_logistic.R) [part 2](https://rawgit.com/andrewcparnell/simms_course/master/ap_notes/prac_jags/practical_jags_poisson.R) 
 12:45-13:45 | Lunch
 13:45-15:00 | [Differences between regression models and SIMMs (AP)](https://rawgit.com/andrewcparnell/simms_course/master/ap_notes/reg_and_simms/reg_and_simms.pdf)
 15:00-15:30 | Coffee break
