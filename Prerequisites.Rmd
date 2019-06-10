@@ -50,7 +50,7 @@ library(SIDER)
 
 # NB SIAR is out of date and we will not use it, but some of the example
 # datasets are still in it and we need access to them.
-install_github("andrewljackson/siar@master", build_vingettes = TRUE)
+install_github("andrewljackson/siar@master", build_vignettes = TRUE)
 
 ```
 
