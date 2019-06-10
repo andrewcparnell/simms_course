@@ -27,6 +27,7 @@ install.packages(c('rjags', 'R2jags','compositions', 'devtools', 'tidyverse', 'v
 
 # check that they load
 library(rjags)
+library(R2jags)
 library(compositions)
 library(devtools) 
 library(tidyverse)
