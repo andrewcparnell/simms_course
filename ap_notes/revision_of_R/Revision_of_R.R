@@ -326,7 +326,8 @@ head(faithful)
 lm(eruptions ~ waiting, data = faithful)
 
 # Save as an object and then can manipulate
-model_1 = lm(eruptions ~ waiting, data = faithful)
+model_1 = lm(eruptions ~ waiting, 
+             data = faithful)
 summary(model_1)
 
 # model_1 is now a list
