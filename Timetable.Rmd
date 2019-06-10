@@ -23,7 +23,7 @@ Time  | Class
 11:45-12:00 | Break 
 12:00-12:45 | [Guided practical: Revision of important R concepts (AP)](https://rawgit.com/andrewcparnell/simms_course/master/ap_notes/revision_of_R/Revision_of_R.R)
 12:45-13:45 | Lunch
-13:45-15:00 | [Guided practical: Intro to SI data](https://rawgit.com/andrewcparnell/simms_course/master/aj-content/practicals/day-1-am/Exploring-Basic-SIA-Data.html) and [biplots](https://rawgit.com/andrewcparnell/simms_course/master/aj-content/practicals/day-1-am/first-biplot.html) (AJ)
+13:45-15:00 | [Guided practical: Intro to SI data](https://rawgit.com/andrewcparnell/simms_course/master/aj-content/practicals/day-1-pm1/Exploring-Basic-SIA-Data.html) and [biplots](https://rawgit.com/andrewcparnell/simms_course/master/aj-content/practicals/day-1-pm2/first-biplot.html) (AJ)
 15:00-15:30 | Coffee break
 15:30-17:00 | [Guided Practical: Simple linear models to explain SIA data](https://rawgit.com/andrewcparnell/simms_course/master/aj-content/practicals/day-1-pm/basic-SIA-linear-models.html) (AJ)
 

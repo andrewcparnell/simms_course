@@ -66,11 +66,11 @@ table(mydata$Taxon)
 It is not so easy to get summary statistics on each Taxonomic group within our dataset using the basic R functions. There are many packages out there to help, but Hadley Wickham's suite of packages are impossible to beat in my opinion, and we will be using his `ggplot2` package for pretty graphs later on so lets stick with the "tidyverse" set of functions.
 
 ```{r summarise-data-by-group}
-# Install dplyr if required
-# install.packages('dplyr')
+# Install tidyverse if required
+# install.packages('tidyverse')
 
 # load the library
-library(dplyr)
+library(tidyverse)
 
 # generate summary statitsics by group
 mydata %>% group_by(Taxon) %>% 
@@ -78,7 +78,9 @@ mydata %>% group_by(Taxon) %>%
             mC = mean(d13C), 
             sdC = sd(d13C), 
             mN = mean(d15N), 
-            sdN = sd(d15N))
+            sdN = sd(d15N),
+            mCN = mean(C.N),
+            sdCN = sd(C.N))
 
 
 ```

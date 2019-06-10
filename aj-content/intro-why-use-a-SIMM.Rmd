@@ -25,7 +25,7 @@ output:
 
 ## Practicals
 - R revision
-- SIAR / simmr
+- simmr (not SIAR)
 - SIBER
 - SIDER
 - MixSIAR and jags
