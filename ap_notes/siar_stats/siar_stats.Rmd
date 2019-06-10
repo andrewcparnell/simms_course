@@ -6,6 +6,8 @@ output:
   beamer_presentation:
     includes:
       in_header: ../header.tex
+editor_options: 
+  chunk_output_type: console
 ---
 
 ```{r setup, include=FALSE}
@@ -72,7 +74,7 @@ simmr_in = simmr_load(mixtures=mix,
                      concentration_means = conc)
 ```
 
-```{r, warning=FALSE}
+```{r, warning=FALSE, fig.height = 5}
 plot(simmr_in)
 ```
 
@@ -95,7 +97,7 @@ $$ y_i \sim N\left(\sum_{k=1}^K p_ks_k,\sigma^2\right)$$
 ## JAGS SIMM with a Dirichlet prior
 ```{r,include=FALSE}
 library(siar)
-library(rjags)
+library(R2jags)
 data(geese1demo); data(sourcesdemo)
 consumers = geese1demo[,2]
 set.seed(4)
@@ -103,7 +105,7 @@ set.seed(4)
 
 \small
 ```{r,results='hide'}
-modelstring ='
+model_code ='
 model {
   for(i in 1:N) { y[i] ~ dnorm(inprod(p,s),sigma^-2) }
   p ~ ddirch(alpha)
@@ -116,9 +118,9 @@ data=list(y=consumers,s_mean=sources[,1],s_sd=sources[,2],
           N=length(consumers),K=nrow(sources),
           alpha=rep(1,nrow(sources)))
 set.seed(123)
-model=jags.model(textConnection(modelstring), data=data)
-output=coda.samples(model=model,variable.names=c("p"),
-                    n.iter=1000)
+model_run = jags(data = data,
+                 parameters.to.save = c("p", "sigma"),
+                 model.file = textConnection(model_code))
 ```
 This is now running with all 4 sources
 
@@ -129,7 +131,7 @@ This is now running with all 4 sources
 - We can explore/plot results with `summary(output)`, `plot(output)`, and also run multiple chains, form predictive distributions, check convergence, etc
 - One important thing to note is that the fitting method (MCMC) produces a joint posterior distribution of the dietary proportions. This means that each set of samples will sum to 1:
 ```{r}
-head(as.matrix(output[[1]]),4)
+head(model_run$BUGSoutput$sims.matrix,4)
 ```
 - The key implication of this is that, aside from exploring the _marginal_ posterior distributions (with means, sds, etc) we can explore the _joint_ uncertainty of the dietary proportions
 
@@ -151,7 +153,7 @@ panel.cor <- function(x, y, digits = 2, prefix = "", cex.cor, ...)
 ```
 
 ```{r, fig.height = 5}
-out_2 = as.matrix(output[[1]])
+out_2 = model_run$BUGSoutput$sims.list$p
 colnames(out_2) = sourcesdemo[,1]
 pairs(out_2, lower.panel = panel.smooth, 
       upper.panel = panel.cor)
@@ -170,7 +172,7 @@ $$ y_i \sim N \left( \frac{\sum_{k=1}^K p_k q_k (s_k+c_k)}{\sum_{k=1}^K p_k q_k}
 
 \small
 ```{r,results='hide'}
-modelstring ='
+model_code ='
 model {
   for(i in 1:N) { 
     y[i] ~ dnorm(inprod(p*q,s+c)/inprod(p,q),sigma^-2) 
@@ -188,8 +190,9 @@ data=list(y=consumers,s_mean=sources[,1],s_sd=sources[,2],
           c_mean=correctionsdemo[,4],c_sd=correctionsdemo[,5],
           q=concdepdemo[,4],N=length(consumers),K=nrow(sources),
           alpha=rep(1,nrow(sources)))
-model=jags.model(textConnection(modelstring), data=data)
-output=coda.samples(model=model,variable.names=c("p"),n.iter=10000)
+model_run = jags(data = data,
+                 parameters.to.save = c("p"),
+                 model.file = textConnection(model_code))
 ```
 
 ## Notes on the TEF and CD model
@@ -230,7 +233,7 @@ $$ y_{ij} \sim N \left( \frac{\sum_{k=1}^K p_k q_{jk} (\mu_{s,jk}+\mu_{c,jk})}{\
 
 ## Full SIAR model: JAGS code
 ```{r,results='hide'}
-modelstring ='
+model_code ='
 model {
   for (i in 1:N) { 
     for (j in 1:J) {
@@ -260,52 +263,30 @@ data=list(y=geese1demo,s_mean=sources[,c(1,3)],
           c_mean=tefs[,c(1,3)],c_sd=tefs[,c(2,4)],
           q=cd,N=nrow(geese1demo),
           J=ncol(geese1demo),alpha=rep(1,nrow(sources)))
-model=jags.model(textConnection(modelstring), data=data)
-output=coda.samples(model=model,variable.names=c("p",'sigma'),
-                    n.iter=10000,nthin=10)
+model_run = jags(data = data,
+                 parameters.to.save = c("p", "sigma"),
+                 model.file = textConnection(model_code),
+                 DIC = FALSE)
 ```
 
 ## Summary of posterior dietary proportions
 
 \small
 ```{r,fig.align='center'}
-out_2 = as.matrix(output[[1]])
+out_2 = model_run$BUGSoutput$sims.matrix
 colnames(out_2) = c(as.character(sourcesdemo[,1]),'SD1','SD2')
 t(round(apply(out_2,2,quantile,probs=c(0.025,0.5,0.975)),2))
 ```
 Some of these proportions are quite imprecise: perhaps see better with matrix plot?
 
-## Running SIAR
+## Running SIAR/simmr
 
-- The SIAR R package runs exactly this model with a few extra tweaks
+- The SIAR/simmr R packages run exactly this model with a few extra tweaks
 - It contains a slightly optimised algorithm as JAGS sometimes gets a bit stuck on harder data sets. It's also much faster than JAGS for complicated problems
 - It allows for direct plotting of the data in isotope space and $p$-space (i.e. dietary proportion space - `pairs` plots)
 - It allows for changing the $\alpha$ values to put in proper prior information
 - It includes convergence checking 
 - Most of this covered in the practical this afternoon
-
-## Running SIAR 2
-
-\small
-
-- Running SIAR is as simple as giving it the relevant parts:
-
-```{r,results='hide'}
-out = siarmcmcdirichletv4(geese1demo,sourcesdemo,correctionsdemo,concdepdemo)
-```
-```{r}
-out_2 = out$output
-colnames(out_2) = c(as.character(sourcesdemo[,1]),'SD1','SD2')
-t(round(apply(out_2,2,quantile,probs=c(0.025,0.5,0.975)),2))
-```
-
-- Most people get stuck using SIAR just getting their data into the right format
-
-## Matrix plot of dietary proportions
-
-```{r,message = FALSE, results = 'hide'}
-siarmatrixplot(out)
-```
 
 ## simmr version
 
