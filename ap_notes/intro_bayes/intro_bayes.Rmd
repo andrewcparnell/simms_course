@@ -154,9 +154,11 @@ print(model_run2)
 ```{r, eval = FALSE}
 model_code ='
 model {
+  # Likelihood
   for(i in 1:N) { 
     y[i] ~ dnorm(intercept + slope*x[i], residual_sd^-2) 
   }
+  # Priors
   intercept ~ dnorm(0,100^-2)
   slope ~ dnorm(0,100^-2)
   residual_sd ~ dunif(0,100)
@@ -169,9 +171,9 @@ model {
 
 There are several choices when it comes to specifying prior distributions:
 
-- _Informative_, when there is information from a previous study, or other good external source, e.g slope $\sim N(-30,5^2)$
-- _Vague_, when there is only weak information, perhaps as to the likely range of the parameter e.g. slope $\sim N(0,100^2)$
-- _Flat_, when there is no information at all about a parameter (very rare). In JAGS, write `slope ~ dflat()`
+- _Informative_, when there is information from a previous study, or other good external source, e.g intercept $\sim N(-30,5^2)$
+- _Vague_, when there is only weak information, perhaps as to the likely range of the parameter e.g. intercept $\sim N(0,100^2)$
+- _Flat_, when there is no information at all about a parameter (very rare). In JAGS, write `intercept ~ dflat()`
 
 In fact, choosing the prior and choosing the likelihood are very similar problems
 
@@ -182,7 +184,7 @@ When creating Bayesian models it's helpful to know a lot of probability distribu
 \small
 \begin{tabular}{p{3cm}lp{4cm}}
 \hline
-Distribution & Range of parameter & Useful for \\
+Distribution & Range of data & Useful for \\
 \hline
 Normal, $N(\mu,\sigma^2)$ & $(-\infty,\infty$) & A good default choice \\
 Uniform, $U(a,b)$ & $(a,b)$ & Vague priors when we only know the range of the parameter \\
