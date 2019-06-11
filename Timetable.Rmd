@@ -37,11 +37,11 @@ Time  | Class
 10:30-10:45 | Coffee break
 10:45-11:45 | [Guided practical: R, JAGS, and linear regression (AP)](https://rawgit.com/andrewcparnell/simms_course/master/ap_notes/prac_jags/practical_R_jags_and_lr.R)
 11:45-12:00 | Break 
-12:00-12:45 | Guided practical: JAGS and GLMs (AP) [part 1](https://rawgit.com/andrewcparnell/simms_course/master/ap_notes/prac_jags/practical_jags_logistic.R) [part 2](https://rawgit.com/andrewcparnell/simms_course/master/ap_notes/prac_jags/practical_jags_poisson.R) 
+12:00-12:45 | [Differences between regression models and SIMMs (AP)](https://rawgit.com/andrewcparnell/simms_course/master/ap_notes/reg_and_simms/reg_and_simms.pdf) 
 12:45-13:45 | Lunch
-13:45-15:00 | [Differences between regression models and SIMMs (AP)](https://rawgit.com/andrewcparnell/simms_course/master/ap_notes/reg_and_simms/reg_and_simms.pdf)
+13:45-15:00 | [Practical: intro to simmr (AP)](https://rawgit.com/andrewcparnell/simms_course/master/ap_notes/prac_using_simmr/simmr_vignette_code.R)
 15:00-15:30 | Coffee break
-15:30-17:00 | [Practical: intro to simmr (AP)](https://rawgit.com/andrewcparnell/simms_course/master/ap_notes/prac_using_simmr/simmr_vignette_code.R)
+15:30-17:00 | Practical: options are (1) run your data through AJ's plots from yesterday, or (2) get your data to run in simmr, or (3) go back and learn ggplot2 from [this script]((https://rawgit.com/andrewcparnell/simms_course/master/ap_notes/gg_plot_class.R)
 
 ## Wednesday
 
