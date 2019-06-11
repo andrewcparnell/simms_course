@@ -38,7 +38,8 @@ model_data = list(n = nrow(sea_level),
                   x = sea_level$year_AD)
 
 # Choose which parameters to save
-model_parameters = c('alpha', 'beta', 'sigma')
+model_parameters = c('alpha', 'beta', 
+                      'sigma')
 
 # Run the model
 model_run = jags(data = model_data,
@@ -73,8 +74,7 @@ plot(density(model_run$BUGSoutput$sims.list$beta))
 quantile(model_run$BUGSoutput$sims.list$beta,
          probs = c(0.05, 0.95)) * 1000
 
-
-# We can createa  plot of the posterior mean line
+# We can create a plot of the posterior mean line
 alpha_mean = model_run$BUGSoutput$mean$alpha
 beta_mean = model_run$BUGSoutput$mean$beta
 x = sea_level$year_AD
