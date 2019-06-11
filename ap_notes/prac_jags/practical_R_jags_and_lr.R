@@ -51,7 +51,7 @@ print(model_run)
 # Things to do:
 # 1 Compare the lm output to the jags output to see they match
 # 2 Change the prior distributions - make them narrower?
-# 3 Change the code to get mm per year
+# 3 Change the code/results to get mm per year
 
 # Further output ----------------------------------------------------------
 

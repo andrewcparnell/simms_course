@@ -271,8 +271,8 @@ simmr_in_1D = simmr_load(mixtures=mix,
                      correction_sds=c_sds,
                      concentration_means = conc)
 
-# Iso-space plot
-plot(simmr_in_1D)
+# Iso-space plot - only works in development version
+#plot(simmr_in_1D)
 
 # MCMC run
 simmr_run_1D = simmr_mcmc(simmr_in_1D)
@@ -282,22 +282,6 @@ summary(simmr_run_1D, type = 'diagnostics')
 
 # Plot/summarise output - same as before
 plot(simmr_run_1D, type = 'boxplot')
-
-# Models with individual effects ------------------------------------------
-
-# Run model
-simmr_run_ind = simmr_mcmc(simmr_in, 
-                       individual_effects = TRUE)
-
-# A bit slower
-
-# Get output
-summary(simmr_run_ind, 
-        type = c('diagnostics', 'statistics'))
-
-# Output
-plot(simmr_run_ind, type = 'boxplot')
-compare_groups(simmr_run_ind, groups = 1:2)
 
 # Access the JAGS output --------------------------------------------------
 
