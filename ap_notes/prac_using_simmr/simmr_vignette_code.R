@@ -73,7 +73,6 @@ plot(simmr_out, type = 'density')
 plot(simmr_out, type = 'matrix')
 plot(simmr_out, type = 'boxplot')
 
-
 # Do more with the output -------------------------------------------------
 
 # Compare two sources
@@ -189,7 +188,7 @@ summary(simmr_groups_out, type = 'diagnostics', group = 1:8)
 # Some of these are not good - longer run?
 
 # An example of a longer run
-# simmr_groups_out = simmr_mcmc(simmr_groups, 
+# simmr_groups_out = simmr_mcmc(simmr_groups,
 #                               mcmc_control = list(iter = 1e5,
 #                                                   burn = 1e4,
 #                                                   thin = 1e2))

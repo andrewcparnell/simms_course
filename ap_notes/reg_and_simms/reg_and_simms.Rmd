@@ -107,15 +107,15 @@ where $logit(p) = \log \left( \frac{p}{1-p} \right)$. Note that $p_i$ directly m
 ## Example 2 in JAGS
 \small
 Note: this isn't a great model as the data set is very small
-```{r,eval=FALSE}
+```{r}
 model_code ='
 model {
   for(i in 1:N) { 
     y[i] ~ dbin(p[i],1) 
     logit(p[i]) <- alpha + beta*x[i]
   }
-  alpha ~ dnorm(0,100^-2)
-  beta ~ dnorm(0,100^-2)
+  alpha ~ dnorm(0,4^-2)
+  beta ~ dnorm(0,4^-2)
 }
 '
 data=list(x=c(18.07, 52.59, 54.93, 79.31, 89.58),
@@ -241,10 +241,12 @@ model_run = jags(data = data,
 
 \small
 
-```{r,fig.align='center'}
-plot(density(model_run$BUGSoutput$sims.list$p_1, from = 0, to = 1),
+```{r,fig.align='center', fig.height = 5}
+hist(model_run$BUGSoutput$sims.list$p_1,
+     xlim = c(0, 1),
      xlab='Proportion',
-     ylab='Probability density',main='Proportion of Zostera')
+     ylab='Probability density',
+     main='Proportion of Zostera')
 ```
 
 ## Model checking and convergence
@@ -295,10 +297,12 @@ model_run = jags(data = data,
                  model.file = textConnection(model_code))
 ```
 ```{r}
-y_pred_quantiles = apply(model_run$BUGSoutput$sims.list$y_pred,2,'quantile',probs=c(0.05,0.95))
+y_pred_quantiles = apply(model_run$BUGSoutput$sims.list$y_pred,
+                         2,'quantile',
+                         probs=c(0.25,0.75))
 round(cbind(data$y,t(y_pred_quantiles)),2)
 ```
-Just 1 observation outside the 90% CI. Looks to be an OK model.
+4/9 observations outside the 50% CI. Looks to be an OK model.
 
 ## Convergence checking 
 
@@ -309,21 +313,13 @@ Just 1 observation outside the 90% CI. Looks to be an OK model.
 - Another method for ensuring convergence is to start JAGS with multiple different starting values and see if each model run (known as a _chain_) converges to the same posterior distribution
 - You can supply initial guesses and the number of chains to JAGS when you run it:
 
-\vspace{-0.5cm}
-
-```{r,results='hide'}
+```{r,eval=FALSE}
 inits = function() {
   list('p_1'=runif(1),'s_1'=rnorm(1),'s_2'=runif(1),
        'sigma'=runif(1,0,10))
 }
-model_parameters = c('p_1', 'p_2')
-model_run = jags(data = data,
-                 inits = inits,
-                 parameters.to.save = model_parameters,
-                 model.file = textConnection(model_code))
+...
 ```
-
-\vspace{-0.7cm}
 
 - The `model_run` created will now contain (amongst many other things) a list of length 3, so we can look at the different chains with e.g. `traceplot(model_run, varname = 'p_1')`
 
@@ -343,8 +339,8 @@ plot(model_run)
 
 ## Convergence checking 4
 
-- If you started by choosing bad initial values you might want to remove an initial chunk of the samples. This is known as the burn in and can be set using the `n.adapt` command in the `jags.model` function call
-- Ideally the samples from the posterior distribution should be independent. If the algorithm isn't working well you can _thin_ them out with the `thin` argument in the `coda.samples` function. The auto-correlation plot produced by `acf` in `R` can tell you whether you need to thin or not
+- If you started by choosing bad initial values you might want to remove an initial chunk of the samples. This is known as the burn in and can be set using the `n.thin` command in the `jags` function call
+- Ideally the samples from the posterior distribution should be independent. If the algorithm isn't working well you can _thin_ them out with the `n.thin` argument in the `jags` function. The auto-correlation plot produced by `acf` in `R` can tell you whether you need to thin or not
 - Finally, we need to choose the number of iterations. For very simple models 1,000 is usually fine, but for very complicated models you can sometimes need hundreds of thousands or millions. 10,000 is usually a good number for most problems. You can set the number of iterations in JAGS with `n.iter`
 
 `simmr`/`MixSIAR` have their own commands for dealing with burn-in/thinning/iterations
