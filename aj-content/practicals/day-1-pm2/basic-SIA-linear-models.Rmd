@@ -43,7 +43,8 @@ library(ggplot2)
 liver.plot <- ggplot(data = mydata, aes(Liver.CN, Liver.d13C)) + 
   geom_point() +
   geom_smooth(method = "loess", alpha = 0.5) +
-  facet_grid(Species~.)
+  facet_grid(Species~.) + 
+  theme(text = element_text(size=20))
 print(liver.plot)
 
 ```
