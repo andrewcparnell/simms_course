@@ -242,7 +242,8 @@ model_run = jags(data = data,
 \small
 
 ```{r,fig.align='center'}
-plot(density(model_run$BUGSoutput$sims.list$p_1),xlab='Proportion',
+plot(density(model_run$BUGSoutput$sims.list$p_1, from = 0, to = 1),
+     xlab='Proportion',
      ylab='Probability density',main='Proportion of Zostera')
 ```
 
