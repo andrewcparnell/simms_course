@@ -44,6 +44,9 @@ plot_data(filename="isospace_plot",
           source = source, 
           discr = discr)
 
+# Plot the prior
+#plot_prior(alpha.prior=1,source)
+
 # Write the model out
 model_filename = "MixSIAR_model.txt"   # Name of the JAGS model file
 write_JAGS_model(model_filename, 
