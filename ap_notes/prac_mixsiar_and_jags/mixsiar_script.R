@@ -6,6 +6,7 @@ library(MixSIAR)
 
 # Find the data
 mix.filename = system.file("extdata", "wolves_consumer.csv", package = "MixSIAR")
+#system(paste('open',mix.filename))
 
 # Load into MixSIAR
 mix = load_mix_data(filename=mix.filename, 
