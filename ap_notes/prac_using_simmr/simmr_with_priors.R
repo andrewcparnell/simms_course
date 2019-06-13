@@ -28,7 +28,7 @@ simmr_1 = simmr_load(mixtures=mix,
 # Iso-space plot
 plot(simmr_1)
 
-# MCMC run
+# MCMC run - do this for comparison (you don't need to run this before the elicit command)
 simmr_1_out = simmr_mcmc(simmr_1)
 
 # Summary
@@ -43,7 +43,8 @@ summary(simmr_1_out,'quantiles')
 # Now suppose I had prior information that: 
 # proportion means = 0.5,0.2,0.2,0.1 
 # proportion sds = 0.08,0.02,0.01,0.02
-prior=simmr_elicit(simmr_1,c(0.5,0.2,0.2,0.1),
+prior=simmr_elicit(simmr_1,
+                   c(0.5,0.2,0.2,0.1),
                    c(0.08,0.02,0.01,0.02))
 
 simmr_1a_out = simmr_mcmc(simmr_1,
