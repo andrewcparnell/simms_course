@@ -1,7 +1,7 @@
 ---
 title: "Comparing populations in isotope-space"
 author: "Andrew L Jackson"
-date: "14 Jan 2017"
+date: "`r Sys.Date()`"
 output: html_document
 ---
 

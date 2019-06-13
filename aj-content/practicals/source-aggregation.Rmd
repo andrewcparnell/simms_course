@@ -77,6 +77,23 @@ summary(simmr_out,type='statistics')
 summary(simmr_out,type='quantiles')
 ```
 
+Plot the estimates of the dietary proportions
+
+```{r}
+# Plot the a priori aggregated diet estimatess
+plot(simmr_out, type = "density")
+```
+
+
+Plot the covariance between the estimated dietary proportons in the posterior.
+
+```{r plot-posterior-cov}
+
+plot(simmr_out, type = "matrix")
+
+```
+
+
 
 ## __*A priori*__ aggregation
 
@@ -129,12 +146,18 @@ plot(simmr_out_a_priori, type = "density")
 
 ... and now apparently we are very sure about the contributions of all sources to the diet. There is some correlation between A and B since they need to balance each other out in combination to yield a dB value of 0. You would now incorrectly assume that  CD represents pretty much a guaranteed 43% of the diet.
 
+```{r plot-posterior-cov-prior-agg}
+
+plot(simmr_out_a_priori, type = "matrix")
+
+```
+
 ## __*A posteriori*__ aggregation
 Far more honest is to fit the model as before, with the sources as we believe them to be *a priori* and then simply add our prortions together from the posterior distribution. This is made very easy in SIMMR and also MixSIAR with dedicated functions. In fact, MixSIAR also allows easier a priori aggregation by hiding the routine outlined in the preceding section.
 
 ```{r a-posteriori}
 # combine sources C and D which are in positions 3 and 4
-simmr_out_a_posteriori <- combine_sources(
+simmr_out_a_posteriori <- simmr::combine_sources(
   simmr_out, 
   to_combine = simmr_out$input$source_names[c(3,4)], 
   new_source_name = "CD")
