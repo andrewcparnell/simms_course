@@ -1,0 +1,44 @@
+---
+title: "Test limits of SIBER data formats"
+output: html_notebook
+---
+
+```{r try-import}
+
+library(SIBER)
+
+sbr_data <- read.csv("~/Downloads/test-break-siber.csv", header = T, stringsAsFactors = FALSE)
+
+str(sbr_data)
+
+head(sbr_data)
+
+sbr_obj <- createSiberObject(sbr_data)
+
+```
+
+Plot the raw isotope data
+
+```{r}
+
+# of the three plotting functions.
+community.hulls.args <- list(col = 1, lty = 1, lwd = 1)
+group.ellipses.args  <- list(n = 100, p.interval = 0.5, lty = 1, lwd = 2)
+group.hull.args      <- list(lty = 2, col = "grey20")
+
+# plot the raw data
+par(mfrow=c(1,1))
+plotSiberObject(sbr_obj,
+                  ax.pad = 2, 
+                  hulls = F, community.hulls.args, 
+                  ellipses = T, group.ellipses.args,
+                  group.hulls = F, group.hull.args,
+                  bty = "L",
+                  iso.order = c(1,2),
+                  xlab = expression({delta}^13*C~'\u2030'),
+                  ylab = expression({delta}^15*N~'\u2030')
+                  )
+
+```
+
+
