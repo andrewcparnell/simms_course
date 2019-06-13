@@ -81,6 +81,9 @@ Time  | Class
 
 Bring Your Own Data!
 
+Please sign up for a time slot with your name and a brief description of your question and we will meet with you and discuss potential solutions. https://docs.google.com/spreadsheets/d/15NYwk-qwjJRQeKi2yFzY9_7Xg8EsSexKoL_CfEzZ7K4/edit?usp=sharing
+
+
 Time  | Class
 ------------- | ----------------------------------------------------
 9:30-10:30 | [(optional practical)](https://rawgit.com/andrewcparnell/simms_course/master/aj-content/practicals/Introduction-to-SIDER.html) [Estimating trophic discrimination factors using SIDER (AJ)](https://rawgit.com/andrewcparnell/simms_course/master/aj-content/sider-intro.html) 
