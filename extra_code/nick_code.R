@@ -19,6 +19,8 @@ s_means = matrix(c(-14, -15.1, -11.03, -14.44, 3.06, 7.05, 13.72, 5.96), ncol=2,
 s_sds = matrix(c(0.48, 0.38, 0.48, 0.43, 0.46, 0.39, 0.42, 0.48), ncol=2, nrow=4)
 conc = matrix(c(0.02, 0.1, 0.12, 0.04, 0.02, 0.1, 0.09, 0.05), ncol=2, nrow=4)
 
+
+
 # Load into simmr without any corrections
 simmr_tdf = simmr_load(mixtures=mix,
                      source_names=s_names,
@@ -59,3 +61,4 @@ summary(simmr_tdf_2_out, type = 'diagnostics')
 # And see if it looks equal
 plot(simmr_tdf_2_out, type = 'boxplot')
 plot(simmr_tdf_2_out, type = 'matrix')
+
