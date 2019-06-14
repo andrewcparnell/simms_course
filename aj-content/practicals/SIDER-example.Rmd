@@ -123,10 +123,10 @@ The `recipeSider` function also formats the data for the new species data so tha
 We now need to format the data by combining both the isotopic data already available within the package and the data from the new species. We also include what isotope we want to estimate a trophic discrimination value for (either `carbon` or `nitrogen`).
 
 ```{r format_data}
-tdf_data_c <- prepareSider(new_data_test, 
+tdf_data_n <- prepareSider(new_data_test, 
                           isotope_data, 
                           combined_trees, 
-                          "carbon")
+                          "nitrogen")
 ```
 
 > N.B. `isotope_data` is the isotopic dataset already implemented in **`SIDER`**.
@@ -135,13 +135,13 @@ We now have a `mulTree` class object, which is required for the imputation analy
 It contains the matched phylogenies, in this case two phylogenies:
 
 ```{r multi_phlyos}
-tdf_data_c$phy
+tdf_data_n$phy
 ```
 
 and a dataset containing the TDF and related data with the new species, for which you want to estimate a trophic enrichment factor, at the top with a `NA` for either `delta13C` or `delta15N` depending on isotope.
 
 ```{r head_data}
-head(tdf_data_c$data)
+head(tdf_data_n$data)
 ```
 
 
@@ -151,7 +151,7 @@ With the data formatted as a `mulTree` object we can decide on a model which wil
 In this case we will run the full model to estimate delta13C with the fixed factors of diet type and habitat type.
 
 ```{r fixed_effects}
-formula.c <- delta13C ~ diet.type + habitat
+formula.n <- delta15N ~ diet.type + habitat
 ```
 
 and random terms that includes the `animal` term which is required to include phylogeny into the analysis:
@@ -172,7 +172,7 @@ prior <- list(R = list(V = 1, nu=0.002),
 along with the number of iterations to run the chain (`nitt`), the burn-in (`burnin`), the sampling thinning (`thin`), the number of chains to run (`no.chains`) as recommended in the **`MCMCglmm`** guidelines (https://cran.r-project.org/web/packages/MCMCglmm/vignettes/CourseNotes.pdf)}.
 
 ```{r mcmc_parameters}
-nitt <- c(10)
+nitt <- c(100)
 burnin <- c(1)
 thin <- c(1)
 parameters <- c(nitt, thin, burnin)
@@ -202,11 +202,11 @@ As the function exports the model output, to avoid memory issues within `R` when
 ```{r eval_glmm}
 
 
-TDF_est.c <- imputeSider(mulTree.data = tdf_data_c, 
-                         formula = formula.c, 
+TDF_est.n <- imputeSider(mulTree.data = tdf_data_n, 
+                         formula = formula.n, 
                          random.terms = random.terms,
                          prior = prior, 
-                         output = "test_c_run",
+                         output = "test_n_run",
                          parameters = parameters,
                          chains = no.chains, 
                          convergence =  convergence, 
@@ -215,7 +215,7 @@ TDF_est.c <- imputeSider(mulTree.data = tdf_data_c,
 
 
 ###Now lets have a look at the files imputeSider has saved to the current working directory
-list.files(pattern = "test_c_run")
+list.files(pattern = "test_n_run")
 
 ```
 
@@ -235,24 +235,24 @@ As a `mcmc` class object, the many functions of the `coda` package provide optio
 
 ```{r summarise_results}
 # Explore the names of the list created by SIDER::imputeSider
-names(TDF_est.c)
+names(TDF_est.n)
 
 # Calculate summary statistics of the posterior. 
 # Specifically, the mean and standard deviation would be
 # taken from here and used in a mixing model analysis using 
 # MixSIAR, MixSIR or SIAR for example.
-summary(TDF_est.c$tdf_global)
+summary(TDF_est.n$tdf_global)
 
 # Credible intervals and the mode of the posterior are obtained 
 # using the hdrcde package
-hdrcde::hdr(TDF_est.c$tdf_global, prob = c(50, 95, 99))
+hdrcde::hdr(TDF_est.n$tdf_global, prob = c(50, 95, 99))
 
 # You can also create density plots of the posterior
-coda::densplot(TDF_est.c$tdf_global)
+coda::densplot(TDF_est.n$tdf_global)
 ```
 
 <!-- TG: I made this part hidden (just for ) -->
 
 ```{r tidy-up, echo = FALSE, message = FALSE, warning = FALSE}
-file.remove(list.files(pattern = "test_c_run"))
+file.remove(list.files(pattern = "test_n_run"))
 ```
