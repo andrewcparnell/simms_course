@@ -1,0 +1,30 @@
+---
+title: "Explore SEA_B on small sample sizes"
+output: html_notebook
+---
+
+
+```{r setup}
+
+library(SIBER)
+library(mvtnorm)
+library(tidyverse)
+```
+
+
+Create some simulated data to work with:
+
+```{r}
+
+n.iso <- 2
+
+samp_these <- as.list(3:10)
+
+iso_data <- purrr:::map(samp_these, rmvnorm, msean = rep(0,n.iso))
+
+
+
+
+
+```
+
