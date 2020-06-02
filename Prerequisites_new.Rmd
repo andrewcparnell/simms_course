@@ -1,0 +1,87 @@
+---
+title: "Pre-requisites for Stable Isotope Mixing Models course (online)"
+author: "Andrew Parnell and Andrew Jackson"
+output: html_document
+---
+
+In preparation for the course please install the following, preferably in the below suggested order. Make sure you run these as soon as possible to avoid falling behind.
+
+As this module will be delivered online please install [Zoom](https://www.zoom.us) and [Slack](https://slack.com) to access the videos and interactive components of the course. All the Zoom links to the meeting will be posted to the Slack `#General` channel.
+
+### Step 1
+
+Install the following using the corresponding links and *make sure you have the latest versions installed*:
+
+-	R: [http://www.r-project.org](http://www.r-project.org): current version is v4.0.0 and we will assume this version throughout this course. If you want to run an older version or a custom setup then we may not be able to help with compatability issues that may arise.
+
+-	Rstudio (optional but recommended): [https://www.rstudio.com](https://www.rstudio.com)
+
+-	JAGS: http://sourceforge.net/projects/mcmc-jags/files/ **_This step is really important and easy to skip over. JAGS is required, and is not installed as part of the R package rjags which is just a set of functions for R to interact with JAGS._**
+
+### Step 2
+
+Now install all the packages required for the course by entering the following code in to R
+
+```{r,eval=FALSE}
+install.packages(c('rjags', 'R2jags','compositions', 'devtools', 'tidyverse', 'vegan', 'ellipse'))
+
+# check that they load
+library(rjags)
+library(R2jags)
+library(compositions)
+library(devtools) 
+library(tidyverse)
+
+# Install the three main SIA packages
+install.packages(c("simmr", "SIBER", "MixSIAR"))
+
+# check that they load
+library(simmr)
+library(SIBER)
+library(MixSIAR)
+
+# SIDER is slightly different as it is not hosted on CRAN and 
+# instead needs to be installed from GitHub
+install_github("TGuillerme/mulTree@release")
+install_github("healyke/SIDER", build_vignettes = TRUE) 
+
+# check SIDER loads
+library(SIDER)
+
+# NB SIAR is out of date and we will not use it, but some of the example
+# datasets are still in it and we need access to them.
+install_github("andrewljackson/siar@master", build_vignettes = TRUE)
+
+```
+
+These will install the most up to date versions of the packages. Note that this might take a while as some of these are pretty big and complicated packages.
+
+ 
+### Step 3
+ 
+Finally if you would like to do some pre-course reading (recommended) there are some papers which can be accessed [here](https://github.com/andrewcparnell/simms_course/tree/master/papers).
+
+Andrew Jackson has a youtube channel with [podcasts](https://www.youtube.com/playlist?list=PLXXzyqr0tEhPRNDuEQ6wcvMcpAkGRjVqs) on introduction to using R for linear modelling. There are links in the description to an associated repository of scripts and examples to go with it.  
+
+
+### Troubleshooting
+
+Here are some common problems with solutions:
+
+#### Windows issues
+
+  - If you are on Windows and you get an error about not having Rtools please install Rtools from the link it provides you in the error message
+- If you get an error about package `stringi` try typing `install.packages('stringi',type='win.binary')` then re-run the commands above.
+  
+
+#### Mac issues
+
+  - You will more than likely need to install the command line developer tools. Instructions for this are available from (http://osxdaily.com/2014/02/12/install-command-line-tools-mac-os-x/). There is a larger set of tools called Xcode which is available from the Apple Store, but this is unnecessarily large and we dont recommend it unless you know you need it.
+  - Related to the installation of the command line tools, you may get errors such as `make: gfortran: no such file or directory mac` which relate to missing information for the calling of C++ and fortran compilers. This is likely remedied by running `sudo installer -pkg /Library/Developer/CommandLineTools/Packages/macOS_SDK_headers_for_macOS_10.14.pkg -target /` from a terminal window in OS X (not the R command window). This issue and solution is detailed in this thread: (https://github.com/r-lib/devtools/issues/1879#issuecomment-426426380)
+  - If you are on a Mac you might need to install X11 from [http://www.xquartz.org](http://www.xquartz.org). 
+  - If you get an error about package `stringi` try typing `install.packages('stringi',type='mac.binary')`. Then re-run the commands above
+  <!-- - If you get some errors about `pandoc` when installing simmr leave out the `build_vignettes=TRUE` argument -->
+
+
+If you run into any other problems please drop us a line at <andrew.parnell@mu.ie> (for SIAR/simmr/MixSIAR queries) or <a.jackson@tcd.ie> (for SIBER/SIDER queries).
+
