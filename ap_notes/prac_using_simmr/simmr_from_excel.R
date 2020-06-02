@@ -9,26 +9,40 @@ library(readxl) # Run install.packages('readxl') if you don't have this
 library(httr) # Again run install.packages if you don't have this
 
 # Load in the data
-file_path = 'ap_notes/prac_using_simmr/geese_data.xls'
-mix = read_excel(file_path, sheet = 'Targets')
-source = read_excel(file_path, sheet = 'Sources')
-TDF = read_excel(file_path, sheet = 'TEFs')
-Conc = read_excel(file_path, sheet = 'ConcDep')
+
+# Go to the files pane and find the file 'geese_data.xls'
+# Then click (in the files pane) on More > Set as WD
+# Copy the command from the console window into the line below
+setwd("~/GitHub/simms_course/ap_notes/prac_using_simmr")
+
+# Find out what the sheet names are and load in all of them
+sheet_names = excel_sheets(path = 'geese_data.xls')
+all = lapply(sheet_names,
+             read_excel, path = 'geese_data.xls')
+
+# Extract out the different pieces
+mix = all[[1]]
+source = all[[2]]
+TDF = all[[3]]
+Conc = all[[4]]
 
 # Get the data into simmr
-simmr_groups = simmr_load(mixtures=as.matrix(mix[,c(2:1)]),
+simmr_groups = simmr_load(mixtures=as.matrix(mix[,1:2]),
                           source_names=unlist(source[,1]),
-                          source_means=source[,3:2],
-                          source_sds=source[,5:4],
-                          correction_means=TDF[,3:2],
-                          correction_sds=TDF[,5:4],
-                          concentration_means = Conc[,3:2],
-                          group=as.integer(as.factor(mix$Time)))
+                          source_means=source[,2:3],
+                          source_sds=source[,4:5],
+                          correction_means=TDF[,2:3],
+                          correction_sds=TDF[,4:5],
+                          concentration_means = Conc[,2:3],
+                          group=paste('day', mix$Time))
 
 # Plot the iso-space plot
-plot(simmr_groups,group=1:8,xlab=expression(paste(delta^13, "C (\u2030)",sep="")), 
+plot(simmr_groups,
+     group=1:8,
+     xlab=expression(paste(delta^13, "C (\u2030)",sep="")), 
      ylab=expression(paste(delta^15, "N (\u2030)",sep="")), 
-     title='Isospace plot of Inger et al Geese data',mix_name='Geese')
+     title='Isospace plot of Inger et al Geese data',
+     mix_name='Geese')
 
 # RUN THE MODEL
 simmr_groups_out = simmr_mcmc(simmr_groups)
