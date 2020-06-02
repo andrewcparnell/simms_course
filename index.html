@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
 
 <head>
 
 <meta charset="utf-8" />
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
 <meta name="author" content="Andrew Parnell and Andrew Jackson" />
@@ -255,9 +255,7 @@ h6 {
 </style>
 
 
-</head>
 
-<body>
 
 <style type="text/css">
 .main-container {
@@ -271,7 +269,6 @@ code {
 }
 img {
   max-width:100%;
-  height: auto;
 }
 .tabbed-pane {
   padding-top: 12px;
@@ -288,8 +285,6 @@ summary {
 </style>
 
 
-
-<div class="container-fluid main-container">
 
 <!-- tabsets -->
 
@@ -335,6 +330,7 @@ summary {
   border: none;
   display: inline-block;
   border-radius: 4px;
+  background-color: transparent;
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li {
@@ -347,20 +343,17 @@ summary {
 }
 </style>
 
-<script>
-$(document).ready(function () {
-  window.buildTabsets("TOC");
-});
-
-$(document).ready(function () {
-  $('.tabset-dropdown > .nav-tabs > li').click(function () {
-    $(this).parent().toggleClass('nav-tabs-open')
-  });
-});
-</script>
-
 <!-- code folding -->
 
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
 
 
 
@@ -370,8 +363,8 @@ $(document).ready(function () {
 
 
 <h1 class="title toc-ignore">Stable Isotope Mixing Models: course timetable</h1>
-<h4 class="author"><em>Andrew Parnell and Andrew Jackson</em></h4>
-<h4 class="date"><em>June 2019</em></h4>
+<h4 class="author">Andrew Parnell and Andrew Jackson</h4>
+<h4 class="date">June 2020 - online</h4>
 
 </div>
 
@@ -395,7 +388,7 @@ $(document).ready(function () {
 <tbody>
 <tr class="odd">
 <td>9:30-10:30</td>
-<td><a href="https://andrewcparnell.github.io/simms_course/aj-content/intro-why-use-a-SIMM.html">Introduction: why use a SIMM? (AJ)</a></td>
+<td><a href="https://andrewcparnell.github.io/simms_course/aj-content/intro-why-use-a-SIMM.html">Introduction: why use a SIMM? (AJ &amp; AP)</a></td>
 </tr>
 <tr class="even">
 <td>10:30-10:45</td>
@@ -410,15 +403,15 @@ $(document).ready(function () {
 <td>Break</td>
 </tr>
 <tr class="odd">
-<td>12:00-12:45</td>
+<td>12:00-13:00</td>
 <td><a href="https://andrewcparnell.github.io/simms_course/ap_notes/revision_of_R/Revision_of_R.R">Guided practical: Revision of important R concepts (AP)</a></td>
 </tr>
 <tr class="even">
-<td>12:45-13:45</td>
+<td>13:00-14:00</td>
 <td>Lunch</td>
 </tr>
 <tr class="odd">
-<td>13:45-15:00</td>
+<td>14:00-15:00</td>
 <td><a href="https://andrewcparnell.github.io/simms_course/aj-content/practicals/day-1-pm1/Exploring-Basic-SIA-Data.html">Guided practical: Intro to SI data</a> and <a href="https://andrewcparnell.github.io/simms_course/aj-content/practicals/day-1-pm1/first-biplot.html">biplots</a> (AJ)</td>
 </tr>
 <tr class="even">
@@ -519,7 +512,7 @@ $(document).ready(function () {
 </tr>
 <tr class="odd">
 <td>12:00-12:45</td>
-<td><a href="https://andrewcparnell.github.io/simms_course/ap_notes/siar_stats/siar_stats.pdf">The statistical model behind simmr (and SIAR) (AP)</a></td>
+<td><a href="https://andrewcparnell.github.io/simms_course/aj-content/practicals/source-aggregation.html">Practical: Source grouping, when and how? (AJ)</a></td>
 </tr>
 <tr class="even">
 <td>12:45-13:45</td>
@@ -527,7 +520,7 @@ $(document).ready(function () {
 </tr>
 <tr class="odd">
 <td>13:45-15:00</td>
-<td>Guided Practical: using <a href="https://andrewcparnell.github.io/simms_course/ap_notes/prac_mixsiar_and_jags/mixsiar_script.R">MixSIAR</a> and <a href="https://andrewcparnell.github.io/simms_course/ap_notes/prac_using_simmr/simmr_with_priors.R">incorporating prior information in simmr (AP)</a></td>
+<td><a href="https://andrewcparnell.github.io/simms_course/ap_notes/siar_stats/siar_stats.pdf">The statistical model behind simmr (and SIAR) (AP)</a></td>
 </tr>
 <tr class="even">
 <td>15:00-15:30</td>
@@ -535,7 +528,7 @@ $(document).ready(function () {
 </tr>
 <tr class="odd">
 <td>15:30-17:00</td>
-<td><a href="https://cran.r-project.org/web/packages/MixSIAR/vignettes/">Practical: pick a MixSIAR example</a> and <a href="https://github.com/brianstock/MixSIAR/blob/master/Manual/mixsiar_manual_3.1.pdf">look at the manual</a></td>
+<td>Guided Practical: using <a href="https://andrewcparnell.github.io/simms_course/ap_notes/prac_mixsiar_and_jags/mixsiar_script.R">MixSIAR</a> and <a href="https://andrewcparnell.github.io/simms_course/ap_notes/prac_using_simmr/simmr_with_priors.R">incorporating prior information in simmr (AP)</a></td>
 </tr>
 </tbody>
 </table>
@@ -557,70 +550,15 @@ $(document).ready(function () {
 <tbody>
 <tr class="odd">
 <td>9:30-10:30</td>
-<td><a href="https://andrewcparnell.github.io/simms_course/aj-content/practicals/source-aggregation.html">Practical: Source grouping, when and how? (AJ)</a></td>
-</tr>
-<tr class="even">
-<td>10:30-10:45</td>
-<td>Coffee break</td>
-</tr>
-<tr class="odd">
-<td>10:45-11:45</td>
 <td><a href="https://andrewcparnell.github.io/simms_course/aj-content/siber-intro-ellipses.html">Creating and understanding Stable Isotope Bayesian Ellipses (SIBER) (AJ)</a></td>
 </tr>
 <tr class="even">
-<td>11:45-12:00</td>
-<td>Break</td>
-</tr>
-<tr class="odd">
-<td>12:00-12:45</td>
-<td><a href="https://andrewcparnell.github.io/simms_course/aj-content/practicals/siber-comparing-populations.html">Guided Practical: Using SIBER to compare populations using ellipses (AJ)</a></td>
-</tr>
-<tr class="even">
-<td>12:45-13:45</td>
-<td>Lunch</td>
-</tr>
-<tr class="odd">
-<td>13:45-15:00</td>
-<td><a href="https://andrewcparnell.github.io/simms_course/aj-content/siber-intro-hulls.html">Community level metrics using SIBER (AJ)</a></td>
-</tr>
-<tr class="even">
-<td>15:00-15:30</td>
-<td>Coffee break</td>
-</tr>
-<tr class="odd">
-<td>15:30-17:00</td>
-<td><a href="https://andrewcparnell.github.io/simms_course/aj-content/practicals/siber-comparing-communities.html">Guided Practical: Using SIBER to compare communities using convex hulls (AJ)</a></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div id="friday" class="section level2">
-<h2>Friday</h2>
-<p>Bring Your Own Data!</p>
-<p>Please sign up for a time slot with your name and a brief description of your question and we will meet with you and discuss potential solutions. <a href="https://docs.google.com/spreadsheets/d/15NYwk-qwjJRQeKi2yFzY9_7Xg8EsSexKoL_CfEzZ7K4/edit?usp=sharing" class="uri">https://docs.google.com/spreadsheets/d/15NYwk-qwjJRQeKi2yFzY9_7Xg8EsSexKoL_CfEzZ7K4/edit?usp=sharing</a></p>
-<table>
-<colgroup>
-<col width="20%"></col>
-<col width="80%"></col>
-</colgroup>
-<thead>
-<tr class="header">
-<th>Time</th>
-<th>Class</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>9:30-10:30</td>
-<td><a href="https://andrewcparnell.github.io/simms_course/aj-content/practicals/Introduction-to-SIDER.html">(optional practical)</a> <a href="https://andrewcparnell.github.io/simms_course/aj-content/sider-intro.html">Estimating trophic discrimination factors using SIDER (AJ)</a></td>
-</tr>
-<tr class="even">
 <td>10:30-10:45</td>
 <td>Coffee break</td>
 </tr>
 <tr class="odd">
 <td>10:45-11:45</td>
-<td><a href="https://andrewcparnell.github.io/simms_course/ap_notes/complex_simms/complex_SIMMs.pdf">(optional class) SIMMs for complex data sets: time series and mixed effects models (AP)</a></td>
+<td><a href="https://andrewcparnell.github.io/simms_course/aj-content/practicals/siber-comparing-populations.html">Guided Practical: Using SIBER to compare populations using ellipses (AJ)</a></td>
 </tr>
 <tr class="even">
 <td>11:45-12:00</td>
@@ -628,7 +566,7 @@ $(document).ready(function () {
 </tr>
 <tr class="odd">
 <td>12:00-12:45</td>
-<td><a href="https://andrewcparnell.github.io/simms_course/ap_notes/siar_mixsiar/siar_mixsiar.pdf">(Optional class) From simmr to MixSIAR (AP)</a>)</td>
+<td><a href="https://andrewcparnell.github.io/simms_course/aj-content/siber-intro-hulls.html">Community level metrics using SIBER (AJ)</a></td>
 </tr>
 <tr class="even">
 <td>12:45-13:45</td>
@@ -636,7 +574,7 @@ $(document).ready(function () {
 </tr>
 <tr class="odd">
 <td>13:45-15:00</td>
-<td>BYOD</td>
+<td><a href="https://andrewcparnell.github.io/simms_course/aj-content/practicals/siber-comparing-communities.html">Guided Practical: Using SIBER to compare communities using convex hulls (AJ)</a></td>
 </tr>
 <tr class="even">
 <td>15:00-15:30</td>
@@ -644,7 +582,7 @@ $(document).ready(function () {
 </tr>
 <tr class="odd">
 <td>15:30-17:00</td>
-<td>BYOD</td>
+<td><a href="https://cran.r-project.org/web/packages/MixSIAR/vignettes/">Practical: pick a MixSIAR example</a> and <a href="https://github.com/brianstock/MixSIAR/blob/master/Manual/mixsiar_manual_3.1.pdf">look at the manual</a> (AP &amp; AJ)</td>
 </tr>
 </tbody>
 </table>
@@ -667,6 +605,23 @@ $(document).ready(function () {
 
 
 </script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
 
 <!-- dynamically load mathjax for compatibility with self-contained -->
 <script>
