@@ -4,9 +4,9 @@ author: "Andrew Parnell and Andrew Jackson"
 output: html_document
 ---
 
-In preparation for the course please install the following, preferably in the below suggested order. Make sure you run these before you arrive in case of poor (or crowded!) internet.
+In preparation for the course please install the following, preferably in the below suggested order. Make sure you run these as soon as possible to avoid falling behind.
 
-Remember you will need to bring your own personal computer for the duration of the course.
+As this module will be delivered online please install [Zoom](https://www.zoom.us) and [Slack](https://slack.com) to access the videos and interactive components of the course. All the Zoom links to the meeting will be posted to the Slack `#General` channel.
 
 ### Step 1
 

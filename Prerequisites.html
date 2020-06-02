@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
 
 <head>
 
 <meta charset="utf-8" />
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
 <meta name="author" content="Andrew Parnell and Andrew Jackson" />
@@ -255,9 +255,7 @@ h6 {
 </style>
 
 
-</head>
 
-<body>
 
 <style type="text/css">
 .main-container {
@@ -271,7 +269,6 @@ code {
 }
 img {
   max-width:100%;
-  height: auto;
 }
 .tabbed-pane {
   padding-top: 12px;
@@ -288,8 +285,6 @@ summary {
 </style>
 
 
-
-<div class="container-fluid main-container">
 
 <!-- tabsets -->
 
@@ -335,6 +330,7 @@ summary {
   border: none;
   display: inline-block;
   border-radius: 4px;
+  background-color: transparent;
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li {
@@ -347,20 +343,17 @@ summary {
 }
 </style>
 
-<script>
-$(document).ready(function () {
-  window.buildTabsets("TOC");
-});
-
-$(document).ready(function () {
-  $('.tabset-dropdown > .nav-tabs > li').click(function () {
-    $(this).parent().toggleClass('nav-tabs-open')
-  });
-});
-</script>
-
 <!-- code folding -->
 
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
 
 
 
@@ -370,19 +363,19 @@ $(document).ready(function () {
 
 
 <h1 class="title toc-ignore">Pre-requisites for Stable Isotope Mixing Models course</h1>
-<h4 class="author"><em>Andrew Parnell and Andrew Jackson</em></h4>
+<h4 class="author">Andrew Parnell and Andrew Jackson</h4>
 
 </div>
 
 
-<p>In preparation for the course please install the following, preferably in the below suggested order. Make sure you run these before you arrive in case of poor (or crowded!) internet.</p>
-<p>Remember you will need to bring your own personal computer for the duration of the course.</p>
+<p>In preparation for the course please install the following, preferably in the below suggested order. Make sure you run these as soon as possible to avoid falling behind.</p>
+<p>As this module will be delivered online please install <a href="https://www.zoom.us">Zoom</a> and <a href="https://slack.com">Slack</a> to access the videos and interactive components of the course. All the Zoom links to the meeting will be posted to the Slack <code>#General</code> channel.</p>
 <div id="step-1" class="section level3">
 <h3>Step 1</h3>
 <p>Install the following using the corresponding links and <em>make sure you have the latest versions installed</em>:</p>
 <ul>
-<li><p>R: <a href="http://www.r-project.org">http://www.r-project.org</a></p></li>
-<li><p>Rstudio (optional but recommended): <a href="https://www.rstudio.com">https://www.rstudio.com</a></p></li>
+<li><p>R: <a href="http://www.r-project.org">http://www.r-project.org</a>: current version is v4.0.0 and we will assume this version throughout this course. If you want to run an older version or a custom setup then we may not be able to help with compatability issues that may arise.</p></li>
+<li><p>Rstudio (optional but recommended): <a href="https://www.rstudio.com">https://www.rstudio.com</a> - current version 1.2.5042</p></li>
 <li><p>JAGS: <a href="http://sourceforge.net/projects/mcmc-jags/files/" class="uri">http://sourceforge.net/projects/mcmc-jags/files/</a> <strong><em>This step is really important and easy to skip over. JAGS is required, and is not installed as part of the R package rjags which is just a set of functions for R to interact with JAGS.</em></strong></p></li>
 </ul>
 </div>
@@ -441,7 +434,7 @@ assignInNamespace(&quot;version_info&quot;, c(devtools:::version_info, list(&quo
 <h4>Mac issues</h4>
 <ul>
 <li>you will more than likely need to install the command line developer tools. Instructions for this are available from (<a href="http://osxdaily.com/2014/02/12/install-command-line-tools-mac-os-x/" class="uri">http://osxdaily.com/2014/02/12/install-command-line-tools-mac-os-x/</a>). There is a larger set of tools called Xcode which is available from the Apple Store, but this is unnecessarily large and we dont recommend it unless you know you need it.</li>
-<li>related to the installation of the command line tools, you may get errors such as <code>make: gfortran: no such file or directory mac</code> which relate to missing information for the calling of C++ and fortran compilers. This is likely remedied by running <code>sudo installer -pkg /Library/Developer/CommandLineTools/Packages/macOS_SDK_headers_for_macOS_10.14.pkg -target /</code> from a terminal window in OS X (not the R command window). This issue and solution is detailed in this thread: (<a href="https://github.com/r-lib/devtools/issues/1879#issuecomment-426426380" class="uri">https://github.com/r-lib/devtools/issues/1879#issuecomment-426426380</a>)</li>
+<li>related to the installation of the command line tools, you may get errors such as <code>make: gfortran: no such file or directory mac</code> which relate to missing information for the calling of C++ and fortran compilers. The solution is to download and <a href="https://thecoatlessprofessor.com/programming/cpp/r-compiler-tools-for-rcpp-on-macos/">install the required GFORTRAN</a> libraries. The instructions here are not very clear, and I will try to record a short podcast running through them.</li>
 <li>If you are on a Mac you might need to install X11 from <a href="http://www.xquartz.org">http://www.xquartz.org</a>.</li>
 <li>If you get an error about package <code>stringi</code> try typing <code>install.packages('stringi',type='mac.binary')</code>. Then re-run the commands above <!-- - If you get some errors about `pandoc` when installing simmr leave out the `build_vignettes=TRUE` argument --></li>
 </ul>
@@ -466,6 +459,23 @@ $(document).ready(function () {
 
 
 </script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
 
 <!-- dynamically load mathjax for compatibility with self-contained -->
 <script>
