@@ -28,12 +28,12 @@ conc = matrix(c(0.02, 0.1, 0.12, 0.04, 0.02, 0.1, 0.09, 0.05), ncol=2, nrow=4)
 
 # Load it in 
 simmr_in = simmr_load(mixtures=mix,
-                     source_names=s_names,
-                     source_means=s_means,
-                     source_sds=s_sds,
-                     correction_means=c_means,
-                     correction_sds=c_sds,
-                     concentration_means = conc)
+                      source_names=s_names,
+                      source_means=s_means,
+                      source_sds=s_sds,
+                      correction_means=c_means,
+                      correction_sds=c_sds,
+                      concentration_means = conc)
 
 # Want help?
 help(simmr_load)
@@ -67,7 +67,6 @@ summary(simmr_out, type = 'correlations')
 
 # Plot the output
 help(plot.simmr_output)
-plot(simmr_out, type='convergence')
 plot(simmr_out, type = 'histogram')
 plot(simmr_out, type = 'density')
 plot(simmr_out, type = 'matrix')
@@ -185,7 +184,7 @@ simmr_groups_out = simmr_mcmc(simmr_groups)
 
 # Check convergence
 summary(simmr_groups_out, type = 'diagnostics', group = 1:8) 
-# Some of these are not good - longer run?
+# If some of these are not good try a longer run?
 
 # An example of a longer run
 # simmr_groups_out = simmr_mcmc(simmr_groups,
@@ -248,7 +247,6 @@ plot(simmr_groups_out_combine,
      title = 'simmr output: combined sources',
      group = 8)
 
-
 # Running with just 1 isotope ---------------------------------------------
 
 mix = matrix(c(-10.13, -10.72, -11.39, -11.18, -10.81, -10.7, -10.54, 
@@ -270,8 +268,8 @@ simmr_in_1D = simmr_load(mixtures=mix,
                      correction_sds=c_sds,
                      concentration_means = conc)
 
-# Iso-space plot - only works in development version
-#plot(simmr_in_1D)
+# Iso-space plot
+plot(simmr_in_1D)
 
 # MCMC run
 simmr_run_1D = simmr_mcmc(simmr_in_1D)

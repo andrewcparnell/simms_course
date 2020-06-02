@@ -1,5 +1,5 @@
 # A script to run MixSIAR on the Wolves example
-# The full versions are in the MixSIAR manual: https://github.com/brianstock/MixSIAR/blob/master/Manual/mixsiar_manual_3.1.pdf
+# The full versions are in the MixSIAR manual: https://github.com/brianstock/MixSIAR/blob/master/Manual/mixsiar_manual.pdf
 # and the MixSIAR vignettes: https://cran.r-project.org/web/packages/MixSIAR/vignettes/
 
 library(MixSIAR)
