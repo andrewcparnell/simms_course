@@ -12,7 +12,7 @@ Remember you will need to bring your own personal computer for the duration of t
 
 Install the following using the corresponding links and *make sure you have the latest versions installed*:
 
--	R: [http://www.r-project.org](http://www.r-project.org)
+-	R: [http://www.r-project.org](http://www.r-project.org): current version is v4.0.0 and we will assume this version throughout this course. If you want to run an older version or a custom setup then we may not be able to help with compatability issues that may arise.
 
 -	Rstudio (optional but recommended): [https://www.rstudio.com](https://www.rstudio.com)
 
