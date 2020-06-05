@@ -11,6 +11,8 @@ Course pre-requisites can be found [here](https://andrewcparnell.github.io/simms
 
 Here is a [simple script for getting started with ggplot](https://andrewcparnell.github.io/simms_course/ap_notes/gg_plot_class.R) which might be useful for some but is not compulsory. 
 
+Please note that the course will be recorded so that attendees in different time zones can catch up on material.
+
 ## Monday
 
 Introduction to SIA data and revision of basic statistical and R concepts
