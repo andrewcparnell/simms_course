@@ -218,16 +218,7 @@ qqline(x)
 - R can calculate for us the standard deviation estimates of the parameters
 - This means that we can get an estimated standard deviation of an estimated standard deviation!
 - The estimated standard deviation is usually called the _standard error_
-
-## Quantiles of probability distributions
-
 - For the normal distribution we know that 68\% of samples lie approximately within 1 standard deviation, whilst 95\% of samples lie within approximately 2 standard deviations
-- So if we find that a parameter has an estimated value of 6 with standard deviation 1.5, we can calculate the 95\% confidence interval as between 3 and 9
-- We don't have to stick to 68 or 95\% values. If we want, say, an 80\% interval, try:
-```{r}
-qnorm(0.9)
-```
-(Why 0.9?)
 
 ## p-values
 

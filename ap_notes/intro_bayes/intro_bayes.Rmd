@@ -184,7 +184,7 @@ When creating Bayesian models it's helpful to know a lot of probability distribu
 \small
 \begin{tabular}{p{3cm}lp{4cm}}
 \hline
-Distribution & Range of data & Useful for \\
+Distribution & Range of parameter & Useful for \\
 \hline
 Normal, $N(\mu,\sigma^2)$ & $(-\infty,\infty$) & A good default choice \\
 Uniform, $U(a,b)$ & $(a,b)$ & Vague priors when we only know the range of the parameter \\
