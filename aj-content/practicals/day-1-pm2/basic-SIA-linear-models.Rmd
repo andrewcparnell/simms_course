@@ -1,8 +1,8 @@
 ---
 title: "Basic Analyses of Isotopic Variation"
 author: "Andrew L Jackson & Chris Harrod"
-date: "`r Sys.Date()`"
-output: html_document
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output: html_notebook
 ---
 
 ```{r setup, include=FALSE}

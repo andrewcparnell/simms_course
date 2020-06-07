@@ -1,15 +1,8 @@
 ---
 title: "Introduction to SIDER"
 author: "Kevin Healy"
-date: '`r Sys.Date()`'
-output: rmarkdown::html_vignette
-vignette: >
-  %\VignetteIndexEntry{Introduction to SIBER}
-  %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
-  %\VignetteDepends{hdrcde}
-  %\VignetteDepends{coda}
-  %\VignetteDepends{devtools}
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output: html_notebook
 ---
 
 ```{r setup, echo = FALSE}

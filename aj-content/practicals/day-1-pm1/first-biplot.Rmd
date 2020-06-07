@@ -2,7 +2,7 @@
 title: "SIA biplots using ggplot2"
 author: "Andrew L Jackson & Chris Harrod"
 date: "`r format(Sys.time(), '%d %B, %Y')`"
-output: html_document
+output: html_notebook
 ---
 
 ```{r setup, include=FALSE}

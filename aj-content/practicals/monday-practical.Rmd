@@ -1,8 +1,8 @@
 ---
 title: "First-practical"
 author: "Andrew L Jackson"
-date: "`r Sys.Date()`"
-output: html_document
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output: html_notebook
 ---
 
 ## R revision

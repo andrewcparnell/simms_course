@@ -2,7 +2,7 @@
 title: "Source Aggregation"
 author: "Andrew L Jackson"
 date: "`r format(Sys.time(), '%d %B, %Y')`"
-output: html_document
+output: html_notebook
 ---
 
 ```{r setup, include=FALSE}

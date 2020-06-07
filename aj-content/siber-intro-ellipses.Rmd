@@ -1,7 +1,7 @@
 ---
 title: "SIBER introduction - Ellipses"
 author: "Andrew L Jackson"
-date: "22 May 2018"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
 output:
   ioslides_presentation:
     css: mystyle.css
