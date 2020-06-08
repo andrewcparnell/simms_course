@@ -8,10 +8,11 @@ output:
       in_header: ../header.tex
 editor_options: 
   chunk_output_type: console
+classoption: "aspectratio=169"
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(dev = 'pdf')
+knitr::opts_chunk$set(dev = 'pdf', fig.height = 5)
 par(mar=c(3,3,2,1), mgp=c(2,.7,0), tck=-.01,las=1)
 ```
 
@@ -35,7 +36,7 @@ $$y_i \sim N(\alpha + \beta x_i, \sigma^2)$$
 
 ## Example: simple data
 \small
-```{r, fig.height = 5}
+```{r, fig.height = 4}
 x=c(18.07, 52.59, 54.93, 79.31, 89.58)
 y=c(7.89, 12.41, 13.34, 19.3, 19.52)
 plot(x,y,
@@ -74,7 +75,7 @@ model_run = jags(data = data,
 
 \small
 
-```{r,fig.height = 6}
+```{r,fig.height = 4}
 par(mfrow=c(1,2))
 post = model_run$BUGSoutput$sims.list
 plot(density(post$alpha),main='Posterior for alpha')
@@ -129,7 +130,7 @@ model_run = jags(data = data,
 
 ## Output
 
-```{r}
+```{r, fig.height = 4}
 plot(model_run)
 ```
 
@@ -241,7 +242,7 @@ model_run = jags(data = data,
 
 \small
 
-```{r,fig.align='center', fig.height = 5}
+```{r,fig.align='center', fig.height = 3}
 hist(model_run$BUGSoutput$sims.list$p_1,
      xlim = c(0, 1),
      xlab='Proportion',
@@ -326,7 +327,7 @@ inits = function() {
 ## Convergence checking 2
 
 - You can start by plotting the output from JAGS:
-```{r,fig.align='center'}
+```{r,fig.align='center', fig.height = 3}
 plot(model_run)
 ```
 
