@@ -8,9 +8,9 @@ sea_level = read.csv('https://raw.githubusercontent.com/andrewcparnell/tsme_cour
 head(sea_level)
 
 # Create a plot of the data
-# with(sea_level,plot(year_AD,sea_level_m))
+with(sea_level,plot(year_AD,sea_level_m))
 # nicer plotting syntax ;) that matches the call to lm
-plot(year_AD ~ sea_level_m, data = sea_level) 
+#plot(year_AD ~ sea_level_m, data = sea_level) 
 
 # Let's fit a linear regression with sea_level_m as the response and year as the covariate
 
@@ -18,7 +18,7 @@ plot(year_AD ~ sea_level_m, data = sea_level)
 lr_1 = lm(sea_level_m ~ year_AD, data = sea_level)
 summary(lr_1)
 
-# plot(lr_1$residuals ~ lr_1$fitted.values)
+plot(lr_1$residuals ~ lr_1$fitted.values)
 
 # Now look at the JAGS code for this model
 model_code = '

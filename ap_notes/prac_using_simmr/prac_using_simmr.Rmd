@@ -4,6 +4,8 @@ author: "Andrew Parnell"
 output:
   pdf_document: default
   html_document: default
+editor_options: 
+  chunk_output_type: console
 ---
 
 ## Introduction
@@ -221,7 +223,7 @@ To include such extra values a run might be:
 
 ```{r,results='hide', message=FALSE, eval = FALSE}
 simmr_out_long = simmr_mcmc(simmr_in,
-                            mcmc.control = list(iter = 20000,
+                            mcmc_control = list(iter = 20000,
                                                 burn = 2000,
                                                 thin = 20,
                                                 n.chain = 4))
@@ -339,7 +341,7 @@ Occasionally it is the case that previous studies have given insight into the li
 simmr has a special function for the inclusion of prior distributions. For example suppose we had prior information that the four sources in the Geese example had means (0.5, 0.1, 0.2, 0.2) and standard deviations (0.1, 0.05, 0.01, 0.02), we would run:
 
 ```{r, eval = FALSE}
-prior = simmr_elicit(simmr_in,
+prior = simmr_elicit(n_sources = 4,
                      proportion_means = c(0.5,0.1,0.2,0.2),
                      proportion_sds = c(0.1,0.05,0.01,0.02))
 ```
@@ -367,26 +369,31 @@ Often what you want to create isn't exactly part of the simmr toolkit. Maybe the
 
 Whenever simmr creates the dietary proportions using e.g. `simmr_mcmc`, it stores the output as an R _list_. You can see everything in the list with:
 
-```{r}
+```{r, eval = FALSE}
 str(simmr_out)
 ```
 
 This will provide quite a lot of output, but the most important part is the element named `output` which contains all of the posterior samples. You can see the first few samples with:
 
 ```{r}
-head(simmr_out$output[[1]][[1]])
+head(simmr_out$output[[1]]$BUGSoutput$sims.matrix)
+```
+
+or you can access individual parameters with:
+```{r}
+head(simmr_out$output[[1]]$BUGSoutput$sims.list$p)
 ```
 
 You will see that, for each row, each of the four sources sum to 1:
 
 ```{r}
-sum(simmr_out$output[[1]][[1]][1,1:4])
+sum(simmr_out$output[[1]]$BUGSoutput$sims.list$p[1,])
 ```
 
 You can now create any further that you wish, for example a simple histogram of the posterior proportion for the first chain of Zostera:
 
 ```{r}
-hist(simmr_out$output[[1]][[1]][,'Zostera'])
+hist(simmr_out$output[[1]]$BUGSoutput$sims.list$p[,'Zostera'])
 ```
 
 This is a bit crude, but with some extra options, you can make this look quite neat:
@@ -394,28 +401,32 @@ This is a bit crude, but with some extra options, you can make this look quite n
 ```{r}
 # Set some better options for graphs
 par(mar=c(3,3,2,1), mgp=c(2,.7,0), tck=-.01,las=1)
-hist(simmr_out$output[[1]][[1]][,'Zostera'],freq=FALSE,main='Posterior for Zostera',
+hist(simmr_out$output[[1]]$BUGSoutput$sims.list$p[,'Zostera'],
+     freq=FALSE,main='Posterior for Zostera',
      xlab='Proportion',col='lightblue',breaks=30)
 ```
 
 You can also create your own output analysis. For example, what is the 90% credible interval for Grass?
 
 ```{r}
-quantile(simmr_out$output[[1]][[1]][,'Grass'],probs=c(0.05,0.95))
+quantile(simmr_out$output[[1]]$BUGSoutput$sims.list$p[,'Grass'],
+         probs=c(0.05,0.95))
 ```
 
 What is the probability that the consumers ate more Ulva Lactuca than Enteromorpha?
 
 ```{r}
-sum(simmr_out$output[[1]][[1]][,'U.lactuca']>simmr_out$output[[1]][[1]][,'Enteromorpha'])/nrow(simmr_out$output[[1]][[1]])
+sum(simmr_out$output[[1]]$BUGSoutput$sims.list$p[,'U.lactuca'] > 
+      simmr_out$output[[1]]$BUGSoutput$sims.list$p[,'Enteromorpha']) / 
+  nrow(simmr_out$output[[1]]$BUGSoutput$sims.matrix)
 ```
 
 The above counts the number of rows (i.e. iterations) in the output where Ulva Lactuca is higher than Enteromorpha and divides this by the total number of rows. This is essentially what the `compare_groups` function is doing. There is also a `compare_sources` function which also creates something similar to the above.
 
-Finally, if you want to see what simmr is doing behind the scenes, simply type the name of the function without brackets, for example
+Finally, if you want to see what simmr is doing behind the scenes, you can type in the name of the function with the package name separated by three colons, for example
 
 ```{r,eval=FALSE}
-simmr_mcmc
+simmr:::simmr_mcmc.simmr_input
 ```
 
 If the simmr plot or table doesn't exactly match what you want you can create your own function based on the original one which includes everything you need.
@@ -440,7 +451,7 @@ If you finish all the above and want some further tasks to complete try these.
 
 ```{r}
 my_summary = function(x) {
-  head(x$output[[1]][[1]],15)
+  head(x$output[[1]]$BUGSoutput$sims.matrix,15)
 }
 my_summary(simmr_out)
 ```
