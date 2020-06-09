@@ -13,10 +13,9 @@ Import the data as before. Note that we get some warnings from both that "object
 
 ```{r import-data}
 
-#install.packages("ggplot2", "dplyr")
+#install.packages("tidyverse")
 
-library(dplyr)
-library(ggplot2)
+library(tidyverse)
 
 # import the data. 
 # If you get an error about "No such file or directory" then you 
@@ -46,11 +45,15 @@ In ggplot2, figures are created in layer, by first creating a basic layer of axe
 
 ```{r first-gg}
 
-first.plot <- ggplot(data = mydata, aes(d13C, d15N)) +
-  geom_point(aes(color = Taxon, shape = Taxon), size = 3)+
-  ylab(expression(paste(delta^{15}, "N (\u2030)")))+
+first.plot <- ggplot(data = mydata, 
+                     aes(x = d13C, 
+                         y = d15N)) + 
+  geom_point(aes(color = Taxon, shape = Taxon), size = 5) +
+  ylab(expression(paste(delta^{15}, "N (\u2030)"))) +
   xlab(expression(paste(delta^{13}, "C (\u2030)"))) + 
-  theme(text = element_text(size=15))
+  theme(text = element_text(size=20))
+
+# And print our plot to screen
 print(first.plot)
 
 ```
@@ -60,7 +63,9 @@ If you want to use the more normal plotting format for journals without gridline
 ```{r classic-theme}
 
 classic.first.plot <- first.plot + theme_classic() + 
-  theme(text = element_text(size=15))
+  theme(text = element_text(size=35))
+
+# and print to screen
 print(classic.first.plot)
 
 # options to add to point the axis tick marks inwards
@@ -75,8 +80,9 @@ Adding the means and error bars in both directions to create the classic isotope
 ```{r classic-biplot}
 
 # Summarise By Group (sbg)
-sbg <- mydata %>% group_by(Taxon) %>% 
-  summarise(count = length(Taxon),
+sbg <- mydata %>% 
+  group_by(Taxon) %>% 
+  summarise(count = n(),
             mC = mean(d13C), 
             sdC = sd(d13C), 
             mN = mean(d15N), 
@@ -97,9 +103,12 @@ second.plot <- first.plot +
                                xmin = mC - 1.96*sdC,
                                xmax = mC + 1.96*sdC),
                  height = 0) + 
-  geom_point(data = sbg, aes(mC, mN,fill = Taxon), 
+  geom_point(data = sbg, aes(x = mC, 
+                             y = mN,
+                             fill = Taxon), 
              color = "black", shape = 22, size = 5,
-             alpha = 0.7) 
+             alpha = 0.7, show.legend = FALSE)
+
 
 print(second.plot)
   
@@ -126,7 +135,7 @@ ellipse.plot <- first.plot +
   stat_ellipse(aes(group = Taxon, 
                    fill = Taxon, 
                    color = Taxon), 
-               alpha = 0.3, 
+               alpha = 0.25, 
                level = p.ell,
                type = "norm",
                geom = "polygon")

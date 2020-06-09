@@ -109,6 +109,7 @@ pow(p = 3, x = 4)
 # 2.6 Advisable to use invisible if you don't want it to print
 pow = function(x, p = 2) {
   invisible(x^p)
+  # x^p
 }
 pow(3)
 y = pow(3)

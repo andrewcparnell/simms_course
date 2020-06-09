@@ -40,7 +40,9 @@ head(mydata)
 
 # try to do this in ggplot using facets
 library(ggplot2)
-liver.plot <- ggplot(data = mydata, aes(Liver.CN, Liver.d13C)) + 
+liver.plot <- ggplot(data = mydata, 
+                     mapping = aes(x = Liver.CN, 
+                                   y = Liver.d13C)) + 
   geom_point() +
   geom_smooth(method = "loess", alpha = 0.5) +
   facet_grid(Species~.) + 
@@ -60,8 +62,12 @@ b <- -22.270
 c <-  -1.397
 
 # add columns for lipid corrected liver to the data.frame
-mydata$Liver.d13C.crtd <-  mydata$Liver.d13C + 
-  (a * mydata$Liver.CN + b) / (mydata$Liver.CN + c)
+mydata <- mydata %>% 
+  mutate(Liver.d13C.crtd = Liver.d13C + 
+           (a * Liver.CN + b) / (Liver.CN + c))
+
+# mydata$Liver.d13C.crtd <-  mydata$Liver.d13C + 
+#   (a * mydata$Liver.CN + b) / (mydata$Liver.CN + c)
 
 # check that it worked as expected
 head(mydata)
@@ -72,20 +78,22 @@ palette(c("black", "red", "blue"))
 # plot the correlation between the corrected and raw values, and 
 # indicate which observations have large C/N ratios by the 
 # size of the datapoints.
-plot(Liver.d13C.crtd ~ Liver.d13C, data = mydata, 
-     col = Species, cex = 5 * Liver.CN / max(Liver.CN), pch = 19, asp = 1)
-
-# add the 1:1 line
-abline(a = 0, b = 1, col = "grey", lty = 1, lwd = 2)
-
-
-# reset the colour palette to the default
-palette("default")
+# plot(Liver.d13C.crtd ~ Liver.d13C, data = mydata, 
+#      col = Species, cex = 5 * Liver.CN / max(Liver.CN), pch = 19, asp = 1)
+# 
+# # add the 1:1 line
+# abline(a = 0, b = 1, col = "grey", lty = 1, lwd = 2)
+# 
+# 
+# # reset the colour palette to the default
+# palette("default")
 
 # now plot the corrected values on top of our raw data from before 
 # and add a vertical line at 3.6 which is "pure protein"
 liver.plot.2 <- liver.plot + 
-  geom_point(data = mydata, aes(Liver.CN, Liver.d13C.crtd), col = "red") +
+  geom_point(data = mydata, aes(x = Liver.CN, 
+                                y = Liver.d13C.crtd), 
+             col = "red") +
   geom_vline(xintercept = 3.6, col = "black")
 print(liver.plot.2)
 ```

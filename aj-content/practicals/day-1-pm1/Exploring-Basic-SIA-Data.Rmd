@@ -36,7 +36,7 @@ head(mydata)
 
 # if the data is not a massive dataset, you might like to look  
 # at it all
-mydata
+# mydata
 ```
 
 ## What are my data?
@@ -74,7 +74,7 @@ library(tidyverse)
 
 # generate summary statitsics by group
 mydata %>% group_by(Taxon) %>% 
-  summarise(count = length(Taxon),
+  summarise(count = n(),
             mC = mean(d13C), 
             sdC = sd(d13C), 
             mN = mean(d15N), 
@@ -126,6 +126,14 @@ panel.cor <- function(x, y, digits = 2, prefix = "", cex.cor, ...)
 }
 
 # = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
+
+# A basic pairs() plot of the numeric data
+# These two lines of code are identical, but use the 
+# dplyr functions slightly differently
+# pairs(select(mydata, d13C, d15N, C.N))
+# pairs(mydata %>% select(d13C, d15N, C.N))
+
+
 
 # this select function comes from the package dplyr and allows us to 
 # select a subset of columns to plot.
