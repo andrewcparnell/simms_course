@@ -43,12 +43,12 @@ summary(simmr_1_out,'quantiles')
 # Now suppose I had prior information that: 
 # proportion means = 0.5,0.2,0.2,0.1 
 # proportion sds = 0.08,0.02,0.01,0.02
-prior=simmr_elicit(simmr_1,
+prior=simmr_elicit(n_sources = 4,
                    c(0.5,0.2,0.2,0.1),
                    c(0.08,0.02,0.01,0.02))
 
 simmr_1a_out = simmr_mcmc(simmr_1,
-                          prior.control=list(means=prior$mean,
+                          prior_control=list(means=prior$mean,
                                              sd=prior$sd))
 
 summary(simmr_1a_out,'quantiles')
