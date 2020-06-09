@@ -8,10 +8,11 @@ output:
       in_header: ../header.tex
 editor_options: 
   chunk_output_type: console
+classoption: "aspectratio=169"
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(dev = 'pdf')
+knitr::opts_chunk$set(dev = 'pdf', fig.height = 5)
 par(mar=c(3,3,2,1), mgp=c(2,.7,0), tck=-.01,las=1)
 ```
 ---
@@ -74,7 +75,7 @@ simmr_in = simmr_load(mixtures=mix,
                      concentration_means = conc)
 ```
 
-```{r, warning=FALSE, fig.height = 5}
+```{r, warning=FALSE, fig.height = 4}
 plot(simmr_in)
 ```
 
@@ -152,7 +153,7 @@ panel.cor <- function(x, y, digits = 2, prefix = "", cex.cor, ...)
 
 ```
 
-```{r, fig.height = 5}
+```{r, fig.height = 4}
 out_2 = model_run$BUGSoutput$sims.list$p
 colnames(out_2) = sourcesdemo[,1]
 pairs(out_2, lower.panel = panel.smooth, 
