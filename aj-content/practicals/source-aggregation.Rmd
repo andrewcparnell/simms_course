@@ -66,8 +66,11 @@ simmr_out = simmr_mcmc(simmr_in)
 And we should always check for convergence.
 
 ```{r}
-# plot the convergence statistics 
-plot(simmr_out, type='convergence')
+# a summary table of convergence diagnostics
+summary(simmr_out,type='diagnostics')
+
+# plot the posterior predictive power 
+posterior_predictive(simmr_out)
 ```
 
 The results of this toy example are not expected to be overly helpful or meaningful.
