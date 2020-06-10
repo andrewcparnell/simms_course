@@ -17,6 +17,8 @@ Here we use the package simmr to explore the two alternatives to aggregating sou
 ```{r simulate-data}
 library(simmr, quietly = TRUE)
 
+# Set the random seed so we get the same set of 
+# random numbers each time we run this example.
 set.seed(1)
 
 # specify the sources
@@ -27,7 +29,8 @@ set.seed(1)
 # specify the source names
 S_names = c("A","B","C","D")
 
-# specify the source means
+# specify the source means by binding two vectors 
+# together into a matrix by columns.
 S_means = cbind(c(-5,-5,5,5), c(-5,5,5,-5))
 
 # specify the source standard deviations
