@@ -8,7 +8,14 @@ output:
       in_header: ../header.tex
 editor_options: 
   chunk_output_type: console
+classoption: "aspectratio=169"
 ---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(dev = 'pdf', fig.height = 5)
+par(mar=c(3,3,2,1), mgp=c(2,.7,0), tck=-.01,las=1)
+```
+
 
 ## Learning outcomes
 - Random effects models

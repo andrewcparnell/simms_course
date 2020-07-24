@@ -58,7 +58,7 @@ write_JAGS_model(model_filename,
 jags.1 = run_model(run="test", 
                    mix, source, discr, 
                    model_filename, 
-                   alpha.prior = c(10,0.1,0.1), 
+                   alpha.prior = c(1,1,1), 
                    resid_err = TRUE, 
                    process_err = TRUE)
 
