@@ -5,7 +5,7 @@ simmr_mcmc_indeff = function(simmr_in,
                                                     burn=2000,
                                                     thin=20,
                                                     n.chain=4),
-                                  individual_effects = FALSE) {
+                                  individual_effects = TRUE) {
   
   # Main function to run simmr through JAGS
   # if(class(simmr_in)!='simmr_input') stop("Input argument simmr_in must have come from simmr_load")
