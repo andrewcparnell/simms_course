@@ -25,9 +25,9 @@ Time  | Class
 11:45-12:00 | Break 
 12:00-13:00 | [Guided practical: Revision of important R concepts (AP)](https://andrewcparnell.github.io/simms_course/ap_notes/revision_of_R/Revision_of_R.R)
 13:00-14:00 | Lunch
-14:00-15:00 | [Guided practical: Intro to SI data](https://andrewcparnell.github.io/simms_course/aj-content/practicals/day-1-pm1/Exploring-Basic-SIA-Data.html) and [biplots](https://andrewcparnell.github.io/simms_course/aj-content/practicals/day-1-pm1/first-biplot.html) (AJ)
+14:00-15:00 | [Guided practical: Intro to SI data](https://andrewcparnell.github.io/simms_course/aj-content/practicals/day-1-pm1/Exploring-Basic-SIA-Data.mb.html) and [biplots](https://andrewcparnell.github.io/simms_course/aj-content/practicals/day-1-pm1/first-biplot.nb.html) (AJ)
 15:00-15:30 | Coffee break
-15:30-17:00 | [Guided Practical: Simple linear models to explain SIA data](https://andrewcparnell.github.io/simms_course/aj-content/practicals/day-1-pm2/basic-SIA-linear-models.html) (AJ)
+15:30-17:00 | [Guided Practical: Simple linear models to explain SIA data](https://andrewcparnell.github.io/simms_course/aj-content/practicals/day-1-pm2/basic-SIA-linear-models.nb.html) (AJ)
 
 ## Tuesday
 
@@ -70,11 +70,11 @@ Time  | Class
 ------------- | ----------------------------------------------------
 9:30-10:30 |  [Creating and understanding Stable Isotope Bayesian Ellipses (SIBER) (AJ)](https://andrewcparnell.github.io/simms_course/aj-content/siber-intro-ellipses.html)
 10:30-10:45 | Coffee break
-10:45-11:45 | [Guided Practical: Using SIBER to compare populations using ellipses (AJ)](https://andrewcparnell.github.io/simms_course/aj-content/practicals/siber-comparing-populations.html)
+10:45-11:45 | [Guided Practical: Using SIBER to compare populations using ellipses (AJ)](https://andrewcparnell.github.io/simms_course/aj-content/practicals/siber-comparing-populations.nb.html)
 11:45-12:00 | Break 
 12:00-13:00 | [Community level metrics using SIBER (AJ)](https://andrewcparnell.github.io/simms_course/aj-content/siber-intro-hulls.html)
 13:00-14:00 | Lunch
-14:00-15:00 | [Guided Practical: Using SIBER to compare communities using convex hulls (AJ)](https://andrewcparnell.github.io/simms_course/aj-content/practicals/siber-comparing-communities.html)
+14:00-15:00 | [Guided Practical: Using SIBER to compare communities using convex hulls (AJ)](https://andrewcparnell.github.io/simms_course/aj-content/practicals/siber-comparing-communities.nb.html)
 15:00-15:30 | Coffee break
 15:30-17:00 | [Practical: pick a MixSIAR example](https://cran.r-project.org/web/packages/MixSIAR/vignettes/) and [look at the manual](https://github.com/brianstock/MixSIAR/blob/master/Manual/mixsiar_manual_3.1.pdf) (AP & AJ)
 
