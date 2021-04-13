@@ -62,57 +62,44 @@ The key differences between simmr and other SIMMs are:
   - simmr has simple functions to load data, create iso-space plots, and summarise/plot output
   - simmr has some simple functions for comparing and combining sources, and for comparing groups
 
-We will use the data included with SIAR (make sure you have installed SIAR using the instructions in the 'using SIAR' practical) to run simmr. When running your own models you should try to keep your data in the same format as these examples. At minimum you need two files to get simmr working; a consumers file and a sources file. The simplest geese data set is obtained via:
+We will use the data included with simmr. When running your own models you might run into data loading problems. We have lots of examples of data structures from which to load your data. See for example the `vignette("quick_start")` example. At minimum you need two files to get simmr working; a consumers file and a sources file. The simplest geese data set is obtained via:
 
 ```{r, include = FALSE}
-library(siar)
-data(geese1demo)
-print(geese1demo)
-```
-```{r, eval = FALSE}
-library(siar)
-data(geese1demo)
-print(geese1demo)
+library(simmr)
+data("geese_data_day1")
+str(geese_data_day1)
 ```
 
-This data set has two columns, one for each isotope, and 9 individuals. A useful command for learning about the structure of an R data set is `str`, especially for large data objects:
+This data set is arranged as a list containing all the consumer/mixture, source, and correction data. The consumer data has two columns, one for each isotope, and 9 individuals. A useful command for learning about the structure of an R data set is `str`, especially for large data objects:
 
 ```{r}
-str(geese1demo)
+str(geese_data_day1$mixtures)
 ```
 
-We can see that it has 9 rows, 2 columns, and is of numeric (`num`) mode. The two column labels refer to the $\delta^{15}$N and $\delta^{13}$C isotope values. 
+We can see that it has 9 rows, 2 columns, and is of numeric (`num`) mode. The two column labels refer to the $\delta^{13}$C and $\delta^{15}$N isotope values. 
 
 The sources data can be obtained from:
 
 ```{r}
-data(sourcesdemo)
-print(sourcesdemo)
+print(geese_data_day1$source_names)
+print(geese_data_day1$source_means)
+print(geese_data_day1$source_sds)
 ```
 
-We can see that there are 4 sources, with their names in the first column. The remaining columns refer to the means and standard deviations for each source on each isotope. The isotopes need to be in the same order as the consumer data in `geese1demo`. Note the structure of this object
-
-```{r}
-str(sourcesdemo)
-```
-
-It's a data frame. This is an R data type which can store both text and numbers, useful for storing the source names as well as their isotope values.
+We can see that there are 4 sources with their names. The remaining matrices refer to the means and standard deviations for each source (row) on each isotope (column). The isotopes need to be in the same order as the consumer data in `mixtures`. 
 
 We could run simmr with just these two data files. However, this would produce a pretty poor model as we don't have any corrections for trophic enrichment factors (TEFs). The TEFs file looks just like the source file:
 
 ```{r}
-data(correctionsdemo)
-print(correctionsdemo)
+print(geese_data_day1$correction_means)
+print(geese_data_day1$correction_sds)
 ```
 
 Lastly, if we have concentration dependence we can include these too. The data for the Geese comes from:
 
 ```{r}
-data(concdepdemo)
-print(concdepdemo)
+print(geese_data_day1$concentration_means)
 ```
-
-Note that although this data set includes standard deviations on the concentration dependencies, they are currently not used by simmr in the model run.
 
 If you were loading these data sets in yourself, it's best to store them in the same directory and then load them in from there, e.g.:
 
@@ -127,13 +114,13 @@ sources = read.table('my_sources_file.txt',header=TRUE)
 TEFs = read.table('my_TEF_file.txt',header=TRUE)
 ```
 
-The extra `header=TRUE` argument tells R that there are column names at the top of the file.
+The extra `header=TRUE` argument tells R that there are column names at the top of the file. See also the quick start simmr guide that shows you how to load everything in from an Excel file: `vignette("quick_start")`.
 
 ***
 
-1. What is the structure of the TEFs object? How many rows and columns does it have?
-2. There's another data object that comes with siar called `geese2demo`. How many rows and columns does this have?
-3. Create some simple scatter plots of the `geese1demo` data using `plot`. See if you can add in the source means corrected for the TEF means (hint: add the means together and then plot using `points`)
+1. There is an element in the `geese_data_day1` called `tracer_names`. What type is it and what information does it contain? 
+2. There's another data object that comes with simmr called `geese_data`. How does the `mixtures` elements of this object differ from `geese_data_day1`.
+3. Create some simple scatter plots of the `mixtures` data using `plot`. See if you can add in the source means corrected for the TEF means (hint: add the means together and then plot using `points`)
 
 ***
 
@@ -145,13 +132,14 @@ We are now in a position to run simmr. The first function to use is `simmr_load`
 library(simmr)
 ```
 ```{r}
-simmr_in = simmr_load(mixtures = geese1demo[,c(2,1)],
-                      source_names = as.character(sourcesdemo[,1]),
-                      source_means = sourcesdemo[,c(4,2)],
-                      source_sds = sourcesdemo[,c(5,3)],
-                      correction_means = correctionsdemo[,c(4,2)],
-                      correction_sds = correctionsdemo[,c(5,3)],
-                      concentration_means = concdepdemo[,c(4,2)])
+simmr_in = with(geese_data_day1, 
+                simmr_load(mixtures = mixtures,
+                      source_names = source_names,
+                      source_means = source_means,
+                      source_sds = source_sds,
+                      correction_means = correction_means,
+                      correction_sds = correction_sds,
+                      concentration_means = concentration_means))
 ```
 
 Once loaded we can create an isospace plot very simply with:
@@ -244,15 +232,14 @@ Sometimes you might be interested in running simmr for multiple different groups
 The data which are included in simmr for multiple groups analysis can be found with:
 
 ```{r}
-data(geese2demo)
-head(geese2demo,15)
-str(geese2demo)
+data("geese_data")
+str(geese_data)
 ```
 
-This is a much bigger data set. The first column contains the group number. To run simmr you now need to specify the groups so that it can separate out the model. We can see how many and how large the groups are with:
+This is a much bigger data set. There is now an element which contains the group number. To run simmr you now need to specify the groups so that it can separate out the model. We can see how many and how large the groups are with:
 
 ```{r}
-table(geese2demo[,'Group'])
+table(geese_data$groups)
 ```
 
 so 8 groups ranging from 9 to 74 observations. simmr will work with up to 30 groups. There needs to be at least 3 observations per group for simmr to run, but really 5 or more is desirable if you want to properly estimate the residual error.
@@ -260,14 +247,15 @@ so 8 groups ranging from 9 to 74 observations. simmr will work with up to 30 gro
 To run simmr with this data set it's the same as before:
 
 ```{r,results='hide'}
-simmr_in2 = simmr_load(mixtures = geese2demo[,c(3,2)],
-                       source_names = as.character(sourcesdemo[,1]),
-                       source_means = sourcesdemo[,c(4,2)],
-                       source_sds = sourcesdemo[,c(5,3)],
-                       correction_means = correctionsdemo[,c(4,2)],
-                       correction_sds = correctionsdemo[,c(5,3)],
-                       concentration_means = concdepdemo[,c(4,2)],
-                       group = as.integer(geese2demo[,1]))
+simmr_in2 = with(geese_data, 
+                 simmr_load(mixtures = mixtures,
+                            source_names = source_names,
+                            source_means = source_means,
+                            source_sds = source_sds,
+                            correction_means = correction_means,
+                            correction_sds = correction_sds,
+                            concentration_means = concentration_means,
+                            group = groups))
 ```
 
 Again we can do an isospace plot with:
@@ -316,13 +304,14 @@ This is a really useful plot as it provides the histograms and the relationships
 When you have just a single observation it is impossible to estimate the residual standard deviation. However you can still estimate the dietary proportions and simmr will run this as standard when provided with only one observation by forcing the prior distribution on the residual standard deviation to be tiny. We can create a simple example by just taking a single row from the geese data:
 
 ```{r,results='hide', message=FALSE}
-simmr_in3 = simmr_load(mixtures = geese1demo[1,c(2,1), drop = FALSE],
-                       source_names = as.character(sourcesdemo[,1]),
-                       source_means = sourcesdemo[,c(4,2)],
-                       source_sds = sourcesdemo[,c(5,3)],
-                       correction_means = correctionsdemo[,c(4,2)],
-                       correction_sds = correctionsdemo[,c(5,3)],
-                       concentration_means = concdepdemo[,c(4,2)])
+simmr_in3 = with(geese_data_day1,
+                 simmr_load(mixtures = mixtures[1,, drop = FALSE],
+                            source_names = source_names,
+                            source_means = source_means,
+                            source_sds = source_sds,
+                            correction_means = correction_means,
+                            correction_sds = correction_sds,
+                            concentration_means = concentration_means))
 simmr_out3 = simmr_mcmc(simmr_in3)
 ```
 
