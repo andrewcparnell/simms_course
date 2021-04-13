@@ -1,7 +1,7 @@
 ---
 title: 'Stable Isotope Mixing Models: course timetable'
 author: "Andrew Parnell and Andrew Jackson"
-date: "June 2020 - online"
+date: "April 2021 - online"
 output:
   html_document: default
   pdf_document: default
