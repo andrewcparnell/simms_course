@@ -48,10 +48,6 @@ install_github("healyke/SIDER", build_vignettes = TRUE)
 # check SIDER loads
 library(SIDER)
 
-# NB SIAR is out of date and we will not use it, but some of the example
-# datasets are still in it and we need access to them.
-install_github("andrewljackson/siar@master", build_vignettes = TRUE)
-
 ```
 
 These will install the most up to date versions of the packages. Note that this might take a while as some of these are pretty big and complicated packages.
@@ -89,5 +85,5 @@ Then try the `install_github` command again.
   <!-- - If you get some errors about `pandoc` when installing simmr leave out the `build_vignettes=TRUE` argument -->
 
 
-If you run into any other problems please drop us a line at <andrew.parnell@mu.ie> (for SIAR/simmr/MixSIAR queries) or <a.jackson@tcd.ie> (for SIBER/SIDER queries).
+If you run into any other problems please drop us a line at <andrew.parnell@mu.ie> (for simmr/MixSIAR queries) or <a.jackson@tcd.ie> (for SIBER/SIDER queries).
 
