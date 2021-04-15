@@ -7,6 +7,10 @@ output: html_notebook
 
 ```{r, echo=FALSE, message = FALSE, fig.width = 7, fig.height = 7}
 library(viridis)
+
+# choose 4 colours from the viridis color palette because
+# we have 4 groups in each community and we want to plot them 
+# in different colours.
 palette(viridis(4))
 ```
 Let us return to the original figure we explored in [Introduction-to-SIBER](Introduction-to-SIBER.html) where we had two communities side-by-side, and we wanted to ask whether they differed in how the individuals and populations within were distributed in isotope-space.
@@ -26,7 +30,7 @@ siber.example <- createSiberObject(mydata)
 
 # Create lists of plotting arguments to be passed onwards to each 
 # of the three plotting functions.
-community.hulls.args <- list(col = 1, lty = 1, lwd = 1)
+community.hulls.args <- list(col = "black", lty = 1, lwd = 1)
 group.ellipses.args  <- list(n = 100, p.interval = 0.95, lty = 1, lwd = 2)
 group.hull.args      <- list(lty = 2, col = "grey20")
 
@@ -34,9 +38,9 @@ group.hull.args      <- list(lty = 2, col = "grey20")
 par(mfrow=c(1,1))
 plotSiberObject(siber.example,
                   ax.pad = 2, 
-                  hulls = T, community.hulls.args, 
-                  ellipses = F, group.ellipses.args,
-                  group.hulls = F, group.hull.args,
+                  hulls = TRUE, community.hulls.args, 
+                  ellipses = FALSE, group.ellipses.args,
+                  group.hulls = FALSE, group.hull.args,
                   bty = "L",
                   iso.order = c(1,2),
                   xlab = expression({delta}^13*C~'\u2030'),
@@ -46,7 +50,7 @@ plotSiberObject(siber.example,
 # add the confidence interval of the means to help locate
 # the centre of each data cluster
 plotGroupEllipses(siber.example, n = 100, p.interval = 0.95,
-                  ci.mean = T, lty = 1, lwd = 2)
+                  ci.mean = TRUE, lty = 1, lwd = 2)
 
 
 
@@ -153,16 +157,28 @@ siberDensityPlot(cbind(layman.B[[1]][ , "TA"],
                 ylab = "TA - Convex Hull Area",
                 xlab = "")
 
+
+# We can take the code from just above for TA and simply 
+# swap out the metric of choice for whatever we want. 
+# Here I do this for NND and take care to change the 
+# y axis labels too.
+siberDensityPlot(cbind(layman.B[[1]][ , "NND"], 
+                       layman.B[[2]][ , "NND"]),
+                xticklabels = c("Community 1", "Community 2"), 
+                bty="L", ylim = c(0, 10),
+                las = 1,
+                ylab = "NND (nearest neighbour distance)",
+                xlab = "")
 ```
 
 
-And that pretty is pretty much that for comparing these metrics across communities, except perhaps to make a probabalistic statement about how dNr (for example) differs between __Community 1__ and __Community 2__. In this case, what is the probabily that dNr in Community 1 is less than dNr in Community 2?
+And that pretty is pretty much that for comparing these metrics across communities, except perhaps to make a probabalistic statement about how dNr (for example) differs between __Community 1__ and __Community 2__. In this case, what is the probability that dNr in Community 1 is less than dNr in Community 2?
 
 ```{r}
 
 dNr1.lt.dNr2 <- sum(layman.B[[1]][,"dY_range"] < 
                       layman.B[[2]][,"dY_range"]) / 
-                length(layman.B[[1]][,"TA"])
+                length(layman.B[[1]][,"dY_range"])
 
 print(dNr1.lt.dNr2)
 
