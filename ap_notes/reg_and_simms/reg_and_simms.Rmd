@@ -141,13 +141,7 @@ plot(model_run)
     - 2 food sources
     - 9 consumers
     - No other complications
-- We'll use some of the Geese data from the SIAR package
-- Reminder: you can install the up-to-date version of SIAR with:
-```{r,eval=FALSE}
-library(devtools)
-install_github("andrewljackson/siar")
-library(siar)
-```
+- We'll use some of the Geese data that was originanlly from the SIAR package but is now bundled in SIBER
 
 ## Plotting the data
 
@@ -155,7 +149,7 @@ library(siar)
 - Use the second isotope ($\delta^{13}$C) and the first two food sources (Zostera and Grass)
 - Create a plot:
 ```{r,include=FALSE}
-library(siar)
+library(SIBER) # to access the demo data files
 ```
 ```{r,eval=FALSE}
 # Load in the data

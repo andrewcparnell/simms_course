@@ -42,7 +42,7 @@ They can only get bigger.
 
 ```{r, echo=FALSE, message=FALSE, fig.width = 4, fig.height = 4}
 
-library(siar)
+# library(siar)
 
 set.seed(2)
 
@@ -102,9 +102,9 @@ a = SEA, b = SEAc and c = SEA_B
 
 ```{r, echo=FALSE, message = FALSE, fig.width = 7, fig.height = 3.5}
 
-library(siar, quietly = TRUE,
-        verbose = FALSE,
-        logical.return = FALSE)
+# library(siar, quietly = TRUE,
+#         verbose = FALSE,
+#         logical.return = FALSE)
 
 source("utility-scripts/plot.siber.data.r")
 
