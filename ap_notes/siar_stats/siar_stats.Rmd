@@ -44,12 +44,11 @@ with $s_k \sim N(\mu_{s_k},\sigma_{s_k}^2)$, $p_1 \sim U(0,1)$ and $\sigma \sim 
 ## Reminder: the SIAR geese data
 
 ```{r,include=FALSE}
-library(siar)
+library(simmr)
 ```
 ```{r}
-data(geese1demo,sourcesdemo, correctionsdemo, concdepdemo)
-head(geese1demo,3)
-sourcesdemo
+data(geese_data_day1)
+str(geese_data_day1)
 ```
 
 ## Plotting the data {.smaller}
@@ -57,22 +56,14 @@ sourcesdemo
 A plot in isotope space:
 ```{r,results='hide',message=FALSE, echo = FALSE, warning=FALSE}
 library(simmr)
-mix = geese1demo
-colnames(mix) = c('d13C','d15N')
-s_names=as.character(sourcesdemo[,1])
-s_means = sourcesdemo[,c(2,4)]
-s_sds = sourcesdemo[,c(3,5)]
-c_means = correctionsdemo[,c(2,4)]
-c_sds = correctionsdemo[,c(3,5)]
-conc = concdepdemo[,c(2,4)]
-# Load
-simmr_in = simmr_load(mixtures=mix,
-                     source_names=s_names,
-                     source_means=s_means,
-                     source_sds=s_sds,
-                     correction_means=c_means,
-                     correction_sds=c_sds,
-                     concentration_means = conc)
+simmr_in = with(geese_data_day1, 
+                simmr_load(mixtures = mixtures,
+                      source_names = source_names,
+                      source_means = source_means,
+                      source_sds = source_sds,
+                      correction_means = correction_means,
+                      correction_sds = correction_sds,
+                      concentration_means = concentration_means))
 ```
 
 ```{r, warning=FALSE, fig.height = 4}
@@ -97,15 +88,14 @@ $$ y_i \sim N\left(\sum_{k=1}^K p_ks_k,\sigma^2\right)$$
 
 ## JAGS SIMM with a Dirichlet prior
 ```{r,include=FALSE}
-library(siar)
 library(R2jags)
-data(geese1demo); data(sourcesdemo)
-consumers = geese1demo[,2]
+library(simmr)
+data(geese_data_day1)
 set.seed(4)
 ```
 
 \small
-```{r,results='hide'}
+```{r,results='hide', message=FALSE}
 model_code ='
 model {
   for(i in 1:N) { y[i] ~ dnorm(inprod(p,s),sigma^-2) }
@@ -114,10 +104,12 @@ model {
   sigma ~ dunif(0,100)
 }
 '
-sources = sourcesdemo[,4:5]
-data=list(y=consumers,s_mean=sources[,1],s_sd=sources[,2],
-          N=length(consumers),K=nrow(sources),
-          alpha=rep(1,nrow(sources)))
+data=with(geese_data_day1, 
+          list(y=mixtures[,1],
+               s_mean=source_means[,1],
+               s_sd=source_sds[,1],
+          N = nrow(mixtures),K=nrow(source_means),
+          alpha=rep(1,nrow(source_means))))
 set.seed(123)
 model_run = jags(data = data,
                  parameters.to.save = c("p", "sigma"),
@@ -155,7 +147,7 @@ panel.cor <- function(x, y, digits = 2, prefix = "", cex.cor, ...)
 
 ```{r, fig.height = 4}
 out_2 = model_run$BUGSoutput$sims.list$p
-colnames(out_2) = sourcesdemo[,1]
+colnames(out_2) = geese_data_day1$source_names
 pairs(out_2, lower.panel = panel.smooth, 
       upper.panel = panel.cor)
 ```
@@ -186,11 +178,12 @@ model {
   sigma ~ dunif(0,100)
 }
 '
-data(concdepdemo); data(correctionsdemo)
-data=list(y=consumers,s_mean=sources[,1],s_sd=sources[,2],
-          c_mean=correctionsdemo[,4],c_sd=correctionsdemo[,5],
-          q=concdepdemo[,4],N=length(consumers),K=nrow(sources),
-          alpha=rep(1,nrow(sources)))
+data=with(geese_data_day1, 
+          list(y=mixtures[,1], s_mean=source_means[,1],
+               s_sd=source_sds[,1], c_mean = correction_means[,1],
+               c_sd = correction_sds[,1], q = concentration_means[,1],
+          N = nrow(mixtures),K=nrow(source_means),
+          alpha=rep(1,length(source_names))))
 model_run = jags(data = data,
                  parameters.to.save = c("p"),
                  model.file = textConnection(model_code))
@@ -256,14 +249,12 @@ model {
 
 \small
 ```{r,results='hide'}
-sources = as.matrix(sourcesdemo[,2:5])
-tefs = as.matrix(correctionsdemo[,2:5])
-cd = as.matrix(concdepdemo[,c(2,4)])
-data=list(y=geese1demo,s_mean=sources[,c(1,3)],
-          s_sd=sources[,c(2,4)],
-          c_mean=tefs[,c(1,3)],c_sd=tefs[,c(2,4)],
-          q=cd,N=nrow(geese1demo),
-          J=ncol(geese1demo),alpha=rep(1,nrow(sources)))
+data=with(geese_data_day1, 
+          list(y=mixtures,s_mean=source_means,
+          s_sd=source_sds,
+          c_mean=correction_means,c_sd=correction_sds,
+          q=concentration_means,N=nrow(mixtures),
+          J=ncol(mixtures),alpha=rep(1,length(source_names))))
 model_run = jags(data = data,
                  parameters.to.save = c("p", "sigma"),
                  model.file = textConnection(model_code),
@@ -275,7 +266,7 @@ model_run = jags(data = data,
 \small
 ```{r,fig.align='center'}
 out_2 = model_run$BUGSoutput$sims.matrix
-colnames(out_2) = c(as.character(sourcesdemo[,1]),'SD1','SD2')
+colnames(out_2) = c(geese_data_day1$source_names,'SD1','SD2')
 t(round(apply(out_2,2,quantile,probs=c(0.025,0.5,0.975)),2))
 ```
 Some of these proportions are quite imprecise: perhaps see better with matrix plot?
@@ -303,25 +294,19 @@ Some of these proportions are quite imprecise: perhaps see better with matrix pl
 
 ```{r, echo = FALSE}
 library(simmr)
-mix = geese1demo
-colnames(mix) = c('d13C','d15N')
-s_names=as.character(sourcesdemo[,1])
-s_means = sourcesdemo[,c(2,4)]
-s_sds = sourcesdemo[,c(3,5)]
-c_means = correctionsdemo[,c(2,4)]
-c_sds = correctionsdemo[,c(3,5)]
-conc = concdepdemo[,c(2,4)]
 ```
 
 ```{r, eval = FALSE}
 # Load
-simmr_in = simmr_load(mixtures=mix,
-                     source_names=s_names,
-                     source_means=s_means,
-                     source_sds=s_sds,
-                     correction_means=c_means,
-                     correction_sds=c_sds,
-                     concentration_means = conc)
+data("geese_data_day1")
+simmr_in = with(geese_data_day1, 
+                simmr_load(mixtures = mixtures,
+                      source_names = source_names,
+                      source_means = source_means,
+                      source_sds = source_sds,
+                      correction_means = correction_means,
+                      correction_sds = correction_sds,
+                      concentration_means = concentration_means))
 # Iso-space plot
 plot(simmr_in)
 # MCMC run
