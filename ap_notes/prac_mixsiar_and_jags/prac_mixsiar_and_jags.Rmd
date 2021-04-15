@@ -71,23 +71,26 @@ model {
 Make sure you understand what each of the lines of this code is doing. You can run it on the basic Geese data with:
 
 ```{r,include=FALSE}
-library(siar)
 library(rjags)
+library(simmr)
 ```
 ```{r,eval=FALSE}
-library(siar)
+library(simmr)
 library(rjags)
 ```
 ```{r,results='hide'}
-data(geese1demo,sourcesdemo,correctionsdemo,concdepdemo)
-con = geese1demo
-sources = as.matrix(sourcesdemo[,2:5])
-tefs = as.matrix(correctionsdemo[,2:5])
-cd = as.matrix(concdepdemo[,c(2,4)])
-data=list(y=con,s_mean=sources[,c(1,3)],s_sd=sources[,c(2,4)],
-          c_mean=tefs[,c(1,3)],c_sd=tefs[,c(2,4)],
-          q=cd,N=nrow(con),K=nrow(sources),
-          J=ncol(con),alpha=rep(1,nrow(sources)))
+data("geese_data_day1")
+data = with(geese_data_day1, 
+            list(y=mixtures,
+                 s_mean=source_means,
+                 s_sd=source_sds,
+                 c_mean=correction_means,
+                 c_sd=correction_sds,
+                 q=concentration_means, 
+                 N=nrow(mixtures),
+                 K=length(source_names),
+                 J=ncol(mixtures),
+                 alpha=rep(1,length(source_names))))
 model_1=jags.model(textConnection(modelstring), data=data,n.chain=3)
 output=coda.samples(model=model_1,variable.names=c('p','sigma'),n.iter=10000,thin=10)
 ```
@@ -112,7 +115,7 @@ We can create histograms of the different proportions via
 
 ```{r}
 out = do.call(rbind,output)
-colnames(out) = c(as.character(sourcesdemo[,1]),'sd1','sd2')
+colnames(out) = c(geese_data_day1$source_names,'sd1','sd2')
 hist(out[,'Zostera'])
 ```
 
@@ -165,10 +168,16 @@ model {
 See if you can follow all of the different parts. If not, ask me to help explain this in more detail. We can run this model on the Geese data with:
 
 ```{r,results='hide'}
-data=list(y=con,s_mean=sources[,c(1,3)],s_sd=sources[,c(2,4)],
-          c_mean=tefs[,c(1,3)],c_sd=tefs[,c(2,4)],
-          q=cd,N=nrow(con),K=nrow(sources),
-          J=ncol(con))
+data = with(geese_data_day1, 
+            list(y=mixtures,
+                 s_mean=source_means,
+                 s_sd=source_sds,
+                 c_mean=correction_means,
+                 c_sd=correction_sds,
+                 q=concentration_means, 
+                 N=nrow(mixtures),
+                 K=length(source_names),
+                 J=ncol(mixtures)))
 model_2=jags.model(textConnection(modelstring), data=data,n.chain=3)
 output=coda.samples(model=model_2,variable.names=c('mu_f','sigma_f','sigma'),n.iter=10000,thin=10)
 ```
@@ -193,7 +202,7 @@ library(compositions)
 out = do.call(rbind,output)
 # Apply the CLR inverse transform to make them into proportions
 p_mean = t(apply(out[,1:4],1,clrInv))
-colnames(p_mean) = sourcesdemo[,1]
+colnames(p_mean) = geese_data_day1$source_names
 # Now can perform same analysis as before
 t(round(apply(p_mean,2,'quantile',probs=c(0.025,0.5,0.975)),3))
 ```
@@ -207,7 +216,7 @@ pairs(p_mean,lower.panel=panel.smooth)
 ***
 
 1. Try changing the priors on `sigma_f` and `mu_f`. Do they have much of an effect on the posterior?
-2. Run the same model on some of the `geese2demo` groups. You can create a new consumers file by first running `data(geese2demo)` and then e.g. `new_con = subset(geese2demo[,2:3],geese2demo[,1]==2)`. Check that you can understand the output produced by the JAGS model
+2. Run the same model on a larger data set. You can create a new consumers file by first running `data(geese_data)` and then e.g. `new_con = subset(geese_data$mixtures,geese_data$groups=="Period 2")`. Check that you can understand the output produced by the JAGS model
 
 ***
 

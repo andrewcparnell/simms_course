@@ -1,15 +1,14 @@
 library(rjags)
-library(siar)
+library(simmr)
+library(readxl)
 
 # Set wd
 #setwd("~/transfer/SIMM_Glasgow")
 
 # Load in the data and the output
-data(geese1demo,sourcesdemo,correctionsdemo,concdepdemo)
-sources = as.matrix(sourcesdemo[,2:5])
-tefs = as.matrix(correctionsdemo[,2:5])
-cd = as.matrix(concdepdemo[,c(2,4)])
-con = read.csv('GeeseConsumers2.csv')
+path = system.file("extdata", "geese_data.xls", package = "simmr")
+geese_data = lapply(excel_sheets(path), read_excel, path = path)
+geese_consumers <- read.csv('ap_notes/complex_simms/GeeseConsumers2.csv')
 
 modelstring ='
 model {
@@ -41,12 +40,16 @@ model {
   for(j in 1:J) { sigma[j] ~ dunif(0,10) }
 }
 '
-X = cbind(1,sin(2*pi*con$julianday/365),cos(2*pi*con$julianday/365))
-stop()
-data=list(y=con[,2:3],s_mean=sources[,c(1,3)],s_prec=1/sources[,c(2,4)]^2,
-          c_mean=tefs[,c(1,3)],c_prec=1/tefs[,c(2,4)]^2,
-          q=cd,N=nrow(con),K=nrow(sources),
-          J=ncol(con[,2:3]),X=X,L=ncol(X))
+X = cbind(1,sin(2*pi*geese_consumers[,4]/365),cos(2*pi*geese_consumers[,4]/365))
+data=list(y=geese_consumers[,2:3],
+          s_mean=geese_data[[2]][,2:3],
+          s_prec=1/geese_data[[2]][,4:5]^2,
+          c_mean=geese_data[[3]][,2:3],
+          c_prec=1/geese_data[[3]][,4:5]^2,
+          q=geese_data[[4]][,2:3],
+          N=nrow(geese_consumers),
+          K=nrow(geese_data[[2]]),
+          J=2,X=X,L=ncol(X))
 init = function() {
   list(
     'beta'=matrix(rnorm(data$L*data$K,0,0.1),ncol=data$K,nrow=data$L),

@@ -4,31 +4,35 @@ rm(list=ls())
 
 # Set the working directory
 #setwd("/Volumes/MacintoshHD2/GDrive/Conferences&Talks/SIAR_Glasgow/mod_8_timeseries_SIMMs")
-setwd("~/GDrive/Conferences&Talks/SIAR_Glasgow/mod_8_complex_SIMMs")
+#setwd("~/GDrive/Conferences&Talks/SIAR_Glasgow/mod_8_complex_SIMMs")
 #setwd("~/transfer/SIMM_Glasgow")
 
 # Load in packages
-library(siar)
+library(simmr)
+library(readxl)
 library(compositions)
 
 # Load in the data and the output
-data(geese1demo,sourcesdemo,correctionsdemo,concdepdemo)
-sources = as.matrix(sourcesdemo[,2:5])
-tefs = as.matrix(correctionsdemo[,2:5])
-cd = as.matrix(concdepdemo[,c(2,4)])
-con = read.csv('GeeseConsumers2.csv')
+path = system.file("extdata", "geese_data.xls", package = "simmr")
+geese_data = lapply(excel_sheets(path), read_excel, path = path)
+geese_consumers <- read.csv('ap_notes/complex_simms/GeeseConsumers2.csv')
+julianday = geese_consumers$julianday
+con = geese_data[[1]]
+sources = geese_data[[2]]
+TDF = geese_data[[3]]
+Conc = geese_data[[4]]
 
 # Some useful bits from the data
 N = nrow(con)
 K = nrow(sources)
 
 # Load in the jags output
-load(file='geese2_jags_output.rda')
+load(file='ap_notes/complex_simms/geese2_jags_output.rda')
 out = do.call(rbind,output)
 
 # Sort out the days to plot them properly
-newday = con$julianday
-newday[newday<299.75] = abs(con$julianday[newday<299.75])+365
+newday = julianday
+newday[newday<299.75] = abs(newday[newday<299.75])+365
 
 # Create grid of predicted values
 new_grid = c(290:365,1:110)
@@ -96,5 +100,5 @@ lines(c(mylinelocs[5],mylinelocs[5]),c(0,1)) # 1/11
 text(mylinelocs[5]+myoffset,mylineheight,labels='1st Nov',srt=90,pos=3,offset=0)
 lines(c(mylinelocs[6],mylinelocs[6]),c(0,1)) # 1/12
 text(mylinelocs[6]+myoffset,mylineheight,labels='1st Dec',srt=90,pos=3,offset=0)
-legend('top',legend=sourcesdemo[,1],pch=19,col=mycols,horiz=T)
+legend('top',legend=as.matrix(sources[,1]),pch=19,col=mycols,horiz=T)
 

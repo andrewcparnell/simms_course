@@ -6,6 +6,8 @@ output:
   html_document: default
 ---
 
+NB: This is an old file that use the SIAR package that we no longer use in the course. You will need to install SIAR (instructions below) to get it working
+
 ## Introduction
 
 Welcome to the practical! We will learn about:
