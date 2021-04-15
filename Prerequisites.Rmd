@@ -6,8 +6,6 @@ output: html_document
 
 In preparation for the course please install the following, preferably in the below suggested order. Make sure you run these as soon as possible to avoid falling behind.
 
-As this module will be delivered online please install [Zoom](https://www.zoom.us) and [Slack](https://slack.com) to access the videos and interactive components of the course. All the Zoom links to the meeting will be posted to the Slack `#General` channel.
-
 ### Step 1
 
 Install the following using the corresponding links and *make sure you have the latest versions installed*:
@@ -51,13 +49,14 @@ library(SIDER)
 ```
 
 These will install the most up to date versions of the packages. Note that this might take a while as some of these are pretty big and complicated packages.
-
  
 ### Step 3
  
 Finally if you would like to do some pre-course reading (recommended) there are some papers which can be accessed [here](https://github.com/andrewcparnell/simms_course/tree/master/papers).
 
 Andrew Jackson has a youtube channel with [podcasts](https://www.youtube.com/playlist?list=PLXXzyqr0tEhPRNDuEQ6wcvMcpAkGRjVqs) on introduction to using R for linear modelling. There are links in the description to an associated repository of scripts and examples to go with it.  
+
+Here is a [simple script for getting started with ggplot](https://andrewcparnell.github.io/simms_course/ap_notes/gg_plot_class.R) which might be useful for some but is not compulsory. 
 
 
 ### Troubleshooting
