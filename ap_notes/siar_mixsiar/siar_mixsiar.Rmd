@@ -52,7 +52,7 @@ $$y_{ij} \sim N(\mu + b_j, \sigma^2),\; b_j \sim N(0,\sigma_b^2)$$
 
 \small
 
-```{r,include=FALSE, messages = 'hide'}
+```{r,include = FALSE, message = FALSE}
 library(R2jags)
 #set.seed(123)
 #sigma_b = 0.7
@@ -156,7 +156,7 @@ $$\left[ p_1,\ldots,p_K \right] = \left[ \frac{\exp(f_1)}{\sum_j \exp (f_j)}, \l
 
 ## A 'simple' CLR example
 
-\small 
+\tiny
 
 ```{r,eval=FALSE}
 model_code ='
@@ -212,19 +212,16 @@ model {
 
 ## CLR model: R code
 ```{r,include=FALSE}
-library(siar)
-data(geese1demo,sourcesdemo,correctionsdemo,concdepdemo)
-con = geese1demo
-sources = as.matrix(sourcesdemo[,2:5])
-tefs = as.matrix(correctionsdemo[,2:5])
-cd = as.matrix(concdepdemo[,c(2,4)])
+library(simmr)
+data("geese_data_day1")
 ```
 ```{r,results='hide'}
-data=list(y=con,s_mean=sources[,c(1,3)],
-          s_sd=sources[,c(2,4)],
-          c_mean=tefs[,c(1,3)],c_sd=tefs[,c(2,4)],
-          q=cd,N=nrow(con),K=nrow(sources),
-          J=ncol(con))
+data=with(geese_data_day1, 
+          list(y=mixtures,s_mean=source_means,
+          s_sd=source_sds,
+          c_mean=correction_means,c_sd=correction_sds,
+          q=concentration_means,N=nrow(mixtures),
+          J=ncol(mixtures),K=length(source_names)))
 model_run = jags(data = data,
                  parameters.to.save = c('p','sigma',
                                      'mu_f','sigma_f'),
