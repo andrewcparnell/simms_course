@@ -149,19 +149,20 @@ plot(model_run)
 - Use the second isotope ($\delta^{13}$C) and the first two food sources (Zostera and Grass)
 - Create a plot:
 ```{r,include=FALSE}
-library(SIBER) # to access the demo data files
+library(simmr) # to access the demo data files
 ```
 ```{r,eval=FALSE}
 # Load in the data
-data(geese1demo); data(sourcesdemo)
-consumers = geese1demo[,2]
-sources = sourcesdemo[1:2,4:5]
+data("geese_data_day1")
+consumers = geese_data_day1$mixtures[,1]
+source_means = geese_data_day1$source_means[1:2,1]
+source_sds = geese_data_day1$source_sds[1:2,1]
 con_grid = seq(-35,-5,length=100)
 plot(con_grid,dnorm(con_grid,
-                    mean=sources[2,1],sd=sources[2,2]),
+                    mean=source_means[2],sd=source_sds[2]),
      type='l',col='red',xlab='d13C',ylab='Probability density')
 lines(con_grid,dnorm(con_grid
-                     ,mean=sources[1,1],sd=sources[1,2]),
+                     ,mean=source_means[1],sd=source_sds[1]),
       col='blue')
 points(consumers,rep(0,9))
 legend('topright',legend=c('Grass','Zostera','Consumers'),
@@ -171,13 +172,16 @@ legend('topright',legend=c('Grass','Zostera','Consumers'),
 ## A simple isospace plot
 ```{r,echo=FALSE}
 # Load in the data
-data(geese1demo); data(sourcesdemo)
-consumers = geese1demo[,2]
-sources = sourcesdemo[1:2,4:5]
+data("geese_data_day1")
+consumers = geese_data_day1$mixtures[,1]
+source_means = geese_data_day1$source_means[1:2,1]
+source_sds = geese_data_day1$source_sds[1:2,1]
 con_grid = seq(-35,-5,length=100)
-plot(con_grid,dnorm(con_grid,mean=sources[2,1],sd=sources[2,2]),
+plot(con_grid,dnorm(con_grid,
+                    mean=source_means[2],sd=source_sds[2]),
      type='l',col='red',xlab='d13C',ylab='Probability density')
-lines(con_grid,dnorm(con_grid,mean=sources[1,1],sd=sources[1,2]),
+lines(con_grid,dnorm(con_grid
+                     ,mean=source_means[1],sd=source_sds[1]),
       col='blue')
 points(consumers,rep(0,9))
 legend('topright',legend=c('Grass','Zostera','Consumers'),
@@ -222,9 +226,9 @@ model {
   sigma ~ dunif(0,10)
 }
 '
-data=list(y=consumers,s_1_mean=sources[1,1],
-          s_1_sd=sources[1,2],
-          s_2_mean=sources[2,1],s_2_sd=sources[2,2],
+data=list(y=consumers,s_1_mean=source_means[1],
+          s_1_sd=source_sds[1],
+          s_2_mean=source_means[2],s_2_sd=source_sds[2],
           N=length(consumers))
 model_parameters = c('p_1', 'p_2')
 model_run = jags(data = data,
