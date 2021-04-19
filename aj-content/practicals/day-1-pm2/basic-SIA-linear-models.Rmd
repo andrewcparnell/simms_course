@@ -14,7 +14,7 @@ In this practical, we will explore our data in more detail using some basic stat
 ```{r import-data}
 mydata <- read.csv("Practical02.csv", header = TRUE, stringsAsFactors = FALSE)
 
-# force species to be a factor tpe variable
+# force species to be a factor type variable
 mydata$Species <- factor(mydata$Species)
 
 # verify that it imported as expected
@@ -39,7 +39,7 @@ head(mydata)
 #      subset = Species == "Pollock", main = "Pollock")
 
 # try to do this in ggplot using facets
-library(ggplot2)
+library(tidyverse)
 liver.plot <- ggplot(data = mydata, 
                      mapping = aes(x = Liver.CN, 
                                    y = Liver.d13C)) + 
@@ -95,6 +95,7 @@ liver.plot.2 <- liver.plot +
                                 y = Liver.d13C.crtd), 
              col = "red") +
   geom_vline(xintercept = 3.6, col = "black")
+
 print(liver.plot.2)
 ```
 

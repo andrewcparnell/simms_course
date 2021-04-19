@@ -1,0 +1,84 @@
+---
+title: "GGplot playing"
+output: html_notebook
+---
+
+A file for the SIMMS07 course April 2021 in which we played around with various plotting options.
+
+```{r import-data}
+library(tidyverse)
+
+# import the data. 
+# If you get an error about "No such file or directory" then you 
+# need to take care about where R is currently working, and where your 
+# data file is in relation to this.
+mydata <- read.csv("Practical01.csv", 
+                   header = TRUE, 
+                   stringsAsFactors = FALSE)
+
+# As per the summary statistics file, I am going to remove our outlier
+# note the use of dplyr::filter() to avoid loading the entire 
+# dplyr pacakge for just one function
+mydata <- dplyr::filter(mydata, d13C < max(d13C))
+
+
+```
+
+
+
+A basic plot
+
+```{r}
+
+# set up a basic plot with equal coordinate axes, and scatter plot with colour
+# and shape by Taxon
+
+first.plot <- ggplot(data = mydata, 
+                     aes(x = d13C, 
+                         y = d15N)) + 
+  geom_point(aes(color = Taxon, shape = Taxon), size = 4) +
+  ylab(expression(paste(delta^{15}, "N (\u2030)"))) +
+  xlab(expression(paste(delta^{13}, "C (\u2030)"))) + 
+  theme(text = element_text(size=20)) + 
+  coord_equal()
+
+# And print our plot to screen
+print(first.plot)
+```
+
+
+Add viridis colour palette
+
+```{r}
+# augment the basic plot by using the viridis colour palette and theme_classic
+viridis_plot <- first.plot + 
+  scale_fill_viridis_d(labels = c("Benthic algae", 
+                                  expression(italic("Cabrilla")), 
+                                  expression(italic("Fissurella")), 
+                                  expression(italic("Perumytilus")), 
+                                  "POM")) +
+  theme_classic() + 
+  theme(axis.ticks.length = unit(-0.25, "cm"), 
+        axis.text.x = element_text(margin=unit(c(0.5,0.5,0.5,0.5), "cm")), 
+        axis.text.y = element_text(margin=unit(c(0.5,0.5,0.5,0.5), "cm")) )
+
+
+print(viridis_plot)
+```
+
+and add custom shapes: see the vignette `ggplot2-specs` for help picking which number corresponds to which shape
+
+```{r}
+
+my_shapes <- c(19, 17, 15, 18, 8)
+
+shape_plot <- viridis_plot + scale_shape_manual(values = my_shapes)
+
+print(shape_plot)
+
+
+
+```
+
+
+

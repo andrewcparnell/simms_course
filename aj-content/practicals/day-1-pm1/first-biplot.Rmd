@@ -63,7 +63,8 @@ If you want to use the more normal plotting format for journals without gridline
 ```{r classic-theme}
 
 classic.first.plot <- first.plot + theme_classic() + 
-  theme(text = element_text(size=35))
+  theme(text = element_text(size=35)) + 
+  coord_equal()
 
 # and print to screen
 print(classic.first.plot)
@@ -92,7 +93,7 @@ sbg <- mydata %>%
 # second.plot <- first.plot
 
 # add the layers using the summary data in sbg
-second.plot <- first.plot +
+second.plot <- first.plot + 
   geom_errorbar(data = sbg, 
                 mapping = aes(x = mC, y = mN,
                               ymin = mN - 1.96*sdN, 
@@ -107,7 +108,8 @@ second.plot <- first.plot +
                              y = mN,
                              fill = Taxon), 
              color = "black", shape = 22, size = 5,
-             alpha = 0.7, show.legend = FALSE)
+             alpha = 0.7, show.legend = FALSE) + 
+  coord_equal()
 
 
 print(second.plot)
