@@ -13,12 +13,11 @@ library(httr) # Again run install.packages if you don't have this
 # Go to the files pane and find the file 'geese_data.xls'
 # Then click (in the files pane) on More > Set as WD
 # Copy the command from the console window into the line below
-setwd("~/GitHub/simms_course/ap_notes/prac_using_simmr")
 
 # Find out what the sheet names are and load in all of them
-sheet_names = excel_sheets(path = 'geese_data.xls')
+sheet_names = excel_sheets(path = 'ap_notes/prac_using_simmr/geese_data.xls')
 all = lapply(sheet_names,
-             read_excel, path = 'geese_data.xls')
+             read_excel, path = 'ap_notes/prac_using_simmr/geese_data.xls')
 
 # Extract out the different pieces
 mix = all[[1]]
@@ -29,11 +28,11 @@ Conc = all[[4]]
 # Get the data into simmr
 simmr_groups = simmr_load(mixtures=as.matrix(mix[,1:2]),
                           source_names=unlist(source[,1]),
-                          source_means=source[,2:3],
-                          source_sds=source[,4:5],
-                          correction_means=TDF[,2:3],
-                          correction_sds=TDF[,4:5],
-                          concentration_means = Conc[,2:3],
+                          source_means=as.matrix(source[,2:3]),
+                          source_sds=as.matrix(source[,4:5]),
+                          correction_means=as.matrix(TDF[,2:3]),
+                          correction_sds=as.matrix(TDF[,4:5]),
+                          concentration_means = as.matrix(Conc[,2:3]),
                           group=paste('day', mix$Time))
 
 # Plot the iso-space plot
