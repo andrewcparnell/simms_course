@@ -141,7 +141,7 @@ plot(model_run)
     - 2 food sources
     - 9 consumers
     - No other complications
-- We'll use some of the Geese data that was originanlly from the SIAR package but is now bundled in SIBER
+- We'll use some of the Geese data that was originally from the SIAR package but is now bundled in simmr
 
 ## Plotting the data
 
@@ -338,7 +338,7 @@ plot(model_run)
 
 ## Convergence checking 4
 
-- If you started by choosing bad initial values you might want to remove an initial chunk of the samples. This is known as the burn in and can be set using the `n.thin` command in the `jags` function call
+- If you started by choosing bad initial values you might want to remove an initial chunk of the samples. This is known as the burn in and can be set using the `n.burnin` command in the `jags` function call
 - Ideally the samples from the posterior distribution should be independent. If the algorithm isn't working well you can _thin_ them out with the `n.thin` argument in the `jags` function. The auto-correlation plot produced by `acf` in `R` can tell you whether you need to thin or not
 - Finally, we need to choose the number of iterations. For very simple models 1,000 is usually fine, but for very complicated models you can sometimes need hundreds of thousands or millions. 10,000 is usually a good number for most problems. You can set the number of iterations in JAGS with `n.iter`
 
