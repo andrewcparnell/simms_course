@@ -88,6 +88,7 @@ p <- c(0.2, 0.4, 0.4)
 
 consumer <- p %*% sources
 
+
 plot(sources[,1], sources[,2], pch = c(15,15,15), col = c(1,6,4),
      xlab = "", ylab = "", bty="L", cex = 3, xlim = c(-12,6),
      ylim = c(-5, 10))
