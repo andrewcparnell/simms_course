@@ -115,7 +115,6 @@ model_run = jags(data = data,
                  parameters.to.save = c("p", "sigma"),
                  model.file = textConnection(model_code))
 ```
-This is now running with all 4 sources
 
 ## Results
 
@@ -226,6 +225,7 @@ $$ y_{ij} \sim N \left( \frac{\sum_{k=1}^K p_k q_{jk} (\mu_{s,jk}+\mu_{c,jk})}{\
 - This model has a more complicated likelihood, but removes the extra $s$ and $c$ parameters
 
 ## Full SIAR model: JAGS code
+\small
 ```{r,results='hide'}
 model_code ='
 model {
@@ -278,7 +278,7 @@ Some of these proportions are quite imprecise: perhaps see better with matrix pl
 - It allows for direct plotting of the data in isotope space and $p$-space (i.e. dietary proportion space - `pairs` plots)
 - It allows for changing the $\alpha$ values to put in proper prior information
 - It includes convergence checking 
-- Most of this covered in the practical this afternoon
+- Most of this was covered in the practical yesterday
 
 ## simmr version
 
@@ -320,5 +320,5 @@ plot(simmr_out, type = 'boxplot')
 - The simmr and SIAR models are just complicated versions of linear regression
 - The response is multivariate and the prior distributions on some of the parameters have to be constrained to sum to 1
 - It used to be the case that JAGS was slow and couldn't run SIMM-type models. This is no longer true. You can fit much richer models in JAGS (and now MixSIAR) than with SIAR/simmr
-- More details on running simmr in the practical next
+- The MixSIAR is an order of complexity again as it uses ideas from generalised linear models to include covariates on the dietary proportions
 
