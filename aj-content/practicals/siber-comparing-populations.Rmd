@@ -267,7 +267,23 @@ bayes.overlap.G2.G3 <- bayesianOverlap("1.3", "1.4", ellipses.posterior,
                                        n = 360)
 print(bayes.overlap.G2.G3)
 
+
 ```
+
+And summarise the credible intervals of the Bayesian overlap output. Note that this code does not work well on the small number of posterior draws we are using for this basic example - for one it returns negative values which is not possible, but is arising as the smoother has not got enough information to stay close to or within the positive number range.
+
+```{r}
+# and we can calculate the corresponding credible intervals using
+# our code from above again
+# call to hdrcde:hdr using lapply()
+overlap.credibles <- lapply(
+  as.data.frame(bayes.overlap.G2.G3), 
+  function(x,...){tmp<-hdrcde::hdr(x)$hdr},
+  prob = cr.p)
+
+print(overlap.credibles)
+```
+
 
 
 

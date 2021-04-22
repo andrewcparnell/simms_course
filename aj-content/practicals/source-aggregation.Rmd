@@ -10,9 +10,9 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 ## Create some simulated data for us to work with
-This is essentially the example used in Fry, B. 2013. Alternative approaches for solving underdetermined isotope mixing problems. *MEPS*.
+This is essentially the example used in Fry, B. 2013. Alternative approaches for solving under-determined isotope mixing problems. *MEPS*.
 
-Here we use the package simmr to explore the two alternatives to aggregating sources in mixing models. 
+Here we use the package `simmr` to explore the two alternatives to aggregating sources in mixing models. 
 
 ```{r simulate-data}
 library(simmr, quietly = TRUE)
@@ -38,8 +38,8 @@ S_sds = cbind(c(1,1,1,1), c(1,1,1,1))
 
 # speficy the consumer data at the origin
 # Ten consumers for this example around 0 with small sd of error.
-consumers <- cbind(dC = rnorm(10, 0, 0.1),
-                   dN = rnorm(10, 0, 0.1) )
+consumers <- cbind(dC = rnorm(n = 10, mean = 0, sd = 0.1),
+                   dN = rnorm(n = 10, mean = 0, sd = 0.1) )
 
 # and create the simmr object
 # here we have no TDFs or concentration values
