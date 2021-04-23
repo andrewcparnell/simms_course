@@ -40,6 +40,9 @@ summary(simmr_1_out,'quantiles')
 # Source C 0.216 0.255 0.275 0.296 0.342
 # Source D 0.032 0.123 0.205 0.299 0.465
 
+# Look at prior/posterior
+prior_viz(simmr_1_out)
+
 # Now suppose I had prior information that: 
 # proportion means = 0.5,0.2,0.2,0.1 
 # proportion sds = 0.08,0.02,0.01,0.02
@@ -58,3 +61,6 @@ summary(simmr_1a_out,'quantiles')
 # Source B 0.144 0.173 0.188 0.204 0.236
 # Source C 0.160 0.183 0.196 0.207 0.228
 # Source D 0.060 0.079 0.091 0.105 0.135
+
+# Look at prior/posterior
+prior_viz(simmr_1a_out)
