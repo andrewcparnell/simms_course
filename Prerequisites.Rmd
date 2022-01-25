@@ -10,11 +10,13 @@ In preparation for the course please install the following, preferably in the be
 
 Install the following using the corresponding links and *make sure you have the latest versions installed*:
 
--	R: [http://www.r-project.org](http://www.r-project.org): current version is v4.0.5 and we will assume this version throughout this course. If you want to run an older version or a custom setup then we may not be able to help with compatability issues that may arise.
+-	R: [http://www.r-project.org](http://www.r-project.org): current version is v4.1.2 and we will assume this version throughout this course. If you want to run an older version or a custom setup then we may not be able to help with compatability issues that may arise.
 
--	Rstudio (optional but recommended): [https://www.rstudio.com](https://www.rstudio.com) - current version  1.4.1106
+-	Rstudio (optional but recommended): [https://www.rstudio.com](https://www.rstudio.com) - current version  2021.09.2
 
 -	JAGS: http://sourceforge.net/projects/mcmc-jags/files/ **_This step is really important and easy to skip over. JAGS is required, and is not installed as part of the R package rjags which is just a set of functions for R to interact with JAGS._**
+
+- Rtools for windows. If you are a windows user, it is likely you will need to install this suite of developer tools to install some custom packages https://cran.r-project.org/bin/windows/Rtools/rtools40.html
 
 ### Step 2
 
@@ -65,7 +67,7 @@ Here are some common problems with solutions:
 
 #### Windows issues
 
-  - If you are on Windows and you get an error about not having Rtools please install Rtools from the link it provides you in the error message
+  - If you are on Windows and you get an error about not having Rtools please install Rtools from the link it provides you in the error message or from here https://cran.r-project.org/bin/windows/Rtools/rtools40.html
   - If you are trying to install Rtools with R 3.5.0 and are getting an error message about incompatibility of Rtools, run the command:
 ```{r, eval=FALSE}
 library(devtools)
