@@ -12,7 +12,7 @@ Install the following using the corresponding links and *make sure you have the 
 
 -	R: [http://www.r-project.org](http://www.r-project.org): current version is v4.1.2 and we will assume this version throughout this course. If you want to run an older version or a custom setup then we may not be able to help with compatability issues that may arise.
 
--	Rstudio (optional but recommended): [https://www.rstudio.com](https://www.rstudio.com) - current version  2021.09.2
+-	Rstudio (optional but recommended): [https://www.rstudio.com](https://www.rstudio.com) - current version 2021.09.2
 
 -	JAGS: http://sourceforge.net/projects/mcmc-jags/files/ **_This step is really important and easy to skip over. JAGS is required, and is not installed as part of the R package rjags which is just a set of functions for R to interact with JAGS._**
 
