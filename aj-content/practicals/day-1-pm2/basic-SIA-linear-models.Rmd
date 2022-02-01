@@ -22,6 +22,23 @@ head(mydata)
 
 ```
 
+## Summarise by Species
+
+```{r}
+
+mydata %>% group_by(Species) %>%
+  summarise(count = n(), 
+            mean_length = mean(Length),
+            mean_muscle_d13C = mean(Muscle.d13C),
+            mean_muscle_d15N = mean(Muscle.d15N), 
+            mean_liver_d13C = mean(Liver.d13C),
+            mean_liver_d15N = mean(Liver.d15N))
+
+
+
+```
+
+
 ## Lipid correction
 
 ```{r liver-by-cn}
@@ -54,6 +71,8 @@ print(liver.plot)
 
 The liver in particular has a large quantity of lipids, and in this example, we apply a simple numerical correction based on [Logan et al 2008](https://doi.org/10.1111/j.1365-2656.2008.01394.x ). This correction is weighted by the C/N ratio, such that high amounts of C require a greater correction.
 
+See also [Post et al 2007](https://doi.org/10.1007/s00442-006-0630-x) for a good review of lipid correction.
+
 ```{r lipid-correction}
 
 # constants used in the correction for liver tissue
@@ -73,7 +92,7 @@ mydata <- mydata %>%
 head(mydata)
 
 # specify a color pallete with 3 colours for this example
-palette(c("black", "red", "blue"))
+# palette(c("black", "red", "blue"))
 
 # plot the correlation between the corrected and raw values, and 
 # indicate which observations have large C/N ratios by the 
@@ -163,7 +182,7 @@ Using code from the first practical, we can use the package `dplyr` to generate 
 # Summarise the data by group using the package dplyr (install if required)
 
 # load the library
-library(dplyr)
+library(tidyverse)
 
 summarise.muscle <- mydata %>% group_by(Species) %>%  
   summarise(count = length(Species),
@@ -258,7 +277,7 @@ plot(Muscle.d13C ~ Length, col = mydata$Species, data = mydata,
      main = "Muscle d13C")
 legend("topleft", levels(mydata$Species), col = 1:3, pch = 1)
 
-plot(Muscle.d15N~ Length, col = mydata$Species, data = mydata,
+plot(Muscle.d15N ~ Length, col = mydata$Species, data = mydata,
      main = "Muscle d15N")
 legend("topleft", levels(mydata$Species), col = 1:3, pch = 1)
 
@@ -464,6 +483,16 @@ predict(CAP_like_analysis,
 
 
 
+## Correlations
+
+A quick plot of d13C against d15N to explore correlations in the muscle data for a question that came up in the session. 
+
+```{r}
+
+ggplot(data = mydata, mapping = aes(x = Muscle.d13C, Muscle.d15N))+ 
+  geom_point(aes(color = Species))
+
+```
 
 
 
