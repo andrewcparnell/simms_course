@@ -1,7 +1,7 @@
 # A simmr example from an Excel data set
 
 # Clear workspace
-rstudioapi::restartSession()
+rm(list = ls())
 
 # Load packages
 library(simmr)

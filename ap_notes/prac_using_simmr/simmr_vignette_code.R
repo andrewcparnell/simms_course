@@ -285,10 +285,10 @@ plot(simmr_run_1D, type = 'boxplot')
 # All in the $output bit of simmr_out - but need to be careful with addressing
 
 # Find the mean of the grass proportion
-mean(simmr_out$output[[1]][[1]][,'Grass'])
+mean(simmr_out$output[[1]]$BUGSoutput$sims.list$p[,'Grass'])
 # mean(simmr_out$output$`1`$BUGSoutput$sims.list$p[,'Grass'])
 
 # Find the probability grass is bigger than zostera
-mean(simmr_out$output[[1]][[1]][,'Grass'] > 
-       simmr_out$output[[1]][[1]][,'Zostera'])
+mean(simmr_out$output[[1]]$BUGSoutput$sims.list$p[,'Grass'] > 
+       simmr_out$output[[1]]$BUGSoutput$sims.list$p[,'Zostera'])
 

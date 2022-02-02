@@ -48,7 +48,7 @@ model_parameters = c('alpha', 'beta',
 # Run the model
 model_run = jags(data = model_data,
                  parameters.to.save = model_parameters,
-                 model.file=textConnection(model_code))
+                 model.file = textConnection(model_code))
 
 # Look at the output
 print(model_run)
