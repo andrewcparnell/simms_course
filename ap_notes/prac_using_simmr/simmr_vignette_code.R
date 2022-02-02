@@ -80,6 +80,12 @@ compare_sources(simmr_out,source_names=c('U.lactuca','Zostera'))
 # Compare multiple sources
 compare_sources(simmr_out,source_names=c('Zostera','U.lactuca','Enteromorpha'))
 
+# Check the prior
+prior_viz(simmr_out)
+
+# Check the posterior
+posterior_predictive(simmr_out)
+
 # -----------------------------------------------------------------------
 # Multiple groups ---------------------------------------------------------
 # -----------------------------------------------------------------------
@@ -216,6 +222,7 @@ compare_groups(simmr_groups_out, source = 'Zostera', groups = 1:2)
 
 # Or accross 3 groups
 compare_groups(simmr_groups_out, source = 'Zostera', groups = 1:3)
+
 
 # Combining sources -------------------------------------------------------
 
