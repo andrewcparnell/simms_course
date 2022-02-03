@@ -290,7 +290,7 @@ model {
   sigma ~ dunif(0,10)
 }
 '
-model_parameters = c('y_pred')
+model_parameters = c('y_pred', 'p_1')
 model_run = jags(data = data,
                  parameters.to.save = model_parameters,
                  model.file = textConnection(model_code))
@@ -310,31 +310,20 @@ round(cbind(data$y,t(y_pred_quantiles)),2)
 - When JAGS runs a model it creates initial guesses of the parameter values and then creates many consecutive samples moving away from the initial values towards the true posterior distribution
 - Mathematical theory says that the samples must eventually come from the posterior distribution but this may take a very long time!
 - Another method for ensuring convergence is to start JAGS with multiple different starting values and see if each model run (known as a _chain_) converges to the same posterior distribution
-- You can supply initial guesses and the number of chains to JAGS when you run it:
-
-```{r,eval=FALSE}
-inits = function() {
-  list('p_1'=runif(1),'s_1'=rnorm(1),'s_2'=runif(1),
-       'sigma'=runif(1,0,10))
-}
-...
-```
-
-- The `model_run` created will now contain (amongst many other things) a list of length 3, so we can look at the different chains with e.g. `traceplot(model_run, varname = 'p_1')`
 
 ## Convergence checking 2
 
 - You can start by plotting the output from JAGS:
 ```{r,fig.align='center', fig.height = 3}
-plot(model_run)
+R2jags::traceplot(model_run, varname = 'p_1')
 ```
 
 ## Convergence checking 3
 
 - The different colours show the three chains. The location and variability should be broadly the same between chains
-- There are some useful statistical tests for convergence, including the _Geweke_ test which looks to see whether the mean is stable in each half of the iterations, or the _Brooks, Gelman, Rubin_ (BGR) test which looks to see whether different chains match. 
-- Both `simmr` and `MixSIAR` use the BGR test
-- The BGR test is best if you have multiple chains
+- There are some useful statistical tests for convergence, including the _Geweke_ test which looks to see whether the mean is stable in each half of the iterations, or the _Brooks, Gelman, Rubin_ (BGR or _Rhat_) test which looks to see whether different chains match. 
+- Both `simmr` and `MixSIAR` use the Rhat statistic
+- The Rhat test is best if you have multiple chains
 
 ## Convergence checking 4
 

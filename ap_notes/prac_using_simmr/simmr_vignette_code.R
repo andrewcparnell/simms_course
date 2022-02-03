@@ -80,6 +80,12 @@ compare_sources(simmr_out,source_names=c('U.lactuca','Zostera'))
 # Compare multiple sources
 compare_sources(simmr_out,source_names=c('Zostera','U.lactuca','Enteromorpha'))
 
+# Check the prior
+prior_viz(simmr_out)
+
+# Check the posterior
+posterior_predictive(simmr_out)
+
 # -----------------------------------------------------------------------
 # Multiple groups ---------------------------------------------------------
 # -----------------------------------------------------------------------
@@ -217,6 +223,7 @@ compare_groups(simmr_groups_out, source = 'Zostera', groups = 1:2)
 # Or accross 3 groups
 compare_groups(simmr_groups_out, source = 'Zostera', groups = 1:3)
 
+
 # Combining sources -------------------------------------------------------
 
 # Note you have to have run simmr_mcmc to start combining sources
@@ -285,10 +292,10 @@ plot(simmr_run_1D, type = 'boxplot')
 # All in the $output bit of simmr_out - but need to be careful with addressing
 
 # Find the mean of the grass proportion
-mean(simmr_out$output[[1]][[1]][,'Grass'])
+mean(simmr_out$output[[1]]$BUGSoutput$sims.list$p[,'Grass'])
 # mean(simmr_out$output$`1`$BUGSoutput$sims.list$p[,'Grass'])
 
 # Find the probability grass is bigger than zostera
-mean(simmr_out$output[[1]][[1]][,'Grass'] > 
-       simmr_out$output[[1]][[1]][,'Zostera'])
+mean(simmr_out$output[[1]]$BUGSoutput$sims.list$p[,'Grass'] > 
+       simmr_out$output[[1]]$BUGSoutput$sims.list$p[,'Zostera'])
 

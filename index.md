@@ -1,7 +1,7 @@
 ---
-title: 'Stable Isotope Mixing Models: course timetable'
-author: "Andrew Parnell and Andrew Jackson"
-date: "February 2022 - online"
+title: Stable Isotope Mixing Models: course timetable
+author: Andrew Parnell and Andrew Jackson
+date: February 2022 - online
 layout: default
 output: html_document
 ---
@@ -42,7 +42,7 @@ Introduction to Bayes and SIMMs
 13:00-14:00 | Lunch
 14:00-15:00 | [Guided practical: intro to simmr (AP)](https://andrewcparnell.github.io/simms_course/ap_notes/prac_using_simmr/simmr_vignette_code.R)
 15:00-15:30 | Coffee break
-15:30-17:00 | Practical: options are (1) run your data through AJ's plots from yesterday, or (2) get your data to run in simmr, or (3) go back and learn ggplot2 from [this script](https://andrewcparnell.github.io/simms_course/ap_notes/gg_plot_class.R)
+15:30-17:00 | Practical: options are (1) run your data through AJ's plots from yesterday, or (2) get your data to run in `simmr`, or (3) go back and learn ggplot2 from [this script](https://andrewcparnell.github.io/simms_course/ap_notes/gg_plot_class.R)
 
 ## Thursday
 
