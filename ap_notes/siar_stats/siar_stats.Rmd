@@ -158,7 +158,7 @@ pairs(out_2, lower.panel = panel.smooth,
 $$ y_i \sim N \left( \frac{\sum_{k=1}^K p_k q_k (s_k+c_k)}{\sum_{k=1}^K p_k q_k}, \sigma^2\right) $$
 - The extra part on the denominator is needed so that the dietary proportions still sum to 1
 - The prior for $c_k$ comes from external data and are given normal distributions like the source values
-- In SIAR the concentration dependencies must be less than 1 (given as proportions) and are treated as fixed. You could use a strong Dirichlet prior on these instead
+- In SIAR/simmr the concentration dependencies must be less than 1 (given as proportions) and are treated as fixed
 
 ## Including TEFs and CD - JAGS model {.smaller}
 
@@ -196,7 +196,7 @@ model_run = jags(data = data,
 
 ## Adding extra isotopes
 
-- If we have extra isotopes we can just list the likelihood twice, once for each value of the isotope. Only the dietary proportions are 'shared' between the isotopes
+- If we have extra isotopes we can just repeat the likelihood multiple times, once for each value of the isotope. Only the dietary proportions are 'shared' between the isotopes
 - Now write $y_{ij}$ as the consumer values for observation $i$ on _isotope_ $j$, where $j=1,\ldots,J$ 
 - We now have source values $s_{jk}$, TEF values $c_{jk}$, concentration dependencies $q_{jk}$, and each isotope has its own residual standard deviation $\sigma_j$
 - The likelihood is now:
@@ -205,17 +205,19 @@ $$ y_{ij} \sim N \left( \frac{\sum_{k=1}^K p_k q_{jk} (s_{jk}+c_{jk})}{\sum_{k=1
 
 ## Richer source sampling {.smaller}
 
-- The model we've been fitting up to now assumes that all individuals sample the same source value $s_k$ for each source and isotope. This is unrealistic
-- A better model has each individual sampling a different source value from the source prior distribution, i.e. we now have $s_{ik}$ (or $s_{ikj}$ with multiple isotopes)
+- The model we've been fitting up to now assumes that all individuals sample the same source value $s_{kj}$ for each source and isotope. This is unrealistic
+- A better model has each individual sampling a different source value from the source prior distribution, i.e. we now have $s_{ikj}$
 - The JAGS code becomes:
 ```{r,eval=FALSE}
 for(k in 1:K) { 
   for(i in 1:N) {
-    s[i,k] ~ dnorm(s_mean[k],s_sd[k]^-2) 
+    for(j in 1:J) {
+      s[i,k,j] ~ dnorm(s_mean[k,j],s_sd[k,j]^-2)
+    }
   }
 }
 ```
-- We can do the same with the concentration dependence values
+- We can do the same with the trophic enrichment factors
 - In fact with a bit of clever maths we can remove (_marginalise over_) the $s_{ik}$ values to get a simpler model with fewer parameters.
 
 ## The full simmr/SIAR model
@@ -274,11 +276,11 @@ Some of these proportions are quite imprecise: perhaps see better with matrix pl
 ## Running SIAR/simmr
 
 - The SIAR/simmr R packages run exactly this model with a few extra tweaks
-- It contains a slightly optimised algorithm as JAGS sometimes gets a bit stuck on harder data sets. It's also much faster than JAGS for complicated problems
-- It allows for direct plotting of the data in isotope space and $p$-space (i.e. dietary proportion space - `pairs` plots)
-- It allows for changing the $\alpha$ values to put in proper prior information
-- It includes convergence checking 
-- Most of this was covered in the practical yesterday
+- SIAR contained a slightly optimised algorithm as JAGS used to get a bit stuck on harder data sets. 
+- SIAR allows for direct plotting of the data in isotope space and $p$-space (i.e. dietary proportion space - `pairs` plots)
+- SIAR allows for changing the $\alpha$ values to put in proper prior information
+- SIAR includes convergence checking 
+- But don't use that anymore! Instead...
 
 ## simmr version
 
@@ -287,6 +289,7 @@ Some of these proportions are quite imprecise: perhaps see better with matrix pl
   1. Call `simmr_load` to load in the data
   1. Call `plot` to see the iso-space plot
   1. Call `simmr_mcmc` to run the model
+  1. Check convergence using `summary`
   1. Call `plot` or `summary` to access the output
 - `simmr` has further features to combine sources and to compare dietary proportions
 
