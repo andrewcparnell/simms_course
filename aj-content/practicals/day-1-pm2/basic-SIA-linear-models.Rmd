@@ -73,6 +73,8 @@ The liver in particular has a large quantity of lipids, and in this example, we 
 
 See also [Post et al 2007](https://doi.org/10.1007/s00442-006-0630-x) for a good review of lipid correction.
 
+This review by  [Kiljunen et al 2006](https://besjournals.onlinelibrary.wiley.com/doi/full/10.1111/j.1365-2664.2006.01224.x) offers some suggestions too. 
+
 ```{r lipid-correction}
 
 # constants used in the correction for liver tissue
