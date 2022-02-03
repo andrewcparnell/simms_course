@@ -102,19 +102,44 @@ a = SEA, b = SEAc and c = SEA_B
 
 ```{r, echo=FALSE, message = FALSE, fig.width = 7, fig.height = 3.5}
 
-# library(siar, quietly = TRUE,
-#         verbose = FALSE,
-#         logical.return = FALSE)
+library(SIBER)
 
-source("utility-scripts/plot.siber.data.r")
+data("demo.siber.data")
+mydata <- demo.siber.data
 
-par(mfrow=c(1,2))
 
-M <- plot.siber.data("data/example_layman_data.csv",
-                tt = "Community 1", add.hull = F)
+# create the siber objects
+siber.example_1 <- createSiberObject(mydata %>% filter(community == 1))
+siber.example_2 <- createSiberObject(mydata %>% filter(community == 2))
 
-M <- plot.siber.data("data/example_layman_data_2.csv",
-                tt = "Community 2", add.hull = F)
+
+par(mfrow = c(1,2))
+
+plotSiberObject(siber.example_1,
+                ax.pad = 2, 
+                hulls = F, community.hulls.args, 
+                ellipses = F, group.ellipses.args,
+                group.hulls = F, group.hull.args,
+                bty = "L",
+                iso.order = c(1,2),
+                xlab = expression({delta}^13*C~'\u2030'),
+                ylab = expression({delta}^15*N~'\u2030'), 
+                x.limits = c(-20, 0), 
+                y.limits = c(-5, 10)
+)
+
+plotSiberObject(siber.example_2,
+                ax.pad = 2, 
+                hulls = F, community.hulls.args, 
+                ellipses = F, group.ellipses.args,
+                group.hulls = F, group.hull.args,
+                bty = "L",
+                iso.order = c(1,2),
+                xlab = expression({delta}^13*C~'\u2030'),
+                ylab = expression({delta}^15*N~'\u2030'), 
+                x.limits = c(-20, 0), 
+                y.limits = c(-5, 10)
+)
 
 ```
 
