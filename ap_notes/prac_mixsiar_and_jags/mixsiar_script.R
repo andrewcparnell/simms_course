@@ -72,4 +72,26 @@ jags.2 = run_model(run="very short",
 stop()
 
 # Get the output
-output_JAGS(jags.1, mix = mix, source = source)
+output_JAGS(jags.2, mix = mix, source = source,
+            output_options = 
+              list(summary_save = TRUE, 
+                   summary_name = "summary_statistics",
+                   sup_post = FALSE, 
+                   plot_post_save_pdf = TRUE, 
+                   plot_post_name = "posterior_density",
+                   sup_pairs = FALSE, 
+                   plot_pairs_save_pdf = TRUE, 
+                   plot_pairs_name = "pairs_plot", 
+                   sup_xy = TRUE, 
+                   plot_xy_save_pdf = FALSE, 
+                   plot_xy_name = "xy_plot", 
+                   gelman = TRUE, 
+                   heidel =FALSE, 
+                   geweke = TRUE, 
+                   diag_save = TRUE, 
+                   diag_name = "diagnostics", 
+                   indiv_effect = FALSE, 
+                   plot_post_save_png = FALSE, 
+                   plot_pairs_save_png = FALSE, 
+                   plot_xy_save_png = FALSE, 
+                   diag_save_ggmcmc = TRUE))
