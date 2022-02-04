@@ -9,6 +9,12 @@ output:
     transition: slower
 ---
 
+```{r setup, include=F}
+library(tidyverse)
+library(magrittr)
+
+```
+
 
 ## Inference from d-space
 

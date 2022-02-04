@@ -1,9 +1,55 @@
 ---
-title: "testing siber with text labels for groups and communities"
+title: "Comparing populations in isotope-space"
 author: "Andrew L Jackson"
 date: "`r format(Sys.time(), '%d %B, %Y')`"
 output: html_notebook
 ---
+
+```{r, echo=FALSE, message = FALSE, fig.width = 7, fig.height = 7}
+
+library(SIBER, quietly = TRUE,
+        verbose = FALSE,
+        logical.return = FALSE)
+
+library(viridis)
+palette(viridis(4))
+
+# read in the data
+mydata <- read.csv("../data/example_layman_data_all.csv",
+                   header=TRUE)
+
+# create the siber object
+siber.example <- createSiberObject(mydata)
+
+# Create lists of plotting arguments to be passed onwards to each 
+# of the three plotting functions.
+community.hulls.args <- list(col = 1, lty = 1, lwd = 1)
+group.ellipses.args  <- list(n = 100, p.interval = 0.95, lty = 1, lwd = 2)
+group.hull.args      <- list(lty = 2, col = "grey20")
+
+# plot the raw data
+par(mfrow=c(1,1))
+plotSiberObject(siber.example,
+                  ax.pad = 2, 
+                  hulls = FALSE, community.hulls.args, 
+                  ellipses = FALSE, group.ellipses.args,
+                  group.hulls = FALSE, group.hull.args,
+                  bty = "L",
+                  iso.order = c(1,2),
+                  xlab = expression({delta}^13*C~'\u2030'),
+                  ylab = expression({delta}^15*N~'\u2030')
+                  )
+
+```
+
+In this figure, we have 4 populations (or more generically: groups) of indivuals. We might want to make some comparisons of the isotopic (and hence ecological) niches occupied by these individuals. The two most obvious ways to compare two of these populations, is to ask whether their niches are located in the same place, and if they are the same size. Thereafter, we may be interested in asking to what extent do their niches overlap.
+
+We can visualise this by adding both ellipses, and convex hulls to the data. In this case, we add standard ellipses, which are to bivariate data as standard deviations are to univariate data. A standard ellipse contains approximately 40% of the data, although they can be rescaled to contain any proporition of the data we wish if we accept the assumption that they multivariate normal distributed. Owing to this proportional representation of the data, the ellipse _should_ be insensitive to sample size, and _should_ always contain 40% of the data. However, as was demonstrated in the SIBER paper [Jackson et al 2010](https://scholar.google.com/citations?view_op=view_citation&hl=en&user=E0sB7fUAAAAJ&citation_for_view=E0sB7fUAAAAJ:_FxGoFyzp5QC), the basic Standard Ellipse Area (SEA) shows bias at small sample sizes, which can be corrected to calculate SEAc.
+
+In contrast, the convex hull is a polygon that is drawn around the outermost points in the cloud of data such that all other points lie within the outline. If we were to go out and collect more samples, then this hull can only grow in size and not get smaller. The result of this is that smaller sample sizes will result in smaller convex hulls. Despite this statistical problem, the convex hull remains a useful way to help us visualise bivariate data such as carbon-nitrogen stable isotope values.
+
+We can then go back to our community comprising 4 populations, and add standard ellipses and convex hulls to each group. The new code in SIBER creates a special object that contains the original data, the rescaled and z-scored data, along with various summary statistics to aid with plotting and model fitting. Most of this happens in the background, so you dont need to worry about the details of this object unless you want to delve deeper.
+
 
 And now the full code...
 
@@ -15,9 +61,9 @@ rm(list = ls()) # clear the memory of objects
 # library(SIBER)
 
 # read in the data
-# read in the data
-mydata <- read.csv("../data/example_layman_data_text_labels.csv",
+mydata <- read.csv("../data/example_layman_data_all.csv",
                    header=TRUE)
+
 # create the siber object
 siber.example <- createSiberObject(mydata)
 

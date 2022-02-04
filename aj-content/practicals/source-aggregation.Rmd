@@ -163,10 +163,11 @@ Far more honest is to fit the model as before, with the sources as we believe th
 
 ```{r a-posteriori}
 # combine sources C and D which are in positions 3 and 4
-simmr_out_a_posteriori <- combine_sources(
-  simmr_out, 
-  to_combine = simmr_out$input$source_names[c(3,4)], 
-  new_source_name = "CD")
+simmr_out_a_posteriori <- 
+  combine_sources(
+    simmr_out, 
+    to_combine = simmr_out$input$source_names[c(3,4)], 
+    new_source_name = "CD")
 
 # Plot the a posteriori aggregated diet estimatess
 plot(simmr_out_a_posteriori, type = "density")
@@ -177,4 +178,12 @@ This result fits much better with what we would predict: that if the model is st
 
 One thing to experiment with here is the use of the Jeffrey's prior of `c(0.25, 0.25, 0.25, 0.25)` in place of the default vague prior `c(1, 1, 1, 1)`. This is the nub of the criticism levelled at the SIMMs by Brett, M. 2016. Resource polygon geometry predicts Bayesian stable isotope mixing model bias. MEPS.
 
+*N.B* because simmr no longer uses the Dirichlet prior, this is more difficult and need more thought about how to specify a Jeffries-like or similar specialist prior. The code below won't work and the prior_control needs to be added.
+
+```{r jeffries-prior, evaluate = FALSE}
+
+simmr_out_specialist_prior = simmr_mcmc(simmr_in,
+                                        prior_control = XYZ)
+
+```
 
