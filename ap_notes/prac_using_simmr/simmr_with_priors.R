@@ -28,7 +28,7 @@ simmr_1 = simmr_load(mixtures=mix,
 # Iso-space plot
 plot(simmr_1)
 
-# MCMC run - do this for comparison (you don't need to run this before the elicit command)
+# MCMC run
 simmr_1_out = simmr_mcmc(simmr_1)
 
 # Summary
