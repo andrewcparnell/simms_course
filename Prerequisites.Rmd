@@ -10,20 +10,21 @@ In preparation for the course please install the following, preferably in the be
 
 Install the following using the corresponding links and *make sure you have the latest versions installed*:
 
--	R: [http://www.r-project.org](http://www.r-project.org): current version is v4.1.2 and we will assume this version throughout this course. If you want to run an older version or a custom setup then we may not be able to help with compatability issues that may arise.
+-	R: [http://www.r-project.org](http://www.r-project.org): current version is v4.2.2 and we will assume this version throughout this course. If you want to run an older version or a custom setup then we may not be able to help with compatability issues that may arise.
 
--	Rstudio (optional but recommended): [https://www.rstudio.com](https://www.rstudio.com) - current version 2021.09.2
+-	Rstudio (optional but recommended): [https://www.rstudio.com](https://www.rstudio.com) - current version 2022.12.0+353
 
 -	JAGS: http://sourceforge.net/projects/mcmc-jags/files/ **_This step is really important and easy to skip over. JAGS is required, and is not installed as part of the R package rjags which is just a set of functions for R to interact with JAGS._**
 
-- Rtools for windows. If you are a windows user, it is likely you will need to install this suite of developer tools to install some custom packages https://cran.r-project.org/bin/windows/Rtools/rtools40.html
+- Rtools for windows. If you are a windows user, it is likely you will need to install this suite of developer tools to install some custom packages https://cran.r-project.org/bin/windows/Rtools/rtools42/rtools.html
 
 ### Step 2
 
 Now install all the packages required for the course by entering the following code in to R
 
 ```{r,eval=FALSE}
-install.packages(c('rjags', 'R2jags','compositions', 'devtools', 'tidyverse', 'vegan', 'ellipse'))
+install.packages(c('rjags', 'R2jags','compositions', 'devtools', 
+                   'tidyverse', 'vegan', 'ellipse'))
 
 # check that they load
 library(rjags)
@@ -67,11 +68,15 @@ Here are some common problems with solutions:
 
 #### Windows issues
 
-  - If you are on Windows and you get an error about not having Rtools please install Rtools from the link it provides you in the error message or from here https://cran.r-project.org/bin/windows/Rtools/rtools40.html
-  - If you are trying to install Rtools with R 3.5.0 and are getting an error message about incompatibility of Rtools, run the command:
+  - If you are on Windows and you get an error about not having Rtools please install Rtools from the link it provides you in the error message or from here https://cran.r-project.org/bin/windows/Rtools/rtools42/rtools.html
+  - If you are trying to install Rtools with R 3.5.0 (but you _really_ should be using >4.2) and are getting an error message about incompatibility of Rtools, run the command:
 ```{r, eval=FALSE}
 library(devtools)
-assignInNamespace("version_info", c(devtools:::version_info, list("3.5" = list(version_min = "3.3.0", version_max = "99.99.99", path = "bin"))), "devtools")
+assignInNamespace("version_info", 
+                  c(devtools:::version_info, 
+                    list("3.5" = list(version_min = "3.3.0", 
+                                      version_max = "99.99.99", 
+                                      path = "bin"))), "devtools")
 ```
 Then try the `install_github` command again.
 - If you get an error about package `stringi` try typing `install.packages('stringi',type='win.binary')` then re-run the commands above.
@@ -79,8 +84,8 @@ Then try the `install_github` command again.
 
 #### Mac issues
 
-  - you will more than likely need to install the command line developer tools. Instructions for this are available from (http://osxdaily.com/2014/02/12/install-command-line-tools-mac-os-x/). There is a larger set of tools called Xcode which is available from the Apple Store, but this is unnecessarily large and we dont recommend it unless you know you need it.
-  - related to the installation of the command line tools, you may get errors such as `make: gfortran: no such file or directory mac` which relate to missing information for the calling of C++ and fortran compilers. The solution is to download and [install the required GFORTRAN](https://thecoatlessprofessor.com/programming/cpp/r-compiler-tools-for-rcpp-on-macos/) libraries. The instructions here are not very clear, and I will try to record a short podcast running through them.
+  - you will more than likely need to install the command line developer tools. Instructions for this are available from (http://osxdaily.com/2014/02/12/install-command-line-tools-mac-os-x/). There is a larger set of tools called Xcode which is available from the Apple Store, but this is unnecessarily large and we don't recommend it unless you know you need it.
+  - related to the installation of the command line tools, you may get errors such as `make: gfortran: no such file or directory mac` which relate to missing information for the calling of C++ and FORTRAN compilers. The solution is to download and [install the required GFORTRAN](https://thecoatlessprofessor.com/programming/cpp/r-compiler-tools-for-rcpp-on-macos/) libraries. The instructions here are not very clear, and I will try to record a short podcast running through them.
   - If you are on a Mac you might need to install X11 from [http://www.xquartz.org](http://www.xquartz.org). 
   - If you get an error about package `stringi` try typing `install.packages('stringi',type='mac.binary')`. Then re-run the commands above
   <!-- - If you get some errors about `pandoc` when installing simmr leave out the `build_vignettes=TRUE` argument -->
