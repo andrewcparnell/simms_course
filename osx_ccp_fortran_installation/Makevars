@@ -1,0 +1,12 @@
+VER=12  # set the version of brew gcc. (as of today: 12)
+CC=gcc-$(VER) -fopenmp   # brew gcc nicely creates gcc-12 as symlink 
+CXX=g++-$(VER) -fopenmp
+CFLAGS=-g -O3 -Wall -pedantic -std=gnu99 -mtune=native -pipe
+CXXFLAGS=-g -O3 -Wall -pedantic -std=c++11 -mtune=native -pipe
+
+# Change the version of gcc as appropriate
+FC      = /opt/homebrew/Cellar/gcc/12.2.0/bin/gfortran
+F77     = /opt/homebrew/Cellar/gcc/12.2.0/bin/gfortran
+FLIBS.  = -L/opt/homebrew/Cellar/gcc/12.2.0/lib
+
+

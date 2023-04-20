@@ -365,12 +365,17 @@ as possible to avoid falling behind.</p>
 you have the latest versions installed</em>:</p>
 <ul>
 <li><p>R: <a href="http://www.r-project.org">http://www.r-project.org</a>: current
-version is v4.2.2 and we will assume this version throughout this
+version is v4.2.3 and we will assume this version throughout this
 course. If you want to run an older version or a custom setup then we
-may not be able to help with compatability issues that may
-arise.</p></li>
+may not be able to help with compatability issues that may arise.
+<strong>N.B. If you are a Mac user, make sure you download the correct
+version for your CPU. There is a specific version for the new M1/M2
+chips “R-4.2.3-arm64.pkg” and a different one for the older Intel chips
+R-4.2.3.pkg. It is essential you install the correct version. You can
+check which GPU chip you have by click on the Apple symbol top left of
+your screen and selecting “About This Mac”.</strong></p></li>
 <li><p>Rstudio (optional but recommended): <a href="https://www.rstudio.com">https://www.rstudio.com</a> - current
-version 2022.12.0+353</p></li>
+version 2023.03.0</p></li>
 <li><p>JAGS: <a href="http://sourceforge.net/projects/mcmc-jags/files/" class="uri">http://sourceforge.net/projects/mcmc-jags/files/</a>
 <strong><em>This step is really important and easy to skip over. JAGS is
 required, and is not installed as part of the R package rjags which is
@@ -464,8 +469,37 @@ errors such as
 to missing information for the calling of C++ and FORTRAN compilers. The
 solution is to download and <a href="https://thecoatlessprofessor.com/programming/cpp/r-compiler-tools-for-rcpp-on-macos/">install
 the required GFORTRAN</a> libraries. The instructions here are not very
-clear, and I will try to record a short podcast running through
-them.</li>
+clear so take your time working through them. <strong>N.B. Again for
+M1/M2 chip owners, you will have to do something different as the latest
+version of gfortran is not available through this route</strong>
+<ul>
+<li>For M1/M2 users, you will need to use Homebrew which is a package
+and software manager for OSX. First install <a href="https://brew.sh">homebrew</a>. Then open the OSX Terminal (there
+is also a Terminal pane in Studio you can use) and type
+<code>brew upgrade</code> and press return, followed by
+<code>brew update</code> and again return. Now you can
+<code>brew install gcc</code>. The final step is you will need to point
+R to your gcc installation of gfortran. This is achieved by creating a
+Makevars file and putting in a new folder in your home directory called
+“~/.R”. You can create this hidden folder by opening a Terminal and
+typing <code>mkdir -p ~/.R</code>. You can then copy the “Makevars” file
+from this course’s repository in the folder
+“osx_cpp_fortran_installation” and paste it into your “~/.R” folder.
+Alternatively you can create it yourself and paste the following text
+into it</li>
+</ul></li>
+</ul>
+<pre><code>VER=12  # set the version of brew gcc. (as of today: 12)
+CC=gcc-$(VER) -fopenmp   # brew gcc nicely creates gcc-12 as symlink 
+CXX=g++-$(VER) -fopenmp
+CFLAGS=-g -O3 -Wall -pedantic -std=gnu99 -mtune=native -pipe
+CXXFLAGS=-g -O3 -Wall -pedantic -std=c++11 -mtune=native -pipe
+
+# Change the version of gcc as appropriate
+FC      = /opt/homebrew/Cellar/gcc/12.2.0/bin/gfortran
+F77     = /opt/homebrew/Cellar/gcc/12.2.0/bin/gfortran
+FLIBS.  = -L/opt/homebrew/Cellar/gcc/12.2.0/lib</code></pre>
+<ul>
 <li>If you are on a Mac you might need to install X11 from <a href="http://www.xquartz.org">http://www.xquartz.org</a>.</li>
 <li>If you get an error about package <code>stringi</code> try typing
 <code>install.packages(&#39;stringi&#39;,type=&#39;mac.binary&#39;)</code>. Then re-run
