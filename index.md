@@ -7,7 +7,7 @@ output: html_document
 
 Course pre-requisites can be found [here](https://andrewcparnell.github.io/simms_course/Prerequisites.html). All the raw files and code can be found [here](https://github.com/andrewcparnell/simms_course). Click 'Clone or Download' near the top right and then 'Download ZIP' if you want an offline copy of everything. 
 
-As this module will be delivered online please install [Zoom](https://www.zoom.us) and [Slack](https://slack.com) to access the videos and interactive components of the course. All the Zoom links to the meeting will be posted to the Slack `#video-links` channel.
+As this module will be delivered online please install [Zoom](https://www.zoom.us) and [Slack](https://slack.com) to access the videos and interactive components of the course. All the Zoom links to the meeting will be posted to the Slack `#zoom-links` channel.
 
 Please note that the course will be recorded so that attendees in different time zones can catch up on material.
 
