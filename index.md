@@ -15,7 +15,7 @@ Please note that the course will be recorded so that attendees in different time
 
 Introduction to SIA data and revision of basic statistical and R concepts
 
-Time  | Class
+<span style="display: inline-block; width:100px">Time</span> | Class
 ------------- | ----------------------------------------------------
 9:30-10:30 | [Introduction: why use a SIMM? (AJ & AP)](https://andrewcparnell.github.io/simms_course/aj-content/intro-why-use-a-SIMM.html)
 10:30-10:45 | Coffee break
@@ -31,7 +31,7 @@ Time  | Class
 
 Introduction to Bayes and SIMMs
 
-Time  | Class
+<span style="display: inline-block; width:100px">Time</span> | Class
 ------------- | ----------------------------------------------------
 9:30-10:30 | [An introduction to Bayesian statistics (AP)](https://andrewcparnell.github.io/simms_course/ap_notes/intro_bayes/intro_bayes.pdf)
 10:30-10:45 | Coffee break
@@ -47,7 +47,7 @@ Time  | Class
 
 simmr / MixSIAR
 
-Time  | Class
+<span style="display: inline-block; width:100px">Time</span> | Class
 ------------- | ----------------------------------------------------
 9:30-10:30 | [The statistical model behind simmr (and SIAR) (AP)](https://andrewcparnell.github.io/simms_course/ap_notes/siar_stats/siar_stats.pdf)
 10:30-10:45 | Coffee break
@@ -64,7 +64,7 @@ Time  | Class
 
 Source grouping & SIBER
 
-Time  | Class
+<span style="display: inline-block; width:100px">Time</span> | Class
 ------------- | ----------------------------------------------------
 9:30-10:30 |  [Creating and understanding Stable Isotope Bayesian Ellipses (SIBER) (AJ)](https://andrewcparnell.github.io/simms_course/aj-content/siber-intro-ellipses.html)
 10:30-10:45 | Coffee break
