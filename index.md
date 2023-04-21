@@ -5,7 +5,6 @@ date: "April 2023 - online"
 output: html_document
 ---
 
-
 Course pre-requisites can be found [here](https://andrewcparnell.github.io/simms_course/Prerequisites.html). All the raw files and code can be found [here](https://github.com/andrewcparnell/simms_course). Click 'Clone or Download' near the top right and then 'Download ZIP' if you want an offline copy of everything. 
 
 As this module will be delivered online please install [Zoom](https://www.zoom.us) and [Slack](https://slack.com) to access the videos and interactive components of the course. All the Zoom links to the meeting will be posted to the Slack `#video-links` channel.
@@ -16,8 +15,8 @@ Please note that the course will be recorded so that attendees in different time
 
 Introduction to SIA data and revision of basic statistical and R concepts
 
-<span style="display: inline-block; width:100px">Time</span> | Class
---------------- | ----------------------------------------------------
+Time  | Class
+------------- | ----------------------------------------------------
 9:30-10:30 | [Introduction: why use a SIMM? (AJ & AP)](https://andrewcparnell.github.io/simms_course/aj-content/intro-why-use-a-SIMM.html)
 10:30-10:45 | Coffee break
 10:45-11:45 | [Revision of likelihood and regression (AP)](https://andrewcparnell.github.io/simms_course/ap_notes/revision_of_likelihood_regression/revision_of_likelihood_and_regression.pdf)
@@ -32,8 +31,8 @@ Introduction to SIA data and revision of basic statistical and R concepts
 
 Introduction to Bayes and SIMMs
 
-<span style="display: inline-block; width:100px">Time</span> | Class
---------------- | ----------------------------------------------------
+Time  | Class
+------------- | ----------------------------------------------------
 9:30-10:30 | [An introduction to Bayesian statistics (AP)](https://andrewcparnell.github.io/simms_course/ap_notes/intro_bayes/intro_bayes.pdf)
 10:30-10:45 | Coffee break
 10:45-11:45 | [Guided practical: R, JAGS, and linear regression (AP)](https://andrewcparnell.github.io/simms_course/ap_notes/prac_jags/practical_R_jags_and_lr.R)
@@ -48,8 +47,8 @@ Introduction to Bayes and SIMMs
 
 simmr / MixSIAR
 
-<span style="display: inline-block; width:100px">Time</span> | Class
---------------- | ----------------------------------------------------
+Time  | Class
+------------- | ----------------------------------------------------
 9:30-10:30 | [Dos and don'ts of using mixing models with discussion (AJ)](https://andrewcparnell.github.io/simms_course/aj-content/siar-dos-and-donts.html)
 10:30-10:45 | Coffee break
 10:45-11:45 | Dos and don'ts continued (AJ)
@@ -65,8 +64,8 @@ simmr / MixSIAR
 
 Source grouping & SIBER
 
-<span style="display: inline-block; width:100px">Time</span> | Class
---------------- | ----------------------------------------------------
+Time  | Class
+------------- | ----------------------------------------------------
 9:30-10:30 |  [Creating and understanding Stable Isotope Bayesian Ellipses (SIBER) (AJ)](https://andrewcparnell.github.io/simms_course/aj-content/siber-intro-ellipses.html)
 10:30-10:45 | Coffee break
 10:45-11:45 | [Guided Practical: Using SIBER to compare populations using ellipses (AJ)](https://andrewcparnell.github.io/simms_course/aj-content/practicals/siber-comparing-populations.nb.html)
