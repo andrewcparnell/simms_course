@@ -1,10 +1,10 @@
 ---
-title: Stable Isotope Mixing Models: course timetable
-author: Andrew Parnell and Andrew Jackson
-date: February 2023 - online
-layout: default
+title: "Stable Isotope Mixing Models: course timetable"
+author: "Andrew Parnell and Andrew Jackson"
+date: "April 2023 - online"
 output: html_document
 ---
+
 
 Course pre-requisites can be found [here](https://andrewcparnell.github.io/simms_course/Prerequisites.html). All the raw files and code can be found [here](https://github.com/andrewcparnell/simms_course). Click 'Clone or Download' near the top right and then 'Download ZIP' if you want an offline copy of everything. 
 
