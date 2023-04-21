@@ -76,9 +76,9 @@ hist(exp(model_run$BUGSoutput$sims.list$beta_male), breaks = 30)
 head(model_run$BUGSoutput$sims.matrix)
 
 # Extract the mean values of the parameters
-alpha_mean = model_run$BUGSoutput$mean$alpha
-beta_male_mean = model_run$BUGSoutput$mean$beta_male
-beta_dose_mean = model_run$BUGSoutput$mean$beta_dose
+alpha_mean = model_run$BUGSoutput$mean$alpha[1]
+beta_male_mean = model_run$BUGSoutput$mean$beta_male[1]
+beta_dose_mean = model_run$BUGSoutput$mean$beta_dose[1]
 
 # What about effect of dose?
 o = order(dose)

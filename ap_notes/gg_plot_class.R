@@ -322,7 +322,7 @@ smooth = data.frame(with(glob_temp, ksmooth(Year, J.D, bandwidth = 15)))
 
 # Missing one obs - full 2016 data
 ggplot(glob_temp, aes(x = Year, y = J.D, colour = J.D)) +
-  geom_line(size = 1) + # Add thicker line
+  geom_line(linewidth = 1) + # Add thicker line
   theme_bw() + # Nicer theme
   scale_x_continuous(breaks = seq(1880, 2020, by = 10)) + # Better x-axis every 10 years
   scale_color_viridis(option = "A") + # Viridis colour palette
