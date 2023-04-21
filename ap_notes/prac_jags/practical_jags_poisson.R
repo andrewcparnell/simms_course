@@ -53,7 +53,6 @@ model_run = jags(data = model_data,
 
 # Look at output ----------------------------------------------------------
 
-stop()
 print(model_run)
 plot(model_run)
 

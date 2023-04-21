@@ -84,7 +84,7 @@ Then try the `install_github` command again.
 
 #### Mac issues
 
-  - you will more than likely need to install the command line developer tools. Instructions for this are available from (http://osxdaily.com/2014/02/12/install-command-line-tools-mac-os-x/). There is a larger set of tools called Xcode which is available from the Apple Store, but this is unnecessarily large and we don't recommend it unless you know you need it.
+  - You will more than likely need to install the command line developer tools. Instructions for this are available from (http://osxdaily.com/2014/02/12/install-command-line-tools-mac-os-x/). There is a larger set of tools called Xcode which is available from the Apple Store, but this is unnecessarily large and we don't recommend it unless you know you need it.
   - You may need to install X11 from [http://www.xquartz.org](http://www.xquartz.org). 
   - If you get an error about package `stringi` try typing `install.packages('stringi',type='mac.binary')`. Then re-run the commands above
   <!-- - If you get some errors about `pandoc` when installing simmr leave out the `build_vignettes=TRUE` argument -->
@@ -103,11 +103,6 @@ FC      = /opt/homebrew/Cellar/gcc/12.2.0/bin/gfortran
 F77     = /opt/homebrew/Cellar/gcc/12.2.0/bin/gfortran
 FLIBS.  = -L/opt/homebrew/Cellar/gcc/12.2.0/lib
 ```
-
-      
-      
-
-
 
 If you run into any other problems please drop us a line at <andrew.parnell@mu.ie> (for simmr/MixSIAR queries) or <a.jackson@tcd.ie> (for SIBER/SIDER queries).
 

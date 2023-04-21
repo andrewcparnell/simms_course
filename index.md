@@ -1,8 +1,7 @@
 ---
-title: Stable Isotope Mixing Models: course timetable
-author: Andrew Parnell and Andrew Jackson
-date: February 2023 - online
-layout: default
+title: "Stable Isotope Mixing Models: course timetable"
+author: "Andrew Parnell and Andrew Jackson"
+date: "April 2023 - online"
 output: html_document
 ---
 
@@ -17,7 +16,7 @@ Please note that the course will be recorded so that attendees in different time
 Introduction to SIA data and revision of basic statistical and R concepts
 
 <span style="display: inline-block; width:100px">Time</span> | Class
---------------- | ----------------------------------------------------
+------------- | ----------------------------------------------------
 9:30-10:30 | [Introduction: why use a SIMM? (AJ & AP)](https://andrewcparnell.github.io/simms_course/aj-content/intro-why-use-a-SIMM.html)
 10:30-10:45 | Coffee break
 10:45-11:45 | [Revision of likelihood and regression (AP)](https://andrewcparnell.github.io/simms_course/ap_notes/revision_of_likelihood_regression/revision_of_likelihood_and_regression.pdf)
@@ -33,7 +32,7 @@ Introduction to SIA data and revision of basic statistical and R concepts
 Introduction to Bayes and SIMMs
 
 <span style="display: inline-block; width:100px">Time</span> | Class
---------------- | ----------------------------------------------------
+------------- | ----------------------------------------------------
 9:30-10:30 | [An introduction to Bayesian statistics (AP)](https://andrewcparnell.github.io/simms_course/ap_notes/intro_bayes/intro_bayes.pdf)
 10:30-10:45 | Coffee break
 10:45-11:45 | [Guided practical: R, JAGS, and linear regression (AP)](https://andrewcparnell.github.io/simms_course/ap_notes/prac_jags/practical_R_jags_and_lr.R)
@@ -49,16 +48,16 @@ Introduction to Bayes and SIMMs
 simmr / MixSIAR
 
 <span style="display: inline-block; width:100px">Time</span> | Class
---------------- | ----------------------------------------------------
-9:30-10:30 | [Dos and don'ts of using mixing models with discussion (AJ)](https://andrewcparnell.github.io/simms_course/aj-content/siar-dos-and-donts.html)
+------------- | ----------------------------------------------------
+9:30-10:30 | [The statistical model behind simmr (and SIAR) (AP)](https://andrewcparnell.github.io/simms_course/ap_notes/siar_stats/siar_stats.pdf)
 10:30-10:45 | Coffee break
-10:45-11:45 | Dos and don'ts continued (AJ)
+10:45-11:45 | Guided Practical: using [MixSIAR](https://andrewcparnell.github.io/simms_course/ap_notes/prac_mixsiar_and_jags/mixsiar_script.R) and [incorporating prior information in simmr (AP)](https://andrewcparnell.github.io/simms_course/ap_notes/prac_using_simmr/simmr_with_priors.R)
 11:45-12:00 | Break 
-12:00-13:00 | [Practical: Source grouping, when and how? (AJ)](https://andrewcparnell.github.io/simms_course/aj-content/practicals/source-aggregation.nb.html) 
+12:00-13:00 | [Dos and don'ts of using mixing models with discussion (AJ)](https://andrewcparnell.github.io/simms_course/aj-content/siar-dos-and-donts.html)
 13:00-14:00 | Lunch
-14:00-15:00 | [The statistical model behind simmr (and SIAR) (AP)](https://andrewcparnell.github.io/simms_course/ap_notes/siar_stats/siar_stats.pdf)
+14:00-15:00 | Dos and don'ts continued (AJ)
 15:00-15:30 | Coffee break
-15:30-17:00 | Guided Practical: using [MixSIAR](https://andrewcparnell.github.io/simms_course/ap_notes/prac_mixsiar_and_jags/mixsiar_script.R) and [incorporating prior information in simmr (AP)](https://andrewcparnell.github.io/simms_course/ap_notes/prac_using_simmr/simmr_with_priors.R)
+15:30-17:00 | [Practical: Source grouping, when and how? (AJ)](https://andrewcparnell.github.io/simms_course/aj-content/practicals/source-aggregation.nb.html) 
 
 
 ## Friday 
@@ -66,7 +65,7 @@ simmr / MixSIAR
 Source grouping & SIBER
 
 <span style="display: inline-block; width:100px">Time</span> | Class
---------------- | ----------------------------------------------------
+------------- | ----------------------------------------------------
 9:30-10:30 |  [Creating and understanding Stable Isotope Bayesian Ellipses (SIBER) (AJ)](https://andrewcparnell.github.io/simms_course/aj-content/siber-intro-ellipses.html)
 10:30-10:45 | Coffee break
 10:45-11:45 | [Guided Practical: Using SIBER to compare populations using ellipses (AJ)](https://andrewcparnell.github.io/simms_course/aj-content/practicals/siber-comparing-populations.nb.html)

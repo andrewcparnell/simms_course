@@ -79,8 +79,8 @@ quantile(model_run$BUGSoutput$sims.list$beta,
          probs = c(0.05, 0.95)) * 1000
 
 # We can create a plot of the posterior mean line
-alpha_mean = model_run$BUGSoutput$mean$alpha
-beta_mean = model_run$BUGSoutput$mean$beta
+alpha_mean = model_run$BUGSoutput$mean$alpha[1]
+beta_mean = model_run$BUGSoutput$mean$beta[1]
 x = sea_level$year_AD
 with(sea_level,plot(year_AD,sea_level_m))
 lines(x, alpha_mean + beta_mean * x, col = 'red')
