@@ -22,7 +22,7 @@ output:
 ## Knowing the TDF matters
 
 ```{r tef-effects, echo=FALSE, message = FALSE, fig.width = 7, fig.height = 5}
-library(viridis)
+library(viridisLite)
 palette(viridis(3))
 
 x <- c(-10, -5)

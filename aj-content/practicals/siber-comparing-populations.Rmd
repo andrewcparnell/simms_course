@@ -12,11 +12,11 @@ And now the full code...
 rm(list = ls()) # clear the memory of objects
 
 # load the siar package of functions
-# library(SIBER)
+library(SIBER)
 
 # read in the data
 # read in the data
-mydata <- read.csv("../data/example_layman_data_text_labels.csv",
+mydata <- read.csv("../data/example_layman_data_all.csv",
                    header=TRUE)
 # create the siber object
 siber.example <- createSiberObject(mydata)
@@ -217,12 +217,12 @@ print(prop.of.both.less.overlap)
 A problem with this simple overlap calculation is that it yields a point-estimate of overlap based on the maximum likelihood estimated SEA_c. One can instead calculate a distribution of overlap based on the posterior distirbutions of the fitted ellipses. It can be a bit slow to calculate this overlap, so you may want to drop the number of `draws` if your computer is slow.
 
 ```{r bayesian-overlap}
-bayes.overlap.G2.G3 <- bayesianOverlap("1.3", "1.4",
+bayes.overlap.G3.G4 <- bayesianOverlap("1.3", "1.4",
                                        ellipses.posterior, 
                                        draws = 10, 
                                        p.interval = 0.95,
                                        n = 360)
-print(bayes.overlap.G2.G3)
+print(bayes.overlap.G3.G4)
 
 
 ```
@@ -234,7 +234,7 @@ And summarise the credible intervals of the Bayesian overlap output. Note that t
 # our code from above again
 # call to hdrcde:hdr using lapply()
 overlap.credibles <- lapply(
-  as.data.frame(bayes.overlap.G2.G3), 
+  as.data.frame(bayes.overlap.G3.G4), 
   function(x,...){tmp<-hdrcde::hdr(x)$hdr},
   prob = cr.p)
 
