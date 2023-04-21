@@ -49,15 +49,15 @@ simmr / MixSIAR
 
 Time  | Class
 ------------- | ----------------------------------------------------
-9:30-10:30 | [Dos and don'ts of using mixing models with discussion (AJ)](https://andrewcparnell.github.io/simms_course/aj-content/siar-dos-and-donts.html)
+9:30-10:30 | [The statistical model behind simmr (and SIAR) (AP)](https://andrewcparnell.github.io/simms_course/ap_notes/siar_stats/siar_stats.pdf)
 10:30-10:45 | Coffee break
-10:45-11:45 | Dos and don'ts continued (AJ)
+10:45-11:45 | Guided Practical: using [MixSIAR](https://andrewcparnell.github.io/simms_course/ap_notes/prac_mixsiar_and_jags/mixsiar_script.R) and [incorporating prior information in simmr (AP)](https://andrewcparnell.github.io/simms_course/ap_notes/prac_using_simmr/simmr_with_priors.R)
 11:45-12:00 | Break 
-12:00-13:00 | [Practical: Source grouping, when and how? (AJ)](https://andrewcparnell.github.io/simms_course/aj-content/practicals/source-aggregation.nb.html) 
+12:00-13:00 | [Dos and don'ts of using mixing models with discussion (AJ)](https://andrewcparnell.github.io/simms_course/aj-content/siar-dos-and-donts.html)
 13:00-14:00 | Lunch
-14:00-15:00 | [The statistical model behind simmr (and SIAR) (AP)](https://andrewcparnell.github.io/simms_course/ap_notes/siar_stats/siar_stats.pdf)
+14:00-15:00 | Dos and don'ts continued (AJ)
 15:00-15:30 | Coffee break
-15:30-17:00 | Guided Practical: using [MixSIAR](https://andrewcparnell.github.io/simms_course/ap_notes/prac_mixsiar_and_jags/mixsiar_script.R) and [incorporating prior information in simmr (AP)](https://andrewcparnell.github.io/simms_course/ap_notes/prac_using_simmr/simmr_with_priors.R)
+15:30-17:00 | [Practical: Source grouping, when and how? (AJ)](https://andrewcparnell.github.io/simms_course/aj-content/practicals/source-aggregation.nb.html) 
 
 
 ## Friday 
