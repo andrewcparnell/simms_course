@@ -10,7 +10,7 @@ In preparation for the course please install the following, preferably in the be
 
 Install the following using the corresponding links and *make sure you have the latest versions installed*:
 
--	R: [http://www.r-project.org](http://www.r-project.org): current version is v4.2.3 and we will assume this version throughout this course. If you want to run an older version or a custom setup then we may not be able to help with compatability issues that may arise. **N.B. If you are a Mac user, make sure you download the correct version for your CPU. There is a specific version for the new M1/M2 chips "R-4.2.3-arm64.pkg" and a different one for the older Intel chips R-4.2.3.pkg. It is essential you install the correct version. You can check which GPU chip you have by click on the Apple symbol top left of your screen and selecting "About This Mac".**
+-	R: [http://www.r-project.org](http://www.r-project.org): current version is v4.2.3 and we will assume this version throughout this course. If you want to run an older version or a custom setup then we may not be able to help with compatability issues that may arise. **N.B. If you are a Mac user, make sure you download the correct version for your CPU. There is a specific version for the new M1/M2 chips "R-4.2.3-arm64.pkg" and a different one for the older Intel chips R-4.2.3.pkg. It is essential you install the correct version. You can check which GPU chip you have by clicking on the Apple symbol top left of your screen and selecting "About This Mac".**
 
 -	Rstudio (optional but recommended): [https://www.rstudio.com](https://www.rstudio.com) - current version 2023.03.0
 
@@ -70,6 +70,7 @@ Here are some common problems with solutions:
 
   - If you are on Windows and you get an error about not having Rtools please install Rtools from the link it provides you in the error message or from here https://cran.r-project.org/bin/windows/Rtools/rtools42/rtools.html
   - If you are trying to install Rtools with R 3.5.0 (but you _really_ should be using >4.2) and are getting an error message about incompatibility of Rtools, run the command:
+  
 ```{r, eval=FALSE}
 library(devtools)
 assignInNamespace("version_info", 
@@ -78,6 +79,7 @@ assignInNamespace("version_info",
                                       version_max = "99.99.99", 
                                       path = "bin"))), "devtools")
 ```
+
 Then try the `install_github` command again.
 - If you get an error about package `stringi` try typing `install.packages('stringi',type='win.binary')` then re-run the commands above.
   

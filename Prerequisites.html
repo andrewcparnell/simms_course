@@ -372,8 +372,8 @@ may not be able to help with compatability issues that may arise.
 version for your CPU. There is a specific version for the new M1/M2
 chips “R-4.2.3-arm64.pkg” and a different one for the older Intel chips
 R-4.2.3.pkg. It is essential you install the correct version. You can
-check which GPU chip you have by click on the Apple symbol top left of
-your screen and selecting “About This Mac”.</strong></p></li>
+check which GPU chip you have by clicking on the Apple symbol top left
+of your screen and selecting “About This Mac”.</strong></p></li>
 <li><p>Rstudio (optional but recommended): <a href="https://www.rstudio.com">https://www.rstudio.com</a> - current
 version 2023.03.0</p></li>
 <li><p>JAGS: <a href="http://sourceforge.net/projects/mcmc-jags/files/" class="uri">http://sourceforge.net/projects/mcmc-jags/files/</a>
@@ -458,11 +458,17 @@ the commands above.</p>
 <div id="mac-issues" class="section level4">
 <h4>Mac issues</h4>
 <ul>
-<li>you will more than likely need to install the command line developer
+<li>You will more than likely need to install the command line developer
 tools. Instructions for this are available from (<a href="http://osxdaily.com/2014/02/12/install-command-line-tools-mac-os-x/" class="uri">http://osxdaily.com/2014/02/12/install-command-line-tools-mac-os-x/</a>).
 There is a larger set of tools called Xcode which is available from the
 Apple Store, but this is unnecessarily large and we don’t recommend it
 unless you know you need it.</li>
+<li>You may need to install X11 from <a href="http://www.xquartz.org">http://www.xquartz.org</a>.</li>
+<li>If you get an error about package <code>stringi</code> try typing
+<code>install.packages(&#39;stringi&#39;,type=&#39;mac.binary&#39;)</code>. Then re-run
+the commands above
+<!-- - If you get some errors about `pandoc` when installing simmr leave out the `build_vignettes=TRUE` argument -->
+<ul>
 <li>related to the installation of the command line tools, you may get
 errors such as
 <code>make: gfortran: no such file or directory mac</code> which relate
@@ -488,6 +494,7 @@ from this course’s repository in the folder
 Alternatively you can create it yourself and paste the following text
 into it</li>
 </ul></li>
+</ul></li>
 </ul>
 <pre><code>VER=12  # set the version of brew gcc. (as of today: 12)
 CC=gcc-$(VER) -fopenmp   # brew gcc nicely creates gcc-12 as symlink 
@@ -499,13 +506,6 @@ CXXFLAGS=-g -O3 -Wall -pedantic -std=c++11 -mtune=native -pipe
 FC      = /opt/homebrew/Cellar/gcc/12.2.0/bin/gfortran
 F77     = /opt/homebrew/Cellar/gcc/12.2.0/bin/gfortran
 FLIBS.  = -L/opt/homebrew/Cellar/gcc/12.2.0/lib</code></pre>
-<ul>
-<li>If you are on a Mac you might need to install X11 from <a href="http://www.xquartz.org">http://www.xquartz.org</a>.</li>
-<li>If you get an error about package <code>stringi</code> try typing
-<code>install.packages(&#39;stringi&#39;,type=&#39;mac.binary&#39;)</code>. Then re-run
-the commands above
-<!-- - If you get some errors about `pandoc` when installing simmr leave out the `build_vignettes=TRUE` argument --></li>
-</ul>
 <p>If you run into any other problems please drop us a line at <a href="mailto:andrew.parnell@mu.ie" class="email">andrew.parnell@mu.ie</a> (for simmr/MixSIAR queries) or <a href="mailto:a.jackson@tcd.ie" class="email">a.jackson@tcd.ie</a> (for
 SIBER/SIDER queries).</p>
 </div>
