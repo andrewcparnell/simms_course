@@ -1,7 +1,6 @@
 ---
 title: 'What package should I use?'
 author: "Andrew Parnell and Andrew Jackson"
-date: "May 2018"
 output:
   html_document: default
   pdf_document: default
