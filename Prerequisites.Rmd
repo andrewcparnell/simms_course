@@ -24,7 +24,8 @@ Now install all the packages required for the course by entering the following c
 
 ```{r,eval=FALSE}
 install.packages(c('rjags', 'R2jags','compositions', 'devtools', 
-                   'tidyverse', 'vegan', 'ellipse'))
+                   'tidyverse', 'vegan', 'ellipse', 'readxl', 
+                   'httr'))
 
 # check that they load
 library(rjags)
