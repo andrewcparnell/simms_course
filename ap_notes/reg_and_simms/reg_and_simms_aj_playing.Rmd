@@ -2,6 +2,8 @@
 
 ## A simple SIMM in JAGS
 
+This basic example attempts to explore the (minor) discrepancy between prior and posterior distributions on the sources themselves.
+
 plot the data
 
 ```{r}
