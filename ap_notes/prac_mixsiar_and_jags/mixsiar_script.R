@@ -3,6 +3,11 @@
 # and the MixSIAR vignettes: https://cran.r-project.org/web/packages/MixSIAR/vignettes/
 
 library(MixSIAR)
+library(tidyr) # For pivoting later in new output_jags
+library(ggplot2)
+
+# My new output function
+source("extra_code/output_jags_new.R")
 
 # Find the data
 mix.filename = system.file("extdata", "wolves_consumer.csv", package = "MixSIAR")
@@ -17,8 +22,8 @@ mix = load_mix_data(filename=mix.filename,
                     cont_effects=NULL)
 
 # Have a look at the mixture data
-mix.data = read.csv(mix.filename)
-str(mix.data)
+# mix.data = read.csv(mix.filename)
+# str(mix.data)
 
 # Replace the system.file call with the path to your file
 source.filename = system.file("extdata", "wolves_sources.csv", package = "MixSIAR")
@@ -69,29 +74,35 @@ jags.2 = run_model(run="very short",
                    alpha.prior = 1, 
                    resid_err = TRUE, 
                    process_err = TRUE)
-stop()
 
 # Get the output
-output_JAGS(jags.2, mix = mix, source = source,
-            output_options = 
-              list(summary_save = TRUE, 
-                   summary_name = "summary_statistics",
-                   sup_post = FALSE, 
-                   plot_post_save_pdf = TRUE, 
-                   plot_post_name = "posterior_density",
-                   sup_pairs = FALSE, 
-                   plot_pairs_save_pdf = TRUE, 
-                   plot_pairs_name = "pairs_plot", 
-                   sup_xy = TRUE, 
-                   plot_xy_save_pdf = FALSE, 
-                   plot_xy_name = "xy_plot", 
-                   gelman = TRUE, 
-                   heidel =FALSE, 
-                   geweke = TRUE, 
-                   diag_save = TRUE, 
-                   diag_name = "diagnostics", 
-                   indiv_effect = FALSE, 
-                   plot_post_save_png = FALSE, 
-                   plot_pairs_save_png = FALSE, 
-                   plot_xy_save_png = FALSE, 
-                   diag_save_ggmcmc = TRUE))
+# output_JAGS(jags.1, mix = mix, source = source,
+#             output_options = 
+#               list(summary_save = TRUE, 
+#                    summary_name = "summary_statistics",
+#                    sup_post = FALSE, 
+#                    plot_post_save_pdf = FALSE, 
+#                    plot_post_name = "posterior_density",
+#                    sup_pairs = FALSE, 
+#                    plot_pairs_save_pdf = FALSE, 
+#                    plot_pairs_name = "pairs_plot", 
+#                    sup_xy = FALSE, 
+#                    plot_xy_save_pdf = FALSE, 
+#                    plot_xy_name = "xy_plot", 
+#                    gelman = FALSE, 
+#                    heidel =FALSE, 
+#                    geweke = FALSE, 
+#                    diag_save = FALSE, 
+#                    diag_name = "diagnostics", 
+#                    indiv_effect = FALSE, 
+#                    plot_post_save_png = FALSE, 
+#                    plot_pairs_save_png = FALSE, 
+#                    plot_xy_save_png = FALSE, 
+#                    diag_save_ggmcmc = FALSE))
+
+output_JAGS(jags.1, mix = mix, source = source,
+            c('summary_diagnostics',
+              'summary_statistics',
+              'summary_quantiles',
+              'plot_global',
+              'plot_factors'))
