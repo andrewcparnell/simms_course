@@ -76,7 +76,8 @@ output <- output_JAGS(jags.1, mix = mix, source = source,
               'summary_quantiles',
               'plot_global_matrix',
               'plot_global',
-              'plot_cont'))
+              'plot_cont'),
+            search_par = 'p.global')
  
 # Change around if required
 output$plot_cont + 

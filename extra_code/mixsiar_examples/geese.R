@@ -76,4 +76,6 @@ calc_area(source=source,mix=mix,discr=discr)
                'summary_statistics',
                'summary_quantiles',
                'plot_global',
-               'plot_factors'))
+               'plot_factors'),
+             search_par = "p.")
+ 

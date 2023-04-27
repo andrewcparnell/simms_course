@@ -7,7 +7,8 @@ output_JAGS <- function (jags.1,
                                             'plot_global',
                                             'plot_global_matrix',
                                             'plot_factors',
-                                            'plot_cont'))
+                                            'plot_cont'),
+                         search_par = NULL) 
 {
   output_options = match.arg(output_options, several.ok = TRUE)
   
@@ -15,6 +16,13 @@ output_JAGS <- function (jags.1,
   mcmc_out_matrix <- jags.1$BUGSoutput$sims.matrix
   mcmc_out_list <- jags.1$BUGSoutput$sims.list
   source_names <- source$source_names
+  
+  # Narrow down the matrices if the search term is included
+  # Note search_par only used for means/quantiles
+  if(!is.null(search_par)) {
+    choose_columns <- grep(search_par, colnames(mcmc_out_matrix))  
+    mcmc_out_matrix <- jags.1$BUGSoutput$sims.matrix[,choose_columns]
+  }
   
   # Create a holder for the output
   out <- vector('list', length = length(output_options))
