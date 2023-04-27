@@ -9,6 +9,11 @@ output: html_notebook
 knitr::opts_chunk$set(echo = TRUE, fig.width = 9, fig.height = 6)
 ```
 
+```{r}
+library(tidyverse)
+```
+
+
 In this practical, we will explore our data in more detail using some basic statistical tests to identify where the variation in our data lies, and hence where the interesting ecological insights might lie. In this example dataset, we have d13C, d15N and C:N ratio from three fish species.
 
 ```{r import-data}
@@ -303,6 +308,7 @@ d13C.species.model <- glm(Muscle.d13C ~ Species, data = mydata)
 summary(d13C.species.model)
 
 ```
+
 
 Based on this comparison, with an AIC of `r round(AIC(d13C.length.model),2)` for the model with length, and an AIC of `r round(AIC(d13C.species.model),2)` without length, we can conclude that length does not add sufficient explanatory information to warrant its inclusion.
 

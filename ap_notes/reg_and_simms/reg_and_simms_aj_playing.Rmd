@@ -1,0 +1,105 @@
+
+
+## A simple SIMM in JAGS
+
+This basic example attempts to explore the (minor) discrepancy between prior and posterior distributions on the sources themselves. 
+
+plot the data
+
+```{r}
+# Load in the data
+data("geese_data_day1")
+consumers = geese_data_day1$mixtures[,1]
+source_means = geese_data_day1$source_means[1:2,1]
+source_sds = geese_data_day1$source_sds[1:2,1]
+con_grid = seq(-35,-5,length=500)
+plot(con_grid,dnorm(con_grid,
+                    mean=source_means[2],sd=source_sds[2]),
+     type='l',col='red',xlab='d13C',ylab='Probability density')
+lines(con_grid,dnorm(con_grid
+                     ,mean=source_means[1],sd=source_sds[1]),
+      col='blue')
+points(consumers,rep(0,9))
+legend('topright',legend=c('Grass','Zostera','Consumers'),
+       lty=c(1,1,-1),pch=c(-1,-1,1),col=c('red','blue','black'))
+```
+
+
+```{r,results='hide'}
+
+
+model_code ='
+model {
+  for(i in 1:N) { 
+    y[i] ~ dnorm(p_1*s_1+p_2*s_2,sigma^-2) 
+  }
+  p_1 ~ dunif(0,1)
+  p_2 <- 1-p_1
+  s_1 ~ dnorm(s_1_mean,s_1_sd^-2)
+  s_2 ~ dnorm(s_2_mean,s_2_sd^-2)
+  sigma ~ dunif(0,10)
+}
+'
+data=list(y=consumers,s_1_mean=source_means[1],
+          s_1_sd=source_sds[1],
+          s_2_mean=source_means[2],s_2_sd=source_sds[2],
+          N=length(consumers))
+model_parameters = c('p_1', 'p_2', "s_1", "s_2")
+model_run = jags(data = data,
+                 parameters.to.save = model_parameters,
+                 model.file = textConnection(model_code), 
+                 n.iter = 20000, 
+                 n.thin = 10)
+```
+
+### Andrew Playing
+
+In the chunk above i have included monitors for `s_1` and `s_2`. Since these are effectively priors, we can look at their posterior. What is interesting i think is that although there is no data directly relating to these priors, they are informed by the mixing model itself, and so the posterior distribution of their estimates are not the same. In this case, presumably, the fact that the consumers sit very close to source 2 (zostera), it tends to pull it even closer? 
+
+Granted they are very close, but I wonder whether the effect can be larger for different geometries or sample sizes, and whether this has any bearing on interpreation at all?
+
+In this example i increased the numebr of posterior draws and thinned it hard to make sure the posteriors were solid.
+
+
+```{r post-source-means}
+
+prior_s1_mean = source_means[1]
+prior_s2_mean = source_means[2]
+
+post_s1_mean  = mean(model_run$BUGSoutput$sims.list$s_1)
+post_s2_mean  = mean(model_run$BUGSoutput$sims.list$s_2)
+
+
+test_out <- matrix(c(prior_s1_mean, prior_s2_mean, post_s1_mean, post_s2_mean),
+                   ncol = 2, nrow = 2)
+
+colnames(test_out) <- c("prior", "post")
+rownames(test_out) <- c("s1_mean", "s2_mean")
+
+print(test_out, digits = 4)
+
+```
+
+In fact, the discrepancy between the prior and posterior estimates for source 1 sd are more substantial. 
+
+```{r post-source-sds}
+
+prior_s1_sd = source_sds[1]
+prior_s2_sd = source_sds[2]
+
+post_s1_sd  = sd(model_run$BUGSoutput$sims.list$s_1)
+post_s2_sd  = sd(model_run$BUGSoutput$sims.list$s_2)
+
+
+test_out_sd <- matrix(c(prior_s1_sd, prior_s2_sd, post_s1_sd, post_s2_sd),
+                   ncol = 2, nrow = 2)
+
+colnames(test_out_sd) <- c("prior", "post")
+rownames(test_out_sd) <- c("s1_sd", "s2_sd")
+
+print(test_out_sd, digits = 4)
+
+```
+
+
+

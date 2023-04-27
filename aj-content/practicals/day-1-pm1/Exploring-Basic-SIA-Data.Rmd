@@ -9,6 +9,7 @@ output: html_notebook
 knitr::opts_chunk$set(echo = TRUE, fig.width = 9, fig.height = 6)
 ```
 
+
 In this file, we will import our already semi-cleaned up stable isotope dataset and explore it using some basic summary statistics, visualisation and tests.
 
 ## Import the data
