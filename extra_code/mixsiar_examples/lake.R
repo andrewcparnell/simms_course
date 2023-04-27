@@ -10,6 +10,8 @@
 library(MixSIAR)
 library(tidyr) # For pivoting later in new output_jags
 library(ggplot2)
+library(GGally)
+library(dplyr)
 
 # My new output function
 source("extra_code/output_jags_new.R")
@@ -68,10 +70,17 @@ calc_area(source=source,mix=mix,discr=discr)
 
 ## ---- eval=FALSE--------------------------------------------------------------
 #  output_JAGS(jags.1, mix, source, output_options)
-output_JAGS(jags.1, mix = mix, source = source,
+output <- output_JAGS(jags.1, mix = mix, source = source,
             c('summary_diagnostics',
               'summary_statistics',
               'summary_quantiles',
-              'plot_global'))
-
+              'plot_global_matrix',
+              'plot_global',
+              'plot_cont'))
+ 
+# Change around if required
+output$plot_cont + 
+  facet_wrap(~Source) + 
+  theme_bw() + 
+  theme(legend.position = "None")
 

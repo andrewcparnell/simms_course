@@ -10,10 +10,10 @@
 library(MixSIAR)
 library(tidyr) # For pivoting later in new output_jags
 library(ggplot2)
+library(GGally)
 
 # My new output function
 source("extra_code/output_jags_new.R")
-
 
 ## -----------------------------------------------------------------------------
 # Replace the system.file call with the path to your file
@@ -70,5 +70,6 @@ discr <- load_discr_data(filename=discr.filename, mix)
                'summary_statistics',
                'summary_quantiles',
                'plot_global',
+               'plot_global_matrix',
                'plot_factors'))
  

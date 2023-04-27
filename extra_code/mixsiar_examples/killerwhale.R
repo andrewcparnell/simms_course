@@ -10,6 +10,7 @@
 library(MixSIAR)
 library(tidyr) # For pivoting later in new output_jags
 library(ggplot2)
+library(GGally)
 
 # My new output function
 source("extra_code/output_jags_new.R")
@@ -65,7 +66,9 @@ discr <- load_discr_data(filename=discr.filename, mix)
              c('summary_diagnostics',
                'summary_statistics',
                'summary_quantiles',
+               'plot_global_matrix',
                'plot_global'))
+ 
  
 ## ---- eval=FALSE--------------------------------------------------------------
 #  # Our 14 fecal samples were 10, 1, 0, 0, 3
@@ -100,4 +103,5 @@ output_JAGS(jags.inf, mix = mix, source = source,
             c('summary_diagnostics',
               'summary_statistics',
               'summary_quantiles',
+              'plot_global_matrix',
               'plot_global'))

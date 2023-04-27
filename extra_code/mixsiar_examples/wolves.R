@@ -10,9 +10,11 @@
 library(MixSIAR)
 library(tidyr) # For pivoting later in new output_jags
 library(ggplot2)
+library(GGally)
 
 # My new output function
 source("extra_code/output_jags_new.R")
+# source("https://raw.githubusercontent.com/andrewcparnell/simms_course/master/extra_code/output_jags_new.R")
 
 ## -----------------------------------------------------------------------------
 # Replace the system.file call with the path to your file
@@ -102,4 +104,8 @@ calc_area(source=source,mix=mix,discr=discr)
                             'summary_statistics',
                             'summary_quantiles',
                             'plot_global',
+                            'plot_global_matrix',
                             'plot_factors'))
+ 
+ out_stuff$plot_factors[[1]] + theme_bw() + theme(legend.position = "None")
+ out_stuff$plot_factors[[2]] + xlim(0, 1)

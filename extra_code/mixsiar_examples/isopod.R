@@ -10,6 +10,7 @@
 library(MixSIAR)
 library(tidyr) # For pivoting later in new output_jags
 library(ggplot2)
+library(GGally)
 
 # My new output function
 source("extra_code/output_jags_new.R")

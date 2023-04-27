@@ -5,7 +5,9 @@ output_JAGS <- function (jags.1,
                                             'summary_statistics',
                                             'summary_quantiles',
                                             'plot_global',
-                                            'plot_factors'))
+                                            'plot_global_matrix',
+                                            'plot_factors',
+                                            'plot_cont'))
 {
   output_options = match.arg(output_options, several.ok = TRUE)
   
@@ -50,6 +52,33 @@ output_JAGS <- function (jags.1,
       theme(legend.position = "None")
     print(out$plot_global)
   }
+  if('plot_global_matrix' %in% output_options) {
+    post_global <- mcmc_out_list$p.global
+    colnames(post_global) <- source_names
+    modified_bar <- function(data, mapping, ...) {
+      GGally::ggally_barDiag(data, mapping, ..., binwidth = 0.025) + coord_cartesian(xlim = c(0, 1)) + theme_bw()
+    }
+    modified_density <- function(data, mapping, ...) {
+      ggplot(data = data, mapping = mapping, ...) +
+        stat_density_2d(
+          geom = "polygon", contour = TRUE,
+          aes(fill = after_stat(..level..)), colour = "black",
+          bins = 5
+        ) +
+        scale_fill_distiller(palette = "Blues", direction = 1) +
+        theme_bw() +
+        scale_x_continuous(limits = c(0, 1)) +
+        scale_y_continuous(limits = c(0, 1))
+    }
+    out$plot_global <- post_global |> 
+      as.data.frame() |> 
+      GGally::ggpairs(upper = list(continuous = GGally::wrap(modified_density)),
+                      diag = list(continuous = GGally::wrap(modified_bar)),
+                      lower = list(continuous = GGally::wrap("cor", stars = FALSE))
+      )
+    
+    print(out$plot_global)
+  }
   if('plot_factors' %in% output_options) {
     n_factors <- mix$n.effects
     if(n_factors == 0) stop("No factor variables in this MixSIAR model. 
@@ -73,6 +102,38 @@ output_JAGS <- function (jags.1,
       print(out$plot_factors[[i]])
     }
   }
+  if('plot_cont' %in% output_options) {
+    n_cont <- mix$n.ce
+    if(n_cont == 0) stop("No continuous variables in this MixSIAR model. 
+                            Re-run with 'plot_cont' removed from output_options")
+    if(n_cont > 1) stop("This function currently does not support plotting of 
+                        multiple continuous variables")
+    cont_vals <- mix$CE_orig
+    post_cont <- mcmc_out_list$p.ind
+    cont_name <- mix$cont_effects
+    dimnames(post_cont) <- list(paste0("Iteration", 1:jags.1$BUGSoutput$n.sims), 
+                                         cont_vals[[1]],
+                                         source_names)
+    curr_df <- as.data.frame(ftable(post_cont))
+    colnames(curr_df) <- c("Iteration", "Cont_var", "Source", "Proportion")
+    out$plot_cont <- 
+      curr_df |> 
+      group_by(Source, Cont_var) |> 
+      summarise(y_min = quantile(Proportion, 0.025),
+                y_max = quantile(Proportion, 0.975),
+                y_med = quantile(Proportion, 0.5)) |> 
+      mutate(Cont_var2 = as.numeric(levels(Cont_var))[Cont_var]) |> 
+      ungroup() |> 
+      ggplot(aes(x = Cont_var2, 
+                 y = y_med,
+                 colour = Source)) + 
+        geom_line() +
+        geom_ribbon(aes(ymin = y_min, ymax = y_max, fill = Source), colour = NA, alpha = 0.2) + 
+      labs(y = "Proportion",
+           x = mix$cont_effects)
+      print(out$plot_cont)
+  }
+  
   
   invisible(out)
 }
