@@ -45,13 +45,15 @@ output_JAGS <- function (jags.1,
                      values_to = "Proportion",
                      cols = everything()) |> 
         ggplot(aes(x = Proportion, fill = Source)) + 
-        geom_histogram(bins = 30) + 
+        geom_histogram(aes(y = after_stat(density)), bins = 30) + 
         facet_wrap(~ Source) + 
       theme(legend.position = "None")
     print(out$plot_global)
   }
   if('plot_factors' %in% output_options) {
     n_factors <- mix$n.effects
+    if(n_factors == 0) stop("No factor variables in this MixSIAR model. 
+                            Re-run with 'plot_factors' removed from output_options")
     out$plot_factors <- vector('list', length = n_factors)
     fac_locations <- grep("p.fac", names(mcmc_out_list))
     for(i in 1:n_factors) {
@@ -65,7 +67,7 @@ output_JAGS <- function (jags.1,
       curr_df <- as.data.frame(ftable(post_curr_factor))
       names(curr_df) <- c("Iteration", "Factor", "Source", "Proportion")
       out$plot_factors[[i]] <- ggplot(curr_df, aes(x = Proportion, fill = Source)) + 
-        geom_histogram(bins = 30) + 
+        geom_histogram(aes(y = after_stat(density)), bins = 30) + 
         facet_grid(Factor ~ Source) + 
         theme(legend.position = "None")
       print(out$plot_factors[[i]])
