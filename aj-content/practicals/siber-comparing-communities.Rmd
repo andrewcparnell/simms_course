@@ -169,6 +169,14 @@ siberDensityPlot(cbind(layman.B[[1]][ , "NND"],
                 las = 1,
                 ylab = "NND (nearest neighbour distance)",
                 xlab = "")
+
+siberDensityPlot(cbind(layman.B[[1]][ , "dX_range"], 
+                       layman.B[[2]][ , "dX_range"]),
+                xticklabels = c("Community 1", "Community 2"), 
+                bty="L", ylim = c(0, 30),
+                las = 1,
+                ylab = "dX",
+                xlab = "")
 ```
 
 

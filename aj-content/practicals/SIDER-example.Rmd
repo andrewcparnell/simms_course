@@ -47,8 +47,8 @@ We search this data using the `scrumpSider` function.
 ```{r scrumpSider data one}
 
 ##search the dataset for a single species
-scrumpSider(iso.data = "Homo_sapiens")
-
+aj <- scrumpSider(iso.data = "Homo_sapiens")
+print(aj)
 ```
 
 We can also load the full dataset as an object
@@ -87,7 +87,7 @@ In order to estimate a trophic enrichment factor for a new species we need to ch
  and **`diet.type`** (`carnivore`, `herbivore`, `omnivore`, `pellet`).
 
 ```{r check_species}
-# Checking the data for the species we want to estimate TEF for (Meles meles)
+# Checking the data for the species we want to estimate TEF for (Honey Badger)
 new_data_test <- recipeSider(species = "Mellivora_capensis", 
                              habitat = "terrestrial", 
                              taxonomic.class = "mammalia", 

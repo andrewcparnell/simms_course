@@ -111,7 +111,8 @@ We combine the sources C and D before we run the model as is sometimes suggested
 S_names_a_priori = c("A","B","CD")
 
 # take the mean of the last two sources C and D
-S_means_a_priori = rbind(S_means[1:2,], colMeans(S_means[3:4,]) )
+S_means_a_priori = rbind(S_means[1:2,],
+                         colMeans(S_means[3:4,]) )
 
 # square the sds for sources C and D to convert to variance,
 # sum them and convert back to sd
