@@ -72,7 +72,7 @@ Source grouping & SIBER
 11:45-12:00 | Break 
 12:00-13:00 | [Practical: pick a MixSIAR example](https://cran.r-project.org/web/packages/MixSIAR/vignettes/) and [look at the manual](https://github.com/brianstock/MixSIAR/blob/master/Manual/mixsiar_manual_3.1.pdf) (AP & AJ)
 13:00-14:00 | Lunch
-14:00-15:00 | [Guided Practical: Using SIBER to compare communities using convex hulls (AJ)](https://andrewcparnell.github.io/simms_course/aj-content/practicals/siber-comparing-communities.nb.html)
+14:00-15:00 | [Community level metrics using SIBER (AJ)](https://andrewcparnell.github.io/simms_course/aj-content/siber-intro-hulls.html)
 15:00-15:30 | Coffee break
-15:30-17:00 | [Community level metrics using SIBER (AJ)](https://andrewcparnell.github.io/simms_course/aj-content/siber-intro-hulls.html)
+15:30-17:00 | [Guided Practical: Using SIBER to compare communities using convex hulls (AJ)](https://andrewcparnell.github.io/simms_course/aj-content/practicals/siber-comparing-communities.nb.html)
 
