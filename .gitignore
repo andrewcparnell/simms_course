@@ -45,3 +45,4 @@ Src/*.o
 *.log
 *.synctex.gz
 MixSIAR_model.txt
+isospace_plot_1_2.pdf

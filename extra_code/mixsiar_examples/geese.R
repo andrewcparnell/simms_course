@@ -71,11 +71,14 @@ calc_area(source=source,mix=mix,discr=discr)
 
 ## ---- eval=FALSE--------------------------------------------------------------
 #  output_JAGS(jags.1, mix, source, output_options)
- output_JAGS(jags.1, mix = mix, source = source,
+my_output <- output_JAGS(jags.1, mix = mix, source = source,
              c('summary_diagnostics',
                'summary_statistics',
                'summary_quantiles',
                'plot_global',
-               'plot_factors'),
-             search_par = "p.")
+               'plot_global_matrix',
+               'plot_factors'))
+ 
+# To get the full list of parameters use:
+ rownames(my_output$summary_statistics)
  

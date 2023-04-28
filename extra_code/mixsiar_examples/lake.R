@@ -25,7 +25,7 @@ mix <- load_mix_data(filename=mix.filename,
                      factors=NULL,
                      fac_random=NULL,
                      fac_nested=NULL,
-                     cont_effects="Secchi.Mixed")
+                     cont_effects=NULL)
 
 ## -----------------------------------------------------------------------------
 # Replace the system.file call with the path to your file
@@ -85,3 +85,5 @@ output$plot_cont +
   theme_bw() + 
   theme(legend.position = "None")
 
+# Get the DIC (similar to AIC) find a model with the smallest DIC
+jags.1$BUGSoutput$DIC

@@ -11,6 +11,7 @@
 #' - 'summary_statistics' returns means and standard deviations for all of the parameters
 #' - 'summary_quantiles' returns the 2.5th, 25th, 50th, 75th, and 97.5th percentile for all parameters
 #' - 'plot_global' returns a plot of all the global parameter posterior values
+#' - 'plot_global_matrix' returns a matrix plot of all the global parameter posterior values
 #' - 'plot_factors' returns a grid-based plot of the parameter posterior values with the sources in the columns and the factor variables in the rows. It will return an error if there are no factor variables in the model run.
 #' - 'plot_cont' returns a plot of the parameter posterior values against the continuous variable used in the model. It will return an error if there are no factor variables in the model run. Currently only supports 1 continuous variable
 #' 
@@ -112,7 +113,7 @@ output_JAGS <- function(jags.1,
         scale_x_continuous(limits = c(0, 1)) +
         scale_y_continuous(limits = c(0, 1))
     }
-    out$plot_global <- post_global |>
+    out$plot_global_matrix <- post_global |>
       as.data.frame() |>
       GGally::ggpairs(
         upper = list(continuous = GGally::wrap(modified_density)),
