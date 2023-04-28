@@ -44,3 +44,4 @@ Src/*.o
 *.aux
 *.log
 *.synctex.gz
+MixSIAR_model.txt

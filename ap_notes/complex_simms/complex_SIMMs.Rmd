@@ -6,7 +6,16 @@ output:
   beamer_presentation:
     includes:
       in_header: ../header.tex
+editor_options: 
+  chunk_output_type: console
+classoption: "aspectratio=169"
 ---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(dev = 'pdf', fig.height = 5)
+par(mar=c(3,3,2,1), mgp=c(2,.7,0), tck=-.01,las=1)
+```
+
 
 ## Learning outcomes
 
@@ -99,7 +108,7 @@ model {
 
 ## The Geese data
 
-\includegraphics[width=\textwidth]{Geese2IsoSpace.png}
+\includegraphics[width=0.8\textwidth]{Geese2IsoSpace.png}
 
 ## A Fourier basis
 
@@ -155,6 +164,7 @@ output=coda.samples(model=model,variable.names=c('p','beta','mu_f','sigma_f'),n.
 gelman.diag(output,multivariate = FALSE)
 ```
 
+\small 
 ```{r,eval=FALSE}
 modelstring ='
 model {
@@ -177,7 +187,7 @@ Full script in `run_geese_harmonic.R` file
 
 ## Output
 
-\includegraphics[width=\textwidth]{Geese2Harmonic.png}
+\includegraphics[width=0.8\textwidth]{Geese2Harmonic.png}
 
 ## Comparing models
 
