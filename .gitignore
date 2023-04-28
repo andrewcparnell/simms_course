@@ -46,3 +46,5 @@ Src/*.o
 *.synctex.gz
 MixSIAR_model.txt
 isospace_plot_1_2.pdf
+test.pdf
+test.txt
