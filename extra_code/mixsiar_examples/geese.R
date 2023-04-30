@@ -13,7 +13,7 @@ library(ggplot2)
 library(GGally)
 
 # My new output function
-# source("extra_code/output_jags_new.R")
+source("extra_code/output_jags_new.R")
 
 ## -----------------------------------------------------------------------------
 # Replace the system.file call with the path to your file
@@ -56,51 +56,25 @@ calc_area(source=source,mix=mix,discr=discr)
 
 ## ---- eval=FALSE--------------------------------------------------------------
 #  # Write the JAGS model file
- model_filename <- "MixSIAR_model.txt"
- resid_err <- TRUE
- process_err <- FALSE
- write_JAGS_model(model_filename, resid_err, process_err, mix, source)
+model_filename <- "MixSIAR_model.txt"
+resid_err <- TRUE
+process_err <- FALSE
+write_JAGS_model(model_filename, resid_err, process_err, mix, source)
 
 ## ---- eval=FALSE--------------------------------------------------------------
- jags.1 <- run_model(run="test", mix, source, discr, model_filename,
-                     alpha.prior = 1, resid_err, process_err)
+jags.1 <- run_model(run="test", mix, source, discr, model_filename,
+                    alpha.prior = 1, resid_err, process_err)
 
 ## ---- eval=FALSE--------------------------------------------------------------
 #  jags.1 <- run_model(run="short", mix, source, discr, model_filename,
 #                      alpha.prior = 1, resid_err, process_err)
 
 ## ---- eval=FALSE--------------------------------------------------------------
- output_JAGS(jags.1, mix = mix, source = source,
-             output_options =
-               list(summary_save = TRUE,
-                    summary_name = "test",
-                    sup_post = TRUE,
-                    plot_post_save_pdf = TRUE,
-                    plot_post_name = "test",
-                    sup_pairs = TRUE,
-                    plot_pairs_save_pdf = TRUE,
-                    plot_pairs_name = "test",
-                    sup_xy = TRUE,
-                    plot_xy_save_pdf = FALSE,
-                    plot_xy_name = "test",
-                    gelman = TRUE,
-                    heidel =FALSE,
-                    geweke = TRUE,
-                    diag_save = TRUE,
-                    diag_name = "test",
-                    indiv_effect = FALSE,
-                    plot_post_save_png = FALSE,
-                    plot_pairs_save_png = FALSE,
-                    plot_xy_save_png = FALSE,
-                    diag_save_ggmcmc = TRUE))
-# my_output <- output_JAGS(jags.1, mix = mix, source = source,
-#              c('summary_diagnostics',
-#                'summary_statistics',
-#                'summary_quantiles',
-#                'plot_global',
-#                'plot_global_matrix',
-#                'plot_factors'))
- 
-# To get the full list of parameters use:
- rownames(my_output$summary_statistics)
- 
+#  output_JAGS(jags.1, mix, source, output_options)
+output_JAGS(jags.1, mix = mix, source = source,
+            c('summary_diagnostics',
+              'summary_statistics',
+              'summary_quantiles',
+              'plot_global',
+              'plot_factors'),
+            search_par = "p.")
