@@ -1,4 +1,4 @@
-VER=12  # set the version of brew gcc. (as of today: 12)
+VER=15  # set the version of brew gcc. (as of today: 12)
 CC=gcc-$(VER) -fopenmp   # brew gcc nicely creates gcc-12 as symlink 
 CXX=g++-$(VER) -fopenmp
 CFLAGS=-g -O3 -Wall -pedantic -std=gnu99 -mtune=native -pipe

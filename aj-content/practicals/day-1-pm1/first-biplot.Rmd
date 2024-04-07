@@ -146,6 +146,8 @@ ellipse.plot <- first.plot +
 
 print(ellipse.plot)
 
+ggsave(plot = ellipse.plot, filename = "../../images/biplot.jpeg")
+
 ```
 
 
