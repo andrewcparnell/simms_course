@@ -123,6 +123,8 @@ liver.plot.2 <- liver.plot +
   geom_vline(xintercept = 3.6, col = "black")
 
 print(liver.plot.2)
+ggsave(plot = liver.plot.2, 
+       filename = "../../images/lipid_corrected_liver.jpg")
 ```
 
 
