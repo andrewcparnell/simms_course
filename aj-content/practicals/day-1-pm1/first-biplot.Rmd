@@ -65,7 +65,7 @@ If you want to use the more normal plotting format for journals without gridline
 classic.first.plot <- first.plot + theme_classic() + 
   theme(text = element_text(size=35)) + 
   coord_equal() + 
-  theme(axis.ticks.length = unit(-0.2, "cm")) + 
+  theme(axis.ticks.length = unit(-0.2, "cm")) +
   scale_colour_viridis_d(end = 0.9)
 
 # and print to screen

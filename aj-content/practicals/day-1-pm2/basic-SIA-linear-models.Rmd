@@ -31,7 +31,8 @@ head(mydata)
 
 ```{r}
 
-mydata %>% group_by(Species) %>%
+mydata %>% 
+  group_by(Species) %>%
   summarise(count = n(), 
             mean_length = mean(Length),
             mean_muscle_d13C = mean(Muscle.d13C),
@@ -412,6 +413,7 @@ summary(multivar.model)
 
 
 ## Permanova
+
 Running the PERMANOVA analysis requires the package `vegan` so you will need to `install.packages("vegan")` if you do not already have it. The PERMANOVA method is a randomisation process that jumbles up the data among the groups and determines how likely our observed data are given random chance. It therefore does make the same parametric assumptions about the data being multivariate normal distributed with a common covariance structure among groups.
 
 ```{r PERMANOVA-up }

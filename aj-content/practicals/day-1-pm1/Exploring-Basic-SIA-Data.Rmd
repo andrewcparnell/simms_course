@@ -73,8 +73,9 @@ It is not so easy to get summary statistics on each Taxonomic group within our d
 # load the library
 library(tidyverse)
 
-# generate summary statitsics by group
-mydata %>% group_by(Taxon) %>% 
+# generate summary statistics by group
+mydata %>% 
+  group_by(Taxon) %>% 
   summarise(count = n(),
             mC = mean(d13C), 
             sdC = sd(d13C), 
