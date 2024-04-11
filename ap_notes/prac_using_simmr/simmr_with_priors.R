@@ -52,7 +52,9 @@ prior=simmr_elicit(n_sources = 4,
 
 simmr_1a_out = simmr_mcmc(simmr_1,
                           prior_control=list(means=prior$mean,
-                                             sd=prior$sd))
+                                             sd=prior$sd,
+                                             sigma_shape = c(3, 3),
+                                             sigma_rate = c(3/50, 3/50)))
 
 summary(simmr_1a_out,'quantiles')
 # Much more precise:
