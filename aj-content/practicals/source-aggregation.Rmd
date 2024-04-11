@@ -36,7 +36,7 @@ S_means = cbind(c(-5,-5,5,5), c(-5,5,5,-5))
 # specify the source standard deviations
 S_sds = cbind(c(1,1,1,1), c(1,1,1,1))
 
-# speficy the consumer data at the origin
+# specify the consumer data at the origin
 # Ten consumers for this example around 0 with small sd of error.
 consumers <- cbind(dC = rnorm(n = 10, mean = 0, sd = 0.1),
                    dN = rnorm(n = 10, mean = 0, sd = 0.1) )
@@ -60,7 +60,7 @@ plot(simmr_in)
 
 ## Fit the SIMM
 
-We can fit a simmr model using the defaults, and here supress the output using the `results='hide'` option in the chunk.
+We can fit a simmr model using the defaults, and here suppress the output using the `results='hide'` option in the chunk.
 
 ```{r, results='hide'}
 simmr_out = simmr_mcmc(simmr_in)
@@ -91,7 +91,7 @@ plot(simmr_out, type = "density")
 ```
 
 
-Plot the covariance between the estimated dietary proportons in the posterior.
+Plot the covariance between the estimated dietary proportions in the posterior.
 
 ```{r plot-posterior-cov}
 
@@ -165,16 +165,20 @@ Far more honest is to fit the model as before, with the sources as we believe th
 ```{r a-posteriori}
 # combine sources C and D which are in positions 3 and 4
 simmr_out_a_posteriori <- 
-  combine_sources(
-    simmr_out, 
-    to_combine = simmr_out$input$source_names[c(3,4)], 
-    new_source_name = "CD")
+  combine_sources(simmr_out, 
+                  to_combine = simmr_out$input$source_names[c(3,4)], 
+                  new_source_name = "CD")
 
 # Plot the a posteriori aggregated diet estimatess
 plot(simmr_out_a_posteriori, type = "density")
 
 
 ```
+
+```{r}
+plot(simmr_out_a_posteriori, type = "matrix")
+```
+
 This result fits much better with what we would predict: that if the model is still not sure about the contribution of the four sources to the mixture, but that it is pretty sure that on average, 50% of the diet is comprised of both C and D. This concept continues until the model is entirely certain, with no error, that the diet is wholly 100% of A+B+C+D.
 
 One thing to experiment with here is the use of the Jeffrey's prior of `c(0.25, 0.25, 0.25, 0.25)` in place of the default vague prior `c(1, 1, 1, 1)`. This is the nub of the criticism levelled at the SIMMs by Brett, M. 2016. Resource polygon geometry predicts Bayesian stable isotope mixing model bias. MEPS.
@@ -183,8 +187,8 @@ One thing to experiment with here is the use of the Jeffrey's prior of `c(0.25, 
 
 ```{r jeffries-prior, evaluate = FALSE}
 
-simmr_out_specialist_prior = simmr_mcmc(simmr_in,
-                                        prior_control = XYZ)
+# simmr_out_specialist_prior = simmr_mcmc(simmr_in,
+#                                         prior_control = XYZ)
 
 ```
 
