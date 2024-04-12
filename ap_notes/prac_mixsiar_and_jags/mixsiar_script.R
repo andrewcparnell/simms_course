@@ -49,6 +49,17 @@ plot_data(filename="isospace_plot",
           source = source, 
           discr = discr)
 
+# Alternative plot saving it and editing it
+p <- plot_data(filename="isospace_plot", 
+          plot_save_pdf = FALSE, 
+          plot_save_png = FALSE,
+          mix = mix, 
+          source = source, 
+          discr = discr, return_obj = TRUE)
+
+# Can now do e.g.
+p + theme(legend.position = "None")
+
 # Plot the prior
 #plot_prior(alpha.prior=1,source)
 
@@ -100,9 +111,11 @@ jags.2 = run_model(run="very short",
 #                    plot_xy_save_png = FALSE, 
 #                    diag_save_ggmcmc = FALSE))
 
-output_JAGS(jags.1, mix = mix, source = source,
+out <- output_JAGS(jags.1, mix = mix, source = source,
             c('summary_diagnostics',
               'summary_statistics',
               'summary_quantiles',
               'plot_global',
               'plot_factors'))
+
+
