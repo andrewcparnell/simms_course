@@ -18,6 +18,7 @@ library(SIBER)
 # read in the data
 mydata <- read.csv("../data/example_layman_data_all.csv",
                    header=TRUE)
+
 # create the siber object
 siber.example <- createSiberObject(mydata)
 
