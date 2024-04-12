@@ -70,7 +70,7 @@ Source grouping, SIBER, and (new!) cosimmr
 10:30-10:45 | Coffee break
 10:45-11:45 | [Guided Practical: Using SIBER to compare populations using ellipses (AJ)](https://andrewcparnell.github.io/simms_course/aj-content/practicals/siber-comparing-populations.nb.html)
 11:45-12:00 | Break 
-12:00-13:00 | [Practical: pick a MixSIAR example](https://cran.r-project.org/web/packages/MixSIAR/vignettes/) and [look at the manual](https://github.com/brianstock/MixSIAR/blob/master/Manual/mixsiar_manual_3.1.pdf) (AP & AJ)
+12:00-13:00 | [Practical: pick a MixSIAR example](https://github.com/brianstock/MixSIAR/tree/master/inst/example_scripts) and [look at the manual](https://github.com/brianstock/MixSIAR/blob/master/Manual/mixsiar_manual_3.1.pdf) (AP & AJ)
 13:00-14:00 | Lunch
 14:00-15:00 | [Introduction to cosimmr](https://andrewcparnell.github.io/simms_course/ap_notes/cosimmr/cosimmr_presentation.pdf) and [practical](https://raw.githubusercontent.com/emmagovan/cosimmr/master/vignettes/cosimmr.Rmd) (EG & AP)
 15:00-15:30 | Coffee break
