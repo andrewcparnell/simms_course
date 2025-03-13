@@ -365,17 +365,17 @@ as possible to avoid falling behind.</p>
 you have the latest versions installed</em>:</p>
 <ul>
 <li><p>R: <a href="http://www.r-project.org">http://www.r-project.org</a>: current
-version is v4.2.3 and we will assume this version throughout this
+version is v4.4.3 and we will assume this version throughout this
 course. If you want to run an older version or a custom setup then we
 may not be able to help with compatability issues that may arise.
 <strong>N.B. If you are a Mac user, make sure you download the correct
 version for your CPU. There is a specific version for the new M1/M2
-chips “R-4.2.3-arm64.pkg” and a different one for the older Intel chips
-R-4.2.3.pkg. It is essential you install the correct version. You can
+chips “R-4.4.3-arm64.pkg” and a different one for the older Intel chips
+R-4.4.3.pkg. It is essential you install the correct version. You can
 check which GPU chip you have by clicking on the Apple symbol top left
 of your screen and selecting “About This Mac”.</strong></p></li>
-<li><p>Rstudio (optional but recommended): <a href="https://www.rstudio.com">https://www.rstudio.com</a> - current
-version 2023.03.0</p></li>
+<li><p>Rstudio (optional but strongly recommended): <a href="https://www.rstudio.com">https://www.rstudio.com</a> - current
+version RStudio 2024.12.1+563</p></li>
 <li><p>JAGS: <a href="http://sourceforge.net/projects/mcmc-jags/files/" class="uri">http://sourceforge.net/projects/mcmc-jags/files/</a>
 <strong><em>This step is really important and easy to skip over. JAGS is
 required, and is not installed as part of the R package rjags which is
@@ -391,7 +391,8 @@ custom packages <a href="https://cran.r-project.org/bin/windows/Rtools/rtools42/
 <p>Now install all the packages required for the course by entering the
 following code in to R</p>
 <pre class="r"><code>install.packages(c(&#39;rjags&#39;, &#39;R2jags&#39;,&#39;compositions&#39;, &#39;devtools&#39;, 
-                   &#39;tidyverse&#39;, &#39;vegan&#39;, &#39;ellipse&#39;))
+                   &#39;tidyverse&#39;, &#39;vegan&#39;, &#39;ellipse&#39;, &#39;readxl&#39;, 
+                   &#39;httr&#39;))
 
 # check that they load
 library(rjags)
@@ -475,9 +476,10 @@ errors such as
 to missing information for the calling of C++ and FORTRAN compilers. The
 solution is to download and <a href="https://thecoatlessprofessor.com/programming/cpp/r-compiler-tools-for-rcpp-on-macos/">install
 the required GFORTRAN</a> libraries. The instructions here are not very
-clear so take your time working through them. <strong>N.B. Again for
-M1/M2 chip owners, you will have to do something different as the latest
-version of gfortran is not available through this route</strong>
+clear so take your time working through them.</li>
+<li><strong>N.B. Again for M1/M2 chip owners, you will have to do
+something different as the latest version of gfortran is not available
+through this route - see next step</strong>
 <ul>
 <li>For M1/M2 users, you will need to use Homebrew which is a package
 and software manager for OSX. First install <a href="https://brew.sh">homebrew</a>. Then open the OSX Terminal (there
@@ -496,18 +498,17 @@ into it</li>
 </ul></li>
 </ul></li>
 </ul>
-<pre><code>VER=12  # set the version of brew gcc. (as of today: 12)
-CC=gcc-$(VER) -fopenmp   # brew gcc nicely creates gcc-12 as symlink 
+<pre><code>VER=14  # set the version of brew gcc. (as of today: 14)
+CC=gcc-$(VER) -fopenmp   # brew gcc nicely creates gcc-14 as symlink 
 CXX=g++-$(VER) -fopenmp
 CFLAGS=-g -O3 -Wall -pedantic -std=gnu99 -mtune=native -pipe
 CXXFLAGS=-g -O3 -Wall -pedantic -std=c++11 -mtune=native -pipe
 
 # Change the version of gcc as appropriate
-FC      = /opt/homebrew/Cellar/gcc/12.2.0/bin/gfortran
-F77     = /opt/homebrew/Cellar/gcc/12.2.0/bin/gfortran
-FLIBS.  = -L/opt/homebrew/Cellar/gcc/12.2.0/lib</code></pre>
-<p>If you run into any other problems please drop us a line at <a href="mailto:andrew.parnell@mu.ie" class="email">andrew.parnell@mu.ie</a> (for simmr/MixSIAR queries) or <a href="mailto:a.jackson@tcd.ie" class="email">a.jackson@tcd.ie</a> (for
-SIBER/SIDER queries).</p>
+FC      = /opt/homebrew/Cellar/gcc/14.2.0_1/bin/gfortran
+F77     = /opt/homebrew/Cellar/gcc/14.2.0_1/bin/gfortran
+FLIBS.  = -L/opt/homebrew/Cellar/gcc/14.2.0_1/lib</code></pre>
+<p>If you run into any other problems please drop me a line at <a href="mailto:jacksoan@tcd.ie" class="email">jacksoan@tcd.ie</a>.</p>
 </div>
 </div>
 

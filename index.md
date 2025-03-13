@@ -11,7 +11,7 @@ As this module will be delivered online please install [Zoom](https://www.zoom.u
 
 Please note that the course will be recorded so that attendees in different time zones can catch up on material.
 
-## Tuesday
+## Day 1
 
 Introduction to SIA data and revision of basic statistical and R concepts
 
@@ -27,7 +27,7 @@ Introduction to SIA data and revision of basic statistical and R concepts
 15:00-15:30 | Coffee break
 15:30-17:00 | [Guided Practical: Simple linear models to explain SIA data](https://andrewcparnell.github.io/simms_course/aj-content/practicals/day-1-pm2/basic-SIA-linear-models.nb.html) (AJ)
 
-## Wednesday
+## Day 2
 
 Introduction to Bayes and SIMMs
 
@@ -43,7 +43,7 @@ Introduction to Bayes and SIMMs
 15:00-15:30 | Coffee break
 15:30-17:00 | Practical: options are (1) run your data through AJ's plots from yesterday, or (2) get your data to run in `simmr`, or (3) go back and learn ggplot2 from [this script](https://andrewcparnell.github.io/simms_course/ap_notes/gg_plot_class.R)
 
-## Thursday
+## Day 3
 
 simmr / MixSIAR
 
@@ -60,7 +60,7 @@ simmr / MixSIAR
 15:30-17:00 | [Practical: Source grouping, when and how? (AJ)](https://andrewcparnell.github.io/simms_course/aj-content/practicals/source-aggregation.nb.html) 
 
 
-## Friday 
+## Day 4 
 
 Source grouping, SIBER, and (new!) cosimmr
 
