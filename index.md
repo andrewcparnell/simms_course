@@ -9,7 +9,7 @@ Course pre-requisites can be found [here](https://andrewcparnell.github.io/simms
 
 As this module will be delivered online please install [Zoom](https://www.zoom.us) and [Slack](https://slack.com) to access the videos and interactive components of the course. All the Zoom links to the meeting will be posted to the Slack `#zoom-links` channel.
 
-Please note that the course will be recorded so that attendees in different time zones can catch up on material.
+Please note that the course will be recorded so that attendees in different time zones can catch up on material. **All times are UTC+0**.
 
 ## Day 1
 
