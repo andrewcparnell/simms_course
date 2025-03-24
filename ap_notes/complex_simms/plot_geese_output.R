@@ -76,7 +76,8 @@ axis(1,at=seq(365,500,by=20),labels=seq(365,500,by=20)%%365)
 
 # Create some colours
 transp = 0.5
-mycols = c(rgb(1,0,0,transp),rgb(0,0,1,transp),rgb(0,1,0,transp),rgb(1,1,0,transp))
+#mycols = c(rgb(1,0,0,transp),rgb(0,0,1,transp),rgb(0,1,0,transp),rgb(1,1,0,transp))
+mycols = viridisLite::viridis(4, alpha = transp)
 
 # And finally add lines
 for(k in 1:K) {
