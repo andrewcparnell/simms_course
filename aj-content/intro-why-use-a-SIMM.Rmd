@@ -52,7 +52,7 @@ output:
 ## Ecological process inferred by isotopes
 - <div style="ref">Newsome, Martinez del Rio, Bearhop & Phillips. 2007. A Niche for Isotopic Ecology. Frontiers in Ecology and the Environment.</div> 
 - d-space and p-space
-<img src="images/dspace-pspace.png" alt="moving from d-space to p-space" width="600">
+<img src="images/dspace-pspace.jpg" alt="moving from d-space to p-space" width="600">
 
 ## Mixing Models move from d- to p-space
 - Direct measure of trophic interactions via consumption
