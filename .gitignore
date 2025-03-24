@@ -50,4 +50,4 @@ test.pdf
 test.txt
 
 ## Ignore InStats folder
-Instats/
+#Instats/
