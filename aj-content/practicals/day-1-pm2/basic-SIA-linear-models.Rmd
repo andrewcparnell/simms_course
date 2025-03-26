@@ -278,30 +278,54 @@ TukeyHSD(muscleC.aov)
 
 The larger Pacific Cod appears to be the largest of the fish on average, and they also have the larget d13C and d15N values. We might rightly want to know if this is due to their larger body size (length) or whether it is true species variation. We use analysis of covariance to investigate.
 
+We might focus on d13C first.
+
 ```{r}
-# specify a color pallete with 3 colours for this example
-palette(c("black", "red", "blue"))
 
-par(mfrow = c(1,2))
-plot(Muscle.d13C ~ Length, col = mydata$Species, data = mydata, 
-     main = "Muscle d13C")
-legend("topleft", levels(mydata$Species), col = 1:3, pch = 1)
+g_muscle_C <- ggplot(data = mydata,
+                     mapping = aes(x = Length, 
+                                   y = Muscle.d13C,
+                                   color = Species)) + 
+  geom_point() + 
+  geom_smooth(method = "lm") + 
+  scale_color_viridis_d(end = 1)
 
-plot(Muscle.d15N ~ Length, col = mydata$Species, data = mydata,
-     main = "Muscle d15N")
-legend("topleft", levels(mydata$Species), col = 1:3, pch = 1)
+print(g_muscle_C)
 
-# reset the palette
-palette("default")
 
 d13C.length.model <- glm(Muscle.d13C ~ Species + Length, data = mydata)
 summary(d13C.length.model)
 
-d15N.length.model <- glm(Muscle.d15N ~ Species + Length, data = mydata)
-summary(d15N.length.model)
+d13C.interaction.model <- glm(Muscle.d13C ~ Species + Length + Species:Length, 
+                              data = mydata)
+summary(d13C.interaction.model)
 
 
 ```
+
+And now we could consider d15N in a similar manner.
+
+```{r}
+
+g_muscle_N <- ggplot(data = mydata,
+                     mapping = aes(x = Length, 
+                                   y = Muscle.d15N,
+                                   color = Species)) + 
+  geom_point() + 
+  geom_smooth(method = "lm") + 
+  scale_color_viridis_d(end = 1)
+
+print(g_muscle_N)
+
+d15N.length.model <- glm(Muscle.d15N ~ Species + Length, data = mydata)
+summary(d15N.length.model)
+
+d15N.interaction.model <- glm(Muscle.d15N ~ Species + Length + Species:Length, 
+                              data = mydata)
+summary(d15N.interaction.model)
+
+```
+
 
 While d15N appears to scale positively with length (**and you can probably think why this might be**), d13C does not appear to be affected by length. You could assess this by comparing a model without `length` using AIC, where we are looking for AIC to be lower by more than 2 units if we are to justify the inclusion of `length` in the model:
 

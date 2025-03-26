@@ -8,9 +8,9 @@ sea_level = read.csv('https://raw.githubusercontent.com/andrewcparnell/tsme_cour
 head(sea_level)
 
 # Create a plot of the data
-with(sea_level,plot(year_AD,sea_level_m))
+#with(sea_level,plot(year_AD,sea_level_m))
 # nicer plotting syntax ;) that matches the call to lm
-#plot(year_AD ~ sea_level_m, data = sea_level) 
+plot(sea_level_m ~ year_AD, data = sea_level) 
 
 # Let's fit a linear regression with sea_level_m as the response and year as the covariate
 
@@ -81,9 +81,10 @@ quantile(model_run$BUGSoutput$sims.list$beta,
 # We can create a plot of the posterior mean line
 alpha_mean = model_run$BUGSoutput$mean$alpha[1]
 beta_mean = model_run$BUGSoutput$mean$beta[1]
-x = sea_level$year_AD
-with(sea_level,plot(year_AD,sea_level_m))
-lines(x, alpha_mean + beta_mean * x, col = 'red')
+#x = sea_level$year_AD
+plot(sea_level_m ~ year_AD, data = sea_level) 
+abline(a = alpha_mean , b = beta_mean)
+#lines(x, alpha_mean + beta_mean * x, col = 'red')
 legend('topleft',
        legend = c('Data', 'Posterior mean'),
        lty=c(-1,1),
