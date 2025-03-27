@@ -38,8 +38,12 @@ S_sds = cbind(c(1,1,1,1), c(1,1,1,1))
 
 # specify the consumer data at the origin
 # Ten consumers for this example around 0 with small sd of error.
-consumers <- cbind(dC = rnorm(n = 10, mean = 0, sd = 0.1),
-                   dN = rnorm(n = 10, mean = 0, sd = 0.1) )
+consumers <- cbind(dC = rnorm(n = 10, 
+                              mean = 0, 
+                              sd = 0.1),
+                   dN = rnorm(n = 10, 
+                              mean = 0, 
+                              sd = 0.1) )
 
 # and create the simmr object
 # here we have no TDFs or concentration values
@@ -73,7 +77,7 @@ And we should always check for convergence.
 summary(simmr_out,type='diagnostics')
 
 # plot the posterior predictive power 
-posterior_predictive(simmr_out)
+pp <- posterior_predictive(simmr_out)
 ```
 
 The results of this toy example are not expected to be overly helpful or meaningful.
@@ -97,6 +101,7 @@ Plot the covariance between the estimated dietary proportions in the posterior.
 
 plot(simmr_out, type = "matrix")
 
+pp_all <- posterior_predictive(simmr_out)
 ```
 
 
@@ -120,10 +125,11 @@ S_sds_a_priori = rbind( S_sds[1:2,], colSums(S_sds[3:4,]^2) ^ 0.5 )
 
 # and create the new simmr object
 # here we have no TDFs or concentration values
-simmr_in_a_priori <- simmr_load(mixtures = consumers,
-                       source_names = S_names_a_priori,
-                       source_means = S_means_a_priori,
-                       source_sds = S_sds_a_priori)
+simmr_in_a_priori <- simmr_load(
+  mixtures = consumers,
+  source_names = S_names_a_priori,
+  source_means = S_means_a_priori,
+  source_sds = S_sds_a_priori)
 
 
 
@@ -143,8 +149,11 @@ Run the model on the a priori combined data.
 # fit the a priori aggregated models
 simmr_out_a_priori = simmr_mcmc(simmr_in_a_priori)
 
+# run the posterior predictive test on this new model
+pp_prior <- posterior_predictive(simmr_out_a_priori)
+
 ```
-And plot
+And plot the estimated posterior proportions.
 
 ```{r}
 # Plot the a priori aggregated diet estimatess
@@ -166,7 +175,7 @@ Far more honest is to fit the model as before, with the sources as we believe th
 # combine sources C and D which are in positions 3 and 4
 simmr_out_a_posteriori <- 
   simmr::combine_sources(simmr_out, 
-                  to_combine = simmr_out$input$source_names[c(3,4)], 
+                  to_combine = c("C", "D"), 
                   new_source_name = "CD")
 
 # Plot the a posteriori aggregated diet estimatess

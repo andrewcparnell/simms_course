@@ -10,7 +10,9 @@ library(ggplot2)
 source("extra_code/output_jags_new.R")
 
 # Find the data
-mix.filename = system.file("extdata", "wolves_consumer.csv", package = "MixSIAR")
+mix.filename = system.file("extdata", 
+                           "wolves_consumer.csv", 
+                           package = "MixSIAR")
 #system(paste('open',mix.filename))
 
 # Load into MixSIAR
@@ -26,7 +28,9 @@ mix = load_mix_data(filename=mix.filename,
 # str(mix.data)
 
 # Replace the system.file call with the path to your file
-source.filename = system.file("extdata", "wolves_sources.csv", package = "MixSIAR")
+source.filename = system.file("extdata", 
+                              "wolves_sources.csv", 
+                              package = "MixSIAR")
 
 # Load the source data
 source = load_source_data(filename=source.filename,
@@ -36,7 +40,9 @@ source = load_source_data(filename=source.filename,
                           mix)
 
 # Replace the system.file call with the path to your file
-discr.filename = system.file("extdata", "wolves_discrimination.csv", package = "MixSIAR")
+discr.filename = system.file("extdata", 
+                             "wolves_discrimination.csv", 
+                             package = "MixSIAR")
 
 # Load the discrimination/TDF data
 discr = load_discr_data(filename=discr.filename, mix)
@@ -110,6 +116,12 @@ jags.2 = run_model(run="very short",
 #                    plot_pairs_save_png = FALSE, 
 #                    plot_xy_save_png = FALSE, 
 #                    diag_save_ggmcmc = FALSE))
+
+out <- output_JAGS(jags.1, 
+                   mix = mix, 
+                   source = source,
+                   c('summary_diagnostics'))
+
 
 out <- output_JAGS(jags.1, mix = mix, source = source,
             c('summary_diagnostics',
