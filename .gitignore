@@ -51,3 +51,6 @@ test.txt
 
 ## Ignore InStats folder
 #Instats/
+
+# MS temp files
+~$*
