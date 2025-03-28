@@ -10,13 +10,13 @@ library(ggplot2)
 source("extra_code/output_jags_new.R")
 
 # Find the data
-mix.filename = system.file("extdata", 
-                           "wolves_consumer.csv", 
+mix.filename = system.file("extdata",
+                           "wolves_consumer.csv",
                            package = "MixSIAR")
 #system(paste('open',mix.filename))
 
 # Load into MixSIAR
-mix = load_mix_data(filename=mix.filename, 
+mix = load_mix_data(filename="mix.filename", 
                     iso_names=c("d13C","d15N"), 
                     factors=c("Region","Pack"), 
                     fac_random=c(TRUE,TRUE), 

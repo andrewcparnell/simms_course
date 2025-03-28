@@ -1,0 +1,152 @@
+---
+title: "MixSIAR script example as Rnotebook"
+output: html_notebook
+---
+
+Here I recreate the mixsiar_script.R example but in a Rnotebook. Additionally I have grabbed the actual data files and put them in a folder `wolves_data/` within the folder where this Rmd file sits so that the analysis more closely resembles the analysis you might make with your own data.
+
+## Setup 
+
+Load libraries.
+
+```{r}
+library(MixSIAR)
+library(tidyr) # For pivoting later in new output_jags
+library(ggplot2)
+```
+
+## Load in the data
+
+First load the mixtures, i.e. the consumers.
+
+```{r}
+# Load into MixSIAR
+mix = load_mix_data(
+  filename="wolves_data/wolves_consumer.csv", 
+  iso_names=c("d13C","d15N"), 
+  factors=c("Region","Pack"), 
+  fac_random=c(TRUE,TRUE), 
+  fac_nested=c(FALSE,TRUE), 
+  cont_effects=NULL)
+```
+
+load the Source data
+
+```{r}
+# Load the source data
+source = load_source_data(
+  filename="wolves_data/wolves_sources.csv",
+  source_factors="Region", 
+  conc_dep=FALSE, 
+  data_type="means", 
+  mix)
+```
+
+Load the trophic discrimination factors.
+
+```{r}
+# Load the discrimination/TDF data
+discr = load_discr_data(
+  filename="wolves_data/wolves_discrimination.csv", 
+  mix)
+```
+
+## Plot the data
+
+```{r}
+# Isospace plot 
+plot_data(filename="isospace_plot", 
+          plot_save_pdf = FALSE, 
+          plot_save_png = FALSE,
+          mix = mix, 
+          source = source, 
+          discr = discr)
+
+```
+
+Plot the same data but with a colour-blind friendly palette and hide the legend. 
+
+```{r}
+# Alternative plot saving it and editing it
+p <- plot_data(filename="isospace_plot", 
+          plot_save_pdf = FALSE, 
+          plot_save_png = FALSE,
+          mix = mix, 
+          source = source, 
+          discr = discr, return_obj = TRUE)
+
+# We can now augment the ggplot object with our own 
+# customisations.
+p + 
+  theme(legend.position = "None") + 
+  scale_color_viridis_d()
+```
+
+## Use MixSIAR to construct the JAGS model 
+
+```{r}
+# Write the model out
+model_filename = "MixSIAR_model.txt"   # Name of the JAGS model file
+write_JAGS_model(model_filename, 
+                 resid_err = TRUE, 
+                 process_err = TRUE, 
+                 mix, source)
+```
+
+## Run a very short test run of the model 
+
+```{r}
+# Test run
+jags.1 = run_model(run="test", 
+                   mix, source, discr, 
+                   model_filename, 
+                   alpha.prior = c(1,1,1), 
+                   resid_err = TRUE, 
+                   process_err = TRUE)
+```
+
+
+## Run a longer version but still very short
+
+N.B. This is not evaluated by default in case it takes a long time on your machine. Change chunk option `eval = TRUE` or copy and paste to the console window.
+
+```{r, eval = FALSE}
+# Long run - change run to 'normal' 
+# if you have 5 hours to kill
+jags.2 = run_model(run="very short", 
+                   mix, source, discr, 
+                   model_filename, 
+                   alpha.prior = 1, 
+                   resid_err = TRUE, 
+                   process_err = TRUE)
+```
+
+## Explore the output
+
+```{r}
+out <- output_JAGS(jags.1, 
+                   mix = mix, 
+                   source = source,
+                   c('summary_diagnostics'))
+```
+
+Print and plot all (most?) of the optional output. 
+
+N.B. not run by default. Change chunk option `eval = TRUE` or copy and paste to the console window.
+
+```{r}
+out <- output_JAGS(jags.1, 
+                   mix = mix, 
+                   source = source,
+                   c('summary_diagnostics',
+                     'summary_statistics',
+                     'summary_quantiles',
+                     'plot_global',
+                     'plot_factors'))
+```
+
+
+
+
+
+
