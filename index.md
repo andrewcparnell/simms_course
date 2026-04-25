@@ -1,7 +1,7 @@
 ---
 title: "Stable Isotope Mixing Models: course timetable"
-author: "Andrew Parnell and Andrew Jackson, with Emma Govan"
-date: "March 2024 - online"
+author: "Andrew Parnell and Andrew Jackson"
+date: "April 2026"
 output: html_document
 ---
 
@@ -19,11 +19,11 @@ Introduction to SIA data and revision of basic statistical and R concepts
 ------------- | ----------------------------------------------------
 09:30-10:30 | Session 1 [Introduction: why use a SIMM? (AJ & AP)](https://andrewcparnell.github.io/simms_course/aj-content/intro-why-use-a-SIMM.html)
 10:30-10:45 | Coffee break
-10:45-11:45 | Session 2 [Revision of likelihood and regression (AP)](https://andrewcparnell.github.io/simms_course/ap_notes/revision_of_likelihood_regression/revision_of_likelihood_and_regression.pdf)
+10:45-11:45 | Session 2 [Guided practical: Intro to SI data](https://andrewcparnell.github.io/simms_course/aj-content/practicals/day-1-pm1/Exploring-Basic-SIA-Data.nb.html) and [biplots](https://andrewcparnell.github.io/simms_course/aj-content/practicals/day-1-pm1/first-biplot.nb.html) (AJ)
 11:45-12:00 | Break 
 12:00-13:00 | Session 3 [Guided practical: Revision of important R concepts (AP)](https://andrewcparnell.github.io/simms_course/ap_notes/revision_of_R/Revision_of_R.R)
 13:00-14:00 | Lunch
-14:00-15:00 | Session 4 [Guided practical: Intro to SI data](https://andrewcparnell.github.io/simms_course/aj-content/practicals/day-1-pm1/Exploring-Basic-SIA-Data.nb.html) and [biplots](https://andrewcparnell.github.io/simms_course/aj-content/practicals/day-1-pm1/first-biplot.nb.html) (AJ)
+14:00-15:00 | Session 4 [Revision of likelihood and regression (AP)](https://andrewcparnell.github.io/simms_course/ap_notes/revision_of_likelihood_regression/revision_of_likelihood_and_regression.pdf)
 15:00-15:30 | Coffee break
 15:30-17:00 | Session 5 [Guided Practical: Simple linear models to explain SIA data](https://andrewcparnell.github.io/simms_course/aj-content/practicals/day-1-pm2/basic-SIA-linear-models.nb.html) (AJ)
 
@@ -41,7 +41,7 @@ Introduction to Bayes and SIMMs
 13:00-14:00 | Lunch
 14:00-15:00 | Session 9 [Guided practical: intro to simmr (AP)](https://andrewcparnell.github.io/simms_course/ap_notes/prac_using_simmr/simmr_vignette_code.R)
 15:00-15:30 | Coffee break
-15:30-17:00 | Session 10 Practical: options are (1) run your data through AJ's plots from yesterday, or (2) get your data to run in `simmr`, or (3) go back and learn ggplot2 from [this script](https://andrewcparnell.github.io/simms_course/ap_notes/gg_plot_class.R)
+15:30-17:00 | Session 10 Practical: options are (1) run your data through AJ's plots from yesterday, or (2) get your data to run in `simmr`, or (3) go back and learn ggplot2 from [this script](https://andrewcparnell.github.io/simms_course/ap_notes/gg_plot_class.R) (AJ)
 
 ## Day 3
 
