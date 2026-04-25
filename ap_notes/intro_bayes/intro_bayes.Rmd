@@ -1,7 +1,6 @@
 ---
 title: "Introduction to Bayesian Statistics"
 author: Andrew Parnell \newline \texttt{}   \newline \vspace{1cm}
-
 output:
   beamer_presentation:
     includes:
