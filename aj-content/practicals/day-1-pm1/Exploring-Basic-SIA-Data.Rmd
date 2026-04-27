@@ -50,7 +50,7 @@ In this case, `mydata` is a `data.frame` object, and inside it, `Taxon` and `ID`
 str(mydata)
 ```
 
-The next obvious thing we might want to know is how big are these numbers, and how many observations we have etc... Accessing columns within a data.frame object is achieved using the `$` notation, so `mydata$Taxon` is the vector of characters with the taxon identifier for each observation. *N.B. in a previous existence I advocated the use of the function attach() but no longer: it can get you into all manner of mischief thats best avoided.*
+The next obvious thing we might want to know is how big are these numbers, and how many observations we have etc... Accessing columns within a data.frame object is achieved using the `$` notation, so `mydata$Taxon` is the vector of characters with the taxon identifier for each observation. *N.B. in a previous existence I advocated the use of the function attach() but no longer: it can get you into all manner of mischief that is best avoided.*
 
 ```{r summary-data}
 
@@ -74,8 +74,8 @@ It is not so easy to get summary statistics on each Taxonomic group within our d
 library(tidyverse)
 
 # generate summary statistics by group
-mydata %>% 
-  group_by(Taxon) %>% 
+mydata |> 
+  group_by(Taxon) |>
   summarise(count = n(),
             mC = mean(d13C), 
             sdC = sd(d13C), 
