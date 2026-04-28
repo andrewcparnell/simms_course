@@ -9,7 +9,7 @@ Course pre-requisites can be found [here](https://andrewcparnell.github.io/simms
 
 As this module will be delivered online please install [Zoom](https://www.zoom.us) and [Slack](https://slack.com) to access the videos and interactive components of the course. All the Zoom links to the meeting will be posted to the Slack `#zoom-links` channel.
 
-Please note that the course will be recorded so that attendees in different time zones can catch up on material. **All times are UTC+0**.
+Please note that the course will be recorded so that attendees in different time zones can catch up on material. **All times are UTC+1**.
 
 ## Day 1
 
@@ -35,9 +35,9 @@ Introduction to Bayes and SIMMs
 ------------- | ----------------------------------------------------
 09:30-10:30 | Session 6 [An introduction to Bayesian statistics (AP)](https://andrewcparnell.github.io/simms_course/ap_notes/intro_bayes/intro_bayes.pdf)
 10:30-10:45 | Coffee break
-10:45-11:45 | Session 7 [Guided practical: R, JAGS, and linear regression (AP)](https://andrewcparnell.github.io/simms_course/ap_notes/prac_jags/practical_R_jags_and_lr.R)
+10:45-11:45 | Session 7 [Differences between regression models and SIMMs (AP)](https://andrewcparnell.github.io/simms_course/ap_notes/reg_and_simms/reg_and_simms.pdf) 
 11:45-12:00 | Break 
-12:00-13:00 | Session 8 [Differences between regression models and SIMMs (AP)](https://andrewcparnell.github.io/simms_course/ap_notes/reg_and_simms/reg_and_simms.pdf) 
+12:00-13:00 | Session 8 [Guided practical: R, JAGS, and linear regression (AP)](https://andrewcparnell.github.io/simms_course/ap_notes/prac_jags/practical_R_jags_and_lr.R)
 13:00-14:00 | Lunch
 14:00-15:00 | Session 9 [Guided practical: intro to simmr (AP)](https://andrewcparnell.github.io/simms_course/ap_notes/prac_using_simmr/simmr_vignette_code.R)
 15:00-15:30 | Coffee break

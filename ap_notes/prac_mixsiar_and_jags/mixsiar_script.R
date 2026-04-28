@@ -16,7 +16,7 @@ mix.filename = system.file("extdata",
 #system(paste('open',mix.filename))
 
 # Load into MixSIAR
-mix = load_mix_data(filename="mix.filename", 
+mix = load_mix_data(filename=mix.filename, 
                     iso_names=c("d13C","d15N"), 
                     factors=c("Region","Pack"), 
                     fac_random=c(TRUE,TRUE), 
