@@ -89,7 +89,7 @@ b <- -22.270
 c <-  -1.397
 
 # add columns for lipid corrected liver to the data.frame
-mydata <- mydata %>% 
+mydata <- mydata |> 
   mutate(Liver.d13C.crtd = Liver.d13C + 
            (a * Liver.CN + b) / (Liver.CN + c))
 
@@ -194,7 +194,7 @@ Using code from the first practical, we can use the package `dplyr` to generate 
 # load the library
 library(tidyverse)
 
-summarise.muscle <- mydata %>% group_by(Species) %>%  
+summarise.muscle <- mydata |> group_by(Species) |>  
   summarise(count = length(Species),
             musC = mean(Muscle.d13C), musSdC =  sd(Muscle.d13C), 
             musN = mean(Muscle.d15N), musSdN =  sd(Muscle.d15N),
@@ -205,7 +205,7 @@ knitr::kable(summarise.muscle, digits = 2)
 # print(summarise.muscle)
 
 
-summarise.liver <- mydata %>% group_by(Species) %>% 
+summarise.liver <- mydata|> group_by(Species) |> 
   summarise(count = length(Species),
             livC.c = mean(Liver.d13C.crtd), 
             livSdC.c =  sd(Liver.d13C.crtd),
@@ -398,7 +398,9 @@ ellipse.plot <- first.plot +
                alpha = 0.3, 
                level = p.ell,
                type = "norm",
-               geom = "polygon")
+               geom = "polygon") + 
+  scale_fill_viridis_d() + 
+  scale_color_viridis_d()
 
 print(ellipse.plot)
 
@@ -448,7 +450,7 @@ library(vegan)
 Y_muscle <- with(mydata, cbind(Muscle.d13C, Muscle.d15N))
 
 # run a PERMANOVA model
-perm.model <- adonis(Y_muscle ~ Species, 
+perm.model <- adonis2(Y_muscle ~ Species, 
                      data = mydata, 
                      method = "euclidean", 
                      permutations = 9999)
