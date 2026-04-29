@@ -62,7 +62,6 @@ Andrew Jackson has a youtube channel with [podcasts](https://www.youtube.com/pla
 
 Here is a [simple script for getting started with ggplot](https://andrewcparnell.github.io/simms_course/ap_notes/gg_plot_class.R) which might be useful for some but is not compulsory. 
 
-
 ### Troubleshooting
 
 Here are some common problems with solutions:

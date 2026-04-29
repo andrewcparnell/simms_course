@@ -83,7 +83,7 @@ alpha_mean = model_run$BUGSoutput$mean$alpha[1]
 beta_mean = model_run$BUGSoutput$mean$beta[1]
 #x = sea_level$year_AD
 plot(sea_level_m ~ year_AD, data = sea_level) 
-abline(a = alpha_mean , b = beta_mean)
+abline(a = alpha_mean , b = beta_mean, col = 'red')
 #lines(x, alpha_mean + beta_mean * x, col = 'red')
 legend('topleft',
        legend = c('Data', 'Posterior mean'),
