@@ -58,7 +58,7 @@ Now we can plot the data to visualise our system and the output,
 
 ```{r plot-isotope-data}
 
-plot(simmr_in)
+plot(simmr_in) + coord_equal()
 
 ```
 
@@ -140,7 +140,7 @@ Plot this newly combined data.
 
 ```{r}
 # plot the raw data for the a priori aggregated example
-plot(simmr_in_a_priori)
+plot(simmr_in_a_priori) + coord_equal()
 ```
 
 Run the model on the a priori combined data.
