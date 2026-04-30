@@ -72,7 +72,7 @@ Source grouping, SIBER, and (new!) cosimmr
 11:45-12:00 | Break 
 12:00-13:00 | Session 18 [Guided Practical: Using SIBER to compare communities using convex hulls (AJ)](https://andrewcparnell.github.io/simms_course/aj-content/practicals/siber-comparing-communities.nb.html)
 13:00-14:00 | Lunch
-14:00-15:00 | Session 19 [Introduction to cosimmr](https://andrewcparnell.github.io/simms_course/ap_notes/cosimmr/cosimmr_presentation.pdf) and [practical](https://raw.githubusercontent.com/emmagovan/cosimmr/master/vignettes/cosimmr.Rmd) (EG & AP)
+14:00-15:00 | Session 19 [Introduction to cosimmr](https://andrewcparnell.github.io/simms_course/ap_notes/cosimmr/cosimmr_presentation.pdf) and [practical](https://andrewcparnell.github.io/simms_course/ap_notes/cosimmr/cosimmr.R) (AP)
 15:00-15:30 | Coffee break
 15:30-17:00 | Session 20 [Practical: pick a MixSIAR example](https://github.com/brianstock/MixSIAR/tree/master/inst/example_scripts) and [look at the manual](https://github.com/brianstock/MixSIAR/blob/master/Manual/mixsiar_manual_3.1.pdf) (AP & AJ)
 

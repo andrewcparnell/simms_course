@@ -1,3 +1,5 @@
+# Paper at https://arxiv.org/pdf/2408.17230
+
 ## ----eval = FALSE-------------------------------------------------------------
 #  install.packages("cosimmr")
 
