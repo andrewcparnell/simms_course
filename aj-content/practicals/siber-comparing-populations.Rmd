@@ -164,22 +164,33 @@ So, in this case, all of the estimates for groups 1's ellipse are smaller than f
 Then we can do exactly the same for groups 1 and 3.
 
 ```{r prob-diff-g13}
+# calculate the proportion of SEA estimates in ellipse 1
+# that are less than ellipse 3. This is equivalent to the 
+# probability that ellipse 1 is smaller than ellipse 3.
+# Pg1.lt.g3 is my notation for naming the object and translates
+# to "probability that group 1 is less than group 3"
 Pg1.lt.g3 <- sum( SEA.B[,1] < SEA.B[,3] ) / nrow(SEA.B)
+
+# and print it to screen
 print(Pg1.lt.g3 )
 ```
 
 And then for the other pairings:
 
 ```{r prob-diff-all}
+# probabilty that ellipse 1 is less than ellipse 4
 Pg1.lt.g4 <- sum( SEA.B[,1] < SEA.B[,4] ) / nrow(SEA.B)
 print(Pg1.lt.g4)
 
+# probabilty that ellipse 2 is less than ellipse 3
 Pg2.lt.g3 <- sum( SEA.B[,2] < SEA.B[,3] ) / nrow(SEA.B)
 print(Pg2.lt.g3)
 
+# probabilty that ellipse 3 is less than ellipse 4
 Pg3.lt.g4 <- sum( SEA.B[,3] < SEA.B[,4] ) / nrow(SEA.B)
 print(Pg3.lt.g4)
 
+# probabilty that ellipse 5 is less than ellipse 7
 Pg5.lt.g7 <- sum( SEA.B[,5] < SEA.B[,7] ) / nrow(SEA.B)
 print(Pg5.lt.g7)
 ```
